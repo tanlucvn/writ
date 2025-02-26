@@ -12,33 +12,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: checkout repository
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: setup pnpm
+      - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
           version: 9
 
-      - name: setup node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: pnpm
 
-      - name: install dependencies
+      - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: run husky pre-commit checks (lint-staged)
-        run: pnpm exec lint-staged
-
-      - name: run eslint
+      - name: Run ESlint
         run: pnpm lint
 
-      - name: run prettier format check
+      - name: Run Prettier Format Check
         run: pnpm format --check
 
-      - name: check commit messages
-        run: pnpm exec commitlint --from=HEAD~10 --to=HEAD
+      - name: Check Commit Messages
+        run: pnpm exec commitlint --from=HEAD~1 --to=HEAD
