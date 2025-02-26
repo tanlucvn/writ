@@ -1,4 +1,4 @@
-name: Continuous Integration
+name: continuous integration
 
 on:
   pull_request:
@@ -12,28 +12,31 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Setup Node.js
+      - name: setup node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: 'npm'
+          cache: 'pnpm'
 
-      - name: Install dependencies
-        run: npm ci
+      - name: install pnpm
+        run: npm install -g pnpm
 
-      - name: Run Husky pre-commit checks (lint-staged)
+      - name: install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: run husky pre-commit checks (lint-staged)
         run: npx --no -- lint-staged
 
-      - name: Run ESLint
-        run: npm run lint
+      - name: run eslint
+        run: pnpm lint
 
-      - name: Run Prettier format check
-        run: npx prettier --check 'src/**/*.{js,jsx,ts,tsx,css,html}'
+      - name: run prettier format check
+        run: pnpm format --check
 
-      - name: Check commit messages
+      - name: check commit messages
         run: npx --no -- commitlint --from=HEAD~10 --to=HEAD
