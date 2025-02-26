@@ -2,11 +2,33 @@
   "name": "minimi",
   "version": "0.1.0",
   "private": true,
+  "description": "A sleek and minimal Next.js starter template, optimized for performance and rapid development.",
+  "author": "tanlucvn",
+  "keywords": [
+    "nextjs",
+    "react",
+    "boilerplate",
+    "template",
+    "starter",
+    "tailwindcss",
+    "minimal",
+    "sleek",
+    "clean",
+    "lightweight",
+    "fast",
+    "modern",
+    "optimized",
+    "developer-friendly"
+  ],
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "preview": "next build && next start",
+    "lint": "eslint src --ext ts,tsx,js,jsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint src --ext js,jsx,ts,tsx --fix",
+    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,html}'",
+    "commit": "git cz",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -15,20 +37,40 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.7.1",
     "@commitlint/config-conventional": "^19.7.1",
     "@eslint/eslintrc": "^3",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^9",
     "eslint-config-next": "15.1.7",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.3",
     "husky": "^9.1.7",
     "lint-staged": "^15.4.3",
     "postcss": "^8",
+    "prettier": "^3.5.2",
+    "prettier-plugin-tailwindcss": "^0.6.11",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   },
+  "husky": {
+    "hooks": {
+      "commit-msg": "npx --no -- commitlint --edit $1",
+      "pre-commit": "npx --no -- lint-staged"
+    }
+  },
   "lint-staged": {
-    "**/*.{js,ts,tsx,jsx}": "eslint --fix"
+    "src/**/*.{ts,tsx,js,jsx}": "eslint --fix",
+    "src/**/*.{css,html}": "prettier --write"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
