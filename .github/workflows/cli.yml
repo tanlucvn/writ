@@ -17,17 +17,16 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9
+
       - name: setup node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: pnpm
-
-      - name: install pnpm
-        run: |
-          corepack enable
-          corepack prepare pnpm@latest --activate
-          pnpm --version
 
       - name: install dependencies
         run: pnpm install --frozen-lockfile
