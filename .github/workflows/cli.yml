@@ -24,13 +24,16 @@ jobs:
           cache: pnpm
 
       - name: install pnpm
-        run: corepack enable && corepack prepare pnpm@latest --activate
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest --activate
+          pnpm --version
 
       - name: install dependencies
         run: pnpm install --frozen-lockfile
 
       - name: run husky pre-commit checks (lint-staged)
-        run: npx --no -- lint-staged
+        run: pnpm exec lint-staged
 
       - name: run eslint
         run: pnpm lint
@@ -39,4 +42,4 @@ jobs:
         run: pnpm format --check
 
       - name: check commit messages
-        run: npx --no -- commitlint --from=HEAD~10 --to=HEAD
+        run: pnpm exec commitlint --from=HEAD~10 --to=HEAD
