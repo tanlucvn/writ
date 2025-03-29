@@ -2,8 +2,8 @@ import type { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Minimi',
-    short_name: 'Minimi',
+    name: 'Minimil',
+    short_name: 'Minimil',
     description:
       'A sleek and minimal Next.js starter template, optimized for performance and rapid development.',
     start_url: '/',

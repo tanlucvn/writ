@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
   subsets: ['latin']
 });
 
-const APP_NAME = 'Minimi';
-const APP_DEFAULT_TITLE = 'Minimi';
-const APP_TITLE_TEMPLATE = '%s - Minimi';
+const APP_NAME = 'Minimil';
+const APP_DEFAULT_TITLE = 'Minimil';
+const APP_TITLE_TEMPLATE = '%s - Minimil';
 const APP_DESCRIPTION =
   'A sleek and minimal Next.js starter template, optimized for performance and rapid development.';
 
