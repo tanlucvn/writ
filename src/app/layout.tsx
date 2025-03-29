@@ -26,6 +26,20 @@ export const metadata: Metadata = {
     template: APP_TITLE_TEMPLATE
   },
   description: APP_DESCRIPTION,
+  icons: {
+    icon: [
+      {
+        media: '(prefers-color-scheme: light)',
+        url: '/icons/favicon-light.ico',
+        href: '/icons/favicon-light.ico'
+      },
+      {
+        media: '(prefers-color-scheme: dark)',
+        url: '/icons/favicon.ico',
+        href: '/icons/favicon.ico'
+      }
+    ]
+  },
   robots: {
     index: true,
     follow: true,
