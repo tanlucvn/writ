@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 
+import { ThemeProvider } from '@/components/theme';
+
 import './globals.css';
 
 const inter = Inter({
@@ -98,7 +100,9 @@ export default function RootLayout({
   return (
     <html lang='en' suppressHydrationWarning>
       <body className={`${inter.variable} font-sans antialiased`}>
-        <main className='mx-auto max-w-screen-sm px-6 py-24'>{children}</main>
+        <ThemeProvider>
+          <main className='mx-auto max-w-screen-sm px-6 py-24'>{children}</main>
+        </ThemeProvider>
       </body>
     </html>
   );
