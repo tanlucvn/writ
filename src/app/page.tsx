@@ -1,3 +1,4 @@
+import { FeatureListSection } from '@/components/features/section';
 import { Footer } from '@/components/footer';
 import Logo from '@/components/logo';
 import * as FadeIn from '@/components/motion/fade';
@@ -26,6 +27,10 @@ export default function Home() {
           launch projects quickly while maintaining best practices in code
           quality, styling, and development workflow.
         </p>
+      </FadeIn.Item>
+
+      <FadeIn.Item>
+        <FeatureListSection />
       </FadeIn.Item>
 
       <FadeIn.Item>
