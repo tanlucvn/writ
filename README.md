@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<p align="center">
+  <img src=".github/assets/banner.jpg" alt="minimil banner" />
+</p>
 
-## Getting Started
+<p align="center">
+  <a href="https://vercel.com/new/clone?repository-url=https://github.com/tanlucvn/minimil&env=NEXT_PUBLIC_SITE_URL&project-name=minimil&repository-name=minimil">
+    <img src=".github/assets/deploy.png" alt="Deploy to Vercel" />
+  </a>
+</p>
 
-First, run the development server:
+# ✨ `minimil` — Developer-first Next.js Starter
+
+**minimil** is a fast, modern, and minimal starter template built with **Next.js 15** and **Tailwind CSS**. It comes with batteries included for performance, styling, DX, and clean architecture — perfect for building products, portfolios, blogs, or landing pages.
+
+---
+
+## 🚀 Features
+
+- ⚡ **Next.js 15 & App Router** — Latest stable features and layouts
+- 🎨 **Tailwind CSS** with full theme customization
+- 💅 **Dark/Light Mode** toggle built-in
+- ✨ **Framer Motion** animations for smooth UI
+- 📦 **PWA-ready** via Serwist config
+- 🧑‍💻 **DX essentials**: Prettier, ESLint, Husky, Commitlint
+- 🧩 **Modular structure** for easy scaling and refactoring
+- 🖼️ **Dynamic Open Graph Images** (if integrated)
+- 🌍 **SEO & metadata** configured
+
+---
+
+## 📦 Tech Stack
+
+- **Framework**: [Next.js 15](https://nextjs.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Animation**: [Framer Motion](https://www.framer.com/motion/)
+- **Deployment**: [Vercel](https://vercel.com/)
+- **Type Checking**: TypeScript
+- **Linting & Formatting**: ESLint, Prettier, Stylelint (optional)
+- **Git Hooks**: Husky, Commitlint, Lint-staged
+- **PWA**: [Serwist](https://serwist.pages.dev/)
+
+---
+
+## 🛠️ Getting Started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+# Clone the repo
+git clone https://github.com/your-username/minimil
+
+# Install dependencies
+pnpm install
+
+# Run dev server
 pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
