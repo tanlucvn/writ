@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="https://vercel.com/new/clone?repository-url=https://github.com/tanlucvn/minimil&env=NEXT_PUBLIC_SITE_URL&project-name=minimil&repository-name=minimil">
-    <img src=".github/assets/deploy.png" alt="Deploy to Vercel" />
+    <img src=".github/assets/deploy.png" alt="Deploy to Vercel" height="30"/>
   </a>
 </p>
 
@@ -45,7 +45,7 @@
 
 ```bash
 # Clone the repo
-git clone https://github.com/your-username/minimil
+git clone https://github.com/tanlucvn/minimil
 
 # Install dependencies
 pnpm install
