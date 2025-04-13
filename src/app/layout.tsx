@@ -2,9 +2,10 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 
 import { ThemeProvider } from "@/components/theme";
+import { Analytics } from "@vercel/analytics/react";
 
-import "./globals.css";
 import { OpenGraph } from "@/lib/og";
+import "./globals.css";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -29,6 +30,7 @@ export default function RootLayout({
       <body className={`${inter.variable} font-sans antialiased`}>
         <ThemeProvider>
           <main className="mx-auto max-w-screen-sm px-6 py-24">{children}</main>
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
