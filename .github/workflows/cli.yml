@@ -1,4 +1,4 @@
-name: continuous integration
+name: Continuous Integration
 
 on:
   pull_request:
@@ -28,14 +28,17 @@ jobs:
           node-version: 18
           cache: pnpm
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run ESlint
+      - name: Run Biome Lint
         run: pnpm lint
 
-      - name: Run Prettier Format Check
-        run: pnpm format --check
+      - name: Run Biome Format Check
+        run: pnpm format
+
+      - name: Type Check
+        run: pnpm typecheck
 
       - name: Check Commit Messages
         run: pnpm exec commitlint --from=HEAD~1 --to=HEAD
