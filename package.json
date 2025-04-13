@@ -21,19 +21,23 @@
     "developer-friendly"
   ],
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "preview": "next build && next start",
-    "lint": "eslint src --ext ts,tsx,js,jsx --report-unused-disable-directives --max-warnings 0",
-    "lint:fix": "eslint src --ext js,jsx,ts,tsx --fix",
-    "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,html}'",
+    "lint": "biome lint --write .",
+    "lint:fix": "biome lint --write . --unsafe",
+    "format": "biome format --write .",
+    "check": "biome check --write .",
+    "typecheck": "tsc --noEmit",
     "commit": "git cz",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "build:prepare": "pnpm run typecheck && pnpm run lint && pnpm run format && pnpm run check && pnpm run build"
   },
   "dependencies": {
+    "@biomejs/biome": "^1.9.4",
     "@radix-ui/react-slot": "^1.1.2",
-    "@serwist/next": "^9.0.12",
+    "@serwist/next": "^9.0.13",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.6.2",
@@ -49,16 +53,11 @@
     "@commitlint/cli": "^19.7.1",
     "@commitlint/config-conventional": "^19.7.1",
     "@eslint/eslintrc": "^3",
-    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "commitizen": "^4.3.1",
     "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^9",
-    "eslint-config-next": "15.1.7",
-    "eslint-config-prettier": "^10.0.1",
-    "eslint-plugin-prettier": "^5.2.3",
     "husky": "^9.1.7",
     "lint-staged": "^15.4.3",
     "postcss": "^8",
@@ -75,8 +74,8 @@
     }
   },
   "lint-staged": {
-    "src/**/*.{ts,tsx,js,jsx}": "eslint --fix",
-    "src/**/*.{css,html}": "prettier --write"
+    "*.{ts,tsx,js,jsx}": ["biome lint --apply ."],
+    "*.{json,css,html,md}": ["biome format --write ."]
   },
   "config": {
     "commitizen": {

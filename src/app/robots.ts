@@ -1,14 +1,14 @@
-import { MetadataRoute } from 'next';
+import type { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
-        userAgent: '*',
-        allow: '/',
-        disallow: []
-      }
+        userAgent: "*",
+        allow: "/",
+        disallow: [],
+      },
     ],
-    sitemap: `https://nijimap.com/sitemap.xml`
+    sitemap: "https://nijimap.com/sitemap.xml",
   };
 }
