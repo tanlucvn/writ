@@ -10,11 +10,14 @@ import {
 import { useToolbarStore } from "@/store/toolbar-store";
 
 export default function ToolbarFontSelect() {
-  const fontFamily = useToolbarStore((state) => state.fontFamily);
-  const setFontFamily = useToolbarStore((state) => state.setFontFamily);
+  const { fontFamily, setFontFamily } = useToolbarStore();
 
   return (
-    <Select value={fontFamily} onValueChange={setFontFamily}>
+    <Select
+      defaultValue="inter"
+      value={fontFamily}
+      onValueChange={setFontFamily}
+    >
       <SelectTrigger className="h-8 w-[180px] text-xs">
         <SelectValue placeholder="Font Family" />
       </SelectTrigger>

@@ -18,6 +18,6 @@ export const useToolbarStore = create<ToolbarStore>((set) => ({
     set((state) => ({
       fontSize: Math.max(state.fontSize - 1, 12), // Min 12px
     })),
-  fontFamily: "sans",
+  fontFamily: "inter",
   setFontFamily: (family) => set({ fontFamily: family }),
 }));
