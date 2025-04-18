@@ -1,24 +1,20 @@
 {
-  "name": "minimil",
+  "name": "miniwrit",
   "version": "0.1.0",
   "private": true,
-  "description": "A sleek and minimal Next.js starter template, optimized for performance and rapid development.",
+  "description": "A clean, minimal app to write thoughts.",
   "author": "tanlucvn",
   "keywords": [
-    "nextjs",
-    "react",
-    "boilerplate",
-    "template",
-    "starter",
-    "tailwindcss",
+    "writing",
+    "notes",
+    "thoughts",
     "minimal",
-    "sleek",
     "clean",
+    "nextjs",
+    "tailwindcss",
     "lightweight",
-    "fast",
-    "modern",
-    "optimized",
-    "developer-friendly"
+    "focus",
+    "text"
   ],
   "scripts": {
     "dev": "next dev",

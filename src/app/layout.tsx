@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme";
 import { Analytics } from "@vercel/analytics/react";
 
+import AppLayout from "@/components/layout/app-layout";
 import { OpenGraph } from "@/lib/og";
 import "./globals.css";
 
@@ -29,7 +30,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} font-sans antialiased`}>
         <ThemeProvider>
-          <main className="mx-auto max-w-screen-sm px-6 py-24">{children}</main>
+          <AppLayout>{children}</AppLayout>
           <Analytics />
         </ThemeProvider>
       </body>

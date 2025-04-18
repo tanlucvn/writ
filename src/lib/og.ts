@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 
-const APP_NAME = "Minimil";
-const APP_DEFAULT_TITLE = "Minimil";
-const APP_TITLE_TEMPLATE = "%s - Minimil";
-const APP_DESCRIPTION =
-  "A sleek and minimal Next.js starter template, optimized for performance and rapid development.";
+const APP_NAME = "Miniwrit";
+const APP_DEFAULT_TITLE = "Miniwrit";
+const APP_TITLE_TEMPLATE = "Miniwrit | %s";
+const APP_DESCRIPTION = "A clean, minimal app to write thoughts.";
 
 export const OpenGraph: Metadata = {
   applicationName: APP_NAME,
@@ -40,15 +39,18 @@ export const OpenGraph: Metadata = {
     },
   },
   keywords: [
-    "Next.js PWA",
-    "Next.js 15 PWA Template",
-    "Minimal PWA",
-    "Tailwind CSS",
-    "Serwist",
-    "React",
-    "Starter Template",
-    "Offline Support",
-    "Fast and Lightweight",
+    "Writing",
+    "Notes",
+    "Thoughts",
+    "Minimal",
+    "Clean",
+    "Text Editor",
+    "Simple Writing App",
+    "Nextjs",
+    "Tailwindcss",
+    "Lightweight",
+    "Offline",
+    "PWA",
   ],
   appleWebApp: {
     capable: true,
