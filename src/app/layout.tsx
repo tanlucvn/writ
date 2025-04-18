@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme";
 import { Analytics } from "@vercel/analytics/react";
 
 import AppLayout from "@/components/layout/app-layout";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { OpenGraph } from "@/lib/og";
 import "./globals.css";
 
@@ -30,8 +31,10 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} font-sans antialiased`}>
         <ThemeProvider>
-          <AppLayout>{children}</AppLayout>
-          <Analytics />
+          <TooltipProvider>
+            <AppLayout>{children}</AppLayout>
+            <Analytics />
+          </TooltipProvider>
         </ThemeProvider>
       </body>
     </html>
