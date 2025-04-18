@@ -4,6 +4,8 @@ interface ToolbarStore {
   fontSize: number;
   increaseFontSize: () => void;
   decreaseFontSize: () => void;
+  fontFamily: string;
+  setFontFamily: (family: string) => void;
 }
 
 export const useToolbarStore = create<ToolbarStore>((set) => ({
@@ -16,4 +18,6 @@ export const useToolbarStore = create<ToolbarStore>((set) => ({
     set((state) => ({
       fontSize: Math.max(state.fontSize - 1, 12), // Min 12px
     })),
+  fontFamily: "sans",
+  setFontFamily: (family) => set({ fontFamily: family }),
 }));

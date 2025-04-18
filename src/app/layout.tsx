@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
+import { DM_Sans, Inter, Space_Grotesk } from "next/font/google";
 
 import { ThemeProvider } from "@/components/theme";
 import { Analytics } from "@vercel/analytics/react";
@@ -7,11 +7,22 @@ import { Analytics } from "@vercel/analytics/react";
 import AppLayout from "@/components/layout/app-layout";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { OpenGraph } from "@/lib/og";
+import { cn } from "@/lib/utils";
 import "./globals.css";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-spacegrotesk",
+});
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  variable: "--font-dmsans",
 });
 
 export const metadata: Metadata = {
@@ -29,7 +40,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} font-sans antialiased`}>
+      <body
+        className={cn(
+          `${inter.variable} ${spaceGrotesk.variable} ${dmSans.variable}`,
+          "font-sans antialiased",
+        )}
+      >
         <ThemeProvider>
           <TooltipProvider>
             <AppLayout>{children}</AppLayout>

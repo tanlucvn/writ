@@ -60,6 +60,8 @@ export default {
       },
       fontFamily: {
         sans: ["var(--font-inter)", ...fontFamily.sans],
+        spacegrotesk: ["var(--font-spacegrotesk)", ...fontFamily.sans],
+        dmsans: ["var(--font-dmsans)", ...fontFamily.sans],
       },
       keyframes: {
         "accordion-down": {
