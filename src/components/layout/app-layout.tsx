@@ -1,7 +1,7 @@
+import Header from "@/components/header";
+import Toolbar from "@/components/toolbar";
 import type React from "react";
 import type { ReactNode } from "react";
-import Header from "../header";
-import Toolbar from "../toolbar";
 
 interface AppLayoutProps {
   children: ReactNode;

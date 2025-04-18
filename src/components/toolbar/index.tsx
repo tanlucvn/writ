@@ -1,13 +1,17 @@
-import ToolbarThemeToggle from "./toolbar-theme-toggle";
-import ToolbarToggle from "./toolbar-toggle";
+import ToolbarFontSize from "./font-size";
+import ToolbarTimeDisplay from "./time-display";
+// import ToolbarToggle from "./toolbar-toggle";
+import ToolbarWordCount from "./word-count";
 
 export default function Toolbar() {
   return (
     <div className="fixed right-0 bottom-0 left-0 flex items-center justify-between border-t px-4 py-2 opacity-70 backdrop-blur-sm transition-opacity duration-300 hover:opacity-100">
-      Toolbar
-      <div className="flex items-center justify-center gap-2">
-        <ToolbarThemeToggle />
-        <ToolbarToggle />
+      <ToolbarFontSize />
+
+      <div className="flex items-center justify-center gap-4">
+        <ToolbarTimeDisplay />
+        <ToolbarWordCount />
+        {/* <ToolbarToggle /> */}
       </div>
     </div>
   );

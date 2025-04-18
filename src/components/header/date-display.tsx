@@ -1,4 +1,4 @@
-export default function Header() {
+export default function DateDisplay() {
   const now = new Date();
   const formattedDate = now.toLocaleDateString("en-US", {
     year: "numeric",
@@ -6,7 +6,7 @@ export default function Header() {
     day: "numeric",
   });
   return (
-    <div className="fixed top-0 left-0 flex w-full flex-col p-4 px-2 text-xs opacity-70 backdrop-blur-sm transition-opacity duration-300 hover:opacity-100">
+    <div className="flex flex-col">
       <h1 className="font-semibold">Miniwrit</h1>
       <p className="text-foreground/70">{formattedDate}</p>
     </div>
