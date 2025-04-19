@@ -1,13 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import { DM_Sans, Inter, Space_Grotesk } from "next/font/google";
 
-import { ThemeProvider } from "@/components/theme";
-import { Analytics } from "@vercel/analytics/react";
-
 import AppLayout from "@/components/layout/app-layout";
+import { ThemeProvider } from "@/components/theme";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { OpenGraph } from "@/lib/og";
 import { cn } from "@/lib/utils";
+import { Analytics } from "@vercel/analytics/react";
+import { Toaster } from "sonner";
 import "./globals.css";
 
 const inter = Inter({
@@ -49,6 +49,7 @@ export default function RootLayout({
         <ThemeProvider>
           <TooltipProvider>
             <AppLayout>{children}</AppLayout>
+            <Toaster />
             <Analytics />
           </TooltipProvider>
         </ThemeProvider>

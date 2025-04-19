@@ -1,5 +1,5 @@
-import TextEditor from "@/components/text-editor";
+import MainPage from "@/pages/main-page";
 
 export default function Home() {
-  return <TextEditor />;
+  return <MainPage />;
 }

@@ -7,10 +7,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useToolbarStore } from "@/store/toolbar-store";
+import { useAppStore } from "@/store/app-store";
 
 export default function ToolbarFontSelect() {
-  const { fontFamily, setFontFamily } = useToolbarStore();
+  const { fontFamily, setFontFamily } = useAppStore();
 
   return (
     <Select

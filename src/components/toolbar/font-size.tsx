@@ -1,11 +1,14 @@
 "use client";
 
-import { useToolbarStore } from "@/store/toolbar-store";
+import { Button } from "@/components/ui/button";
+import { useAppStore } from "@/store/app-store";
 import { MinusIcon, PlusIcon } from "lucide-react";
-import { Button } from "../ui/button";
 
 export default function ToolbarFontSize() {
-  const { fontSize, increaseFontSize, decreaseFontSize } = useToolbarStore();
+  const { fontSize, setFontSize } = useAppStore();
+
+  const handleDecrease = () => setFontSize(Math.max(fontSize - 1, 12));
+  const handleIncrease = () => setFontSize(Math.min(fontSize + 1, 32));
 
   return (
     <div className="flex items-center space-x-1">
@@ -13,7 +16,7 @@ export default function ToolbarFontSize() {
         variant="ghost"
         size="icon"
         className="size-8 rounded-full text-foreground transition-colors hover:bg-foreground/5"
-        onClick={decreaseFontSize}
+        onClick={handleDecrease}
       >
         <MinusIcon />
       </Button>
@@ -22,7 +25,7 @@ export default function ToolbarFontSize() {
         variant="ghost"
         size="icon"
         className="size-8 rounded-full text-foreground transition-colors hover:bg-foreground/5"
-        onClick={increaseFontSize}
+        onClick={handleIncrease}
       >
         <PlusIcon />
       </Button>

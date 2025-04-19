@@ -2,15 +2,20 @@
 
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
+import { useAppStore } from "@/store/app-store";
 import { useEditorStore } from "@/store/editor-store";
-import { useToolbarStore } from "@/store/toolbar-store";
 
 export default function TextEditor() {
   const { content, setContent } = useEditorStore();
-  const { fontSize, fontFamily } = useToolbarStore();
+  const { fontSize, fontFamily, isZenMode } = useAppStore();
 
   return (
-    <div className="mx-auto w-full px-0 py-16">
+    <div
+      className={cn(
+        "mx-auto w-full px-0 py-16 transition-all duration-300",
+        isZenMode && "pb-2",
+      )}
+    >
       <Textarea
         value={content}
         onChange={(e) => setContent(e.target.value)}
