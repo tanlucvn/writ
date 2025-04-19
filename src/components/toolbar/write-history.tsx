@@ -19,9 +19,14 @@ export default function WriteHistory() {
         <Button
           variant="ghost"
           size="icon"
-          className="size-8 rounded-full text-foreground transition-colors hover:bg-foreground/5"
+          className="relative size-8 rounded-full text-foreground transition-colors hover:bg-foreground/5"
         >
           <HistoryIcon className="size-4" />
+          {writes && writes.length > 1 && (
+            <span className="-top-1 -right-1 absolute flex h-4 w-4 items-center justify-center rounded-full bg-primary/10 font-medium text-[10px] text-foreground">
+              {writes.length > 9 ? "9+" : writes.length}
+            </span>
+          )}
         </Button>
       </Drawer.Trigger>
       <Drawer.Portal>
