@@ -15,8 +15,10 @@ export default function Toolbar() {
       </div>
 
       <div className="flex items-center justify-center gap-4">
-        <CreateWriteButton />
-        <WriteHistory />
+        <div className="flex items-center justify-center gap-2">
+          <CreateWriteButton />
+          <WriteHistory />
+        </div>
 
         <Separator orientation="vertical" className="h-4 w-px bg-border" />
 

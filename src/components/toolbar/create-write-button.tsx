@@ -37,7 +37,7 @@ export default function CreateWriteButton() {
       <TooltipContent className="flex items-center justify-center gap-2">
         <p>New write</p>
         <span className="rounded-sm bg-muted px-1 py-[2px] text-muted-foreground">
-          Ctrl + N
+          Alt + N
         </span>
       </TooltipContent>
     </Tooltip>

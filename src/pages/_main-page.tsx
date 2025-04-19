@@ -1,7 +1,6 @@
 "use client";
 
 import Header from "@/components/header";
-import Loading from "@/components/loading";
 import TextEditor from "@/components/text-editor";
 import Toolbar from "@/components/toolbar";
 import { createWrite, getLatestWrite, saveWrite } from "@/services/indexedDB";
@@ -26,12 +25,17 @@ export default function MainPage() {
 
   const initializeWrite = useCallback(async () => {
     try {
-      const recent = await getLatestWrite();
-      const write = recent ?? createWrite(fontFamily, fontSize);
-      if (!recent) await saveWrite(write);
-      setCurrentWrite(write);
-    } catch (err) {
-      console.error("Failed to init write:", err);
+      // Get latest write from IndexedDB
+      const recentWrite = await getLatestWrite();
+      if (recentWrite) {
+        setCurrentWrite(recentWrite);
+      } else {
+        const newWrite = createWrite(fontFamily, fontSize);
+        await saveWrite(newWrite);
+        setCurrentWrite(newWrite);
+      }
+    } catch (error) {
+      console.error("Error initializing write:", error);
     }
   }, [fontFamily, fontSize, setCurrentWrite]);
 
@@ -40,21 +44,18 @@ export default function MainPage() {
   }, [initializeWrite]);
 
   const handleCreate = async () => {
-    const write = createWrite(fontFamily, fontSize);
-    await saveWrite(write);
-    setCurrentWrite(write);
-    refreshWrites();
+    const newWrite = createWrite();
+    await saveWrite(newWrite);
+
     toast.success("New write created successfully!");
+    refreshWrites();
   };
 
-  // Keyboard shortcuts
   useHotkeys("ctrl+m", () => setTheme(theme === "dark" ? "light" : "dark"));
-  useHotkeys("ctrl+b", toggleZenMode);
-  useHotkeys("alt+n", handleCreate);
+  useHotkeys("ctrl+b", () => toggleZenMode());
+  useHotkeys("ctrl+n", () => handleCreate());
 
-  if (!currentWrite) {
-    return <Loading />;
-  }
+  if (!currentWrite) return <div>Loading...</div>;
 
   return (
     <>
