@@ -1,3 +1,4 @@
+import { type Write, getAllWrites, saveWrite } from "@/services/indexedDB";
 import { create } from "zustand";
 
 interface AppStore {
@@ -7,6 +8,12 @@ interface AppStore {
   setFontFamily: (family: string) => void;
   isZenMode: boolean;
   toggleZenMode: () => void;
+
+  writes: Write[];
+  currentWrite: Write | null;
+  setCurrentWrite: (write: Write) => void;
+  saveCurrentWrite: () => Promise<void>;
+  refreshWrites: () => Promise<void>;
 }
 
 export const useAppStore = create<AppStore>((set) => ({
@@ -16,4 +23,20 @@ export const useAppStore = create<AppStore>((set) => ({
   setFontFamily: (family) => set({ fontFamily: family }),
   isZenMode: false,
   toggleZenMode: () => set((state) => ({ isZenMode: !state.isZenMode })),
+
+  writes: [],
+
+  currentWrite: null,
+  setCurrentWrite: (write) => set({ currentWrite: write }),
+  saveCurrentWrite: async () => {
+    const { currentWrite, refreshWrites } = useAppStore.getState();
+    if (currentWrite) {
+      await saveWrite(currentWrite);
+      await refreshWrites();
+    }
+  },
+  refreshWrites: async () => {
+    const allWrites = await getAllWrites();
+    set({ writes: allWrites });
+  },
 }));

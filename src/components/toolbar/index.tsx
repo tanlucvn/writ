@@ -1,8 +1,10 @@
+import { Separator } from "../ui/separator";
+import CreateWriteButton from "./create-write-button";
 import ToolbarFontSelect from "./font-select";
 import ToolbarFontSize from "./font-size";
 import ToolbarTimeDisplay from "./time-display";
-// import ToolbarToggle from "./toolbar-toggle";
 import ToolbarWordCount from "./word-count";
+import WriteHistory from "./write-history";
 
 export default function Toolbar() {
   return (
@@ -13,9 +15,13 @@ export default function Toolbar() {
       </div>
 
       <div className="flex items-center justify-center gap-4">
+        <CreateWriteButton />
+        <WriteHistory />
+
+        <Separator orientation="vertical" className="h-4 w-px bg-border" />
+
         <ToolbarTimeDisplay />
         <ToolbarWordCount />
-        {/* <ToolbarToggle /> */}
       </div>
     </div>
   );
