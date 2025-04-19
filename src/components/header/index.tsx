@@ -1,5 +1,6 @@
 import ThemeToggle from "@/components/theme-toggle";
 import DateDisplay from "./date-display";
+import FullscreenToggle from "./fullscreen-button";
 import ZenModeToggle from "./zen-mode-toggle";
 
 export default function Header() {
@@ -8,6 +9,7 @@ export default function Header() {
       <DateDisplay />
 
       <div className="flex items-center justify-center gap-2">
+        <FullscreenToggle />
         <ZenModeToggle />
         <ThemeToggle />
       </div>
