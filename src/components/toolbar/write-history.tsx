@@ -5,6 +5,7 @@ import { useAppStore } from "@/store/app-store";
 import { HistoryIcon } from "lucide-react";
 import { useEffect } from "react";
 import { Drawer } from "vaul";
+import { AnimatedNumberBadge } from "../animated-number-badge";
 import { Separator } from "../ui/separator";
 import { HistoryItem } from "./history/history-item";
 import SortDropdown from "./history/sort-dropdown";
@@ -61,8 +62,10 @@ export default function WriteHistory() {
               className="flex items-center justify-between px-4 py-2 text-xs"
               data-vaul-no-drag
             >
-              <div className="flex-1 overflow-hidden text-ellipsis whitespace-nowrap">
-                {writes.length} writes
+              <div className="flex select-none items-center gap-2">
+                <p className="flex items-center gap-2 text-xs">Writes</p>
+                <AnimatedNumberBadge value={writes.length} />
+                {/* <ViewControl /> */}
               </div>
 
               <SortDropdown />

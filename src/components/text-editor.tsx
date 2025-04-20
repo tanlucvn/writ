@@ -6,8 +6,14 @@ import { saveWrite } from "@/services/indexedDB";
 import { useAppStore } from "@/store/app-store";
 
 export default function TextEditor() {
-  const { currentWrite, setCurrentWrite, refreshWrites } = useAppStore();
-  const { fontSize, fontFamily, isZenMode } = useAppStore();
+  const {
+    fontSize,
+    fontFamily,
+    isZenMode,
+    currentWrite,
+    setCurrentWrite,
+    refreshWrites,
+  } = useAppStore();
 
   const handleWriteChange = async (
     e: React.ChangeEvent<HTMLTextAreaElement>,

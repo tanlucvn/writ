@@ -1,14 +1,13 @@
 "use client";
 
-import { useEditorStore } from "@/store/editor-store";
+import { useAppStore } from "@/store/app-store";
 
 export default function ToolbarWordCount() {
-  const content = useEditorStore((state) => state.content);
-  const wordCount = content.length;
+  const { currentWrite } = useAppStore();
 
   return (
     <div className="font-medium text-xs">
-      {wordCount} <span className="font-normal">words</span>
+      {currentWrite?.content.length} <span className="font-normal">words</span>
     </div>
   );
 }

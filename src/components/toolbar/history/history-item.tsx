@@ -55,7 +55,7 @@ export function HistoryItem({ write, className }: HistoryItemProps) {
   return (
     <div
       className={cn(
-        "relative rounded-lg border p-3 pr-9 transition hover:bg-muted/50",
+        "relative cursor-pointer rounded-lg border p-3 pr-9 transition hover:bg-muted/50",
         currentWrite?.id === write.id && "bg-muted",
         className,
       )}
