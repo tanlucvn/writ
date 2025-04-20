@@ -5,9 +5,12 @@ import { useAppStore } from "@/store/app-store";
 import { HistoryIcon } from "lucide-react";
 import { useEffect } from "react";
 import { Drawer } from "vaul";
+import { Separator } from "../ui/separator";
+import { HistoryItem } from "./history/history-item";
+import SortDropdown from "./history/sort-dropdown";
 
 export default function WriteHistory() {
-  const { writes, refreshWrites, setCurrentWrite } = useAppStore();
+  const { writes, refreshWrites } = useAppStore();
 
   useEffect(() => {
     refreshWrites();
@@ -32,36 +35,41 @@ export default function WriteHistory() {
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 bg-black/40" />
         <Drawer.Content className="fixed right-0 bottom-0 z-40 flex h-full w-[450px] max-w-xs flex-col overflow-hidden rounded-xl border bg-background shadow-none outline-none sm:max-w-md md:max-w-lg">
-          <div className="p-4">
+          <div className="flex flex-1 flex-col p-4">
             <Drawer.Title className="font-medium">Write History</Drawer.Title>
             <div className="mb-3 text-muted-foreground text-xs md:text-sm">
               View all the previous writes and drafts.
             </div>
 
-            <div className="space-y-3 overflow-y-auto py-4">
+            <div className="flex-1 space-y-3 overflow-y-auto py-4">
               {writes.length === 0 ? (
                 <div className="py-8 text-center text-muted-foreground text-sm">
                   <p>No writes yet. Start writing your first write!</p>
                 </div>
               ) : (
                 writes.map((write) => (
-                  <div
-                    key={write.id}
-                    className="cursor-pointer rounded-lg border p-3 transition hover:bg-muted/50"
-                    onClick={() => setCurrentWrite(write)}
-                  >
-                    <h3 className="font-medium text-base">
-                      {write.title || "Untitled"}
-                    </h3>
-                    <p className="text-muted-foreground text-xs">
-                      Last updated: {new Date(write.updatedAt).toLocaleString()}
-                    </p>
-                  </div>
+                  <HistoryItem key={write.id} write={write} />
                 ))
               )}
             </div>
           </div>
+
+          {/* Footer */}
+          <div className="opacity-70 backdrop-blur-sm transition-opacity duration-300 hover:opacity-100">
+            <Separator />
+            <div
+              className="flex items-center justify-between px-4 py-2 text-xs"
+              data-vaul-no-drag
+            >
+              <div className="flex-1 overflow-hidden text-ellipsis whitespace-nowrap">
+                {writes.length} writes
+              </div>
+
+              <SortDropdown />
+            </div>
+          </div>
         </Drawer.Content>
+
         <Drawer.Overlay />
       </Drawer.Portal>
     </Drawer.Root>

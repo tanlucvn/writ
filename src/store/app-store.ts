@@ -10,6 +10,8 @@ interface AppStore {
   toggleZenMode: () => void;
 
   writes: Write[];
+  setWrites: (writes: Write[]) => void;
+
   currentWrite: Write | null;
   setCurrentWrite: (write: Write) => void;
   saveCurrentWrite: () => Promise<void>;
@@ -25,6 +27,7 @@ export const useAppStore = create<AppStore>((set) => ({
   toggleZenMode: () => set((state) => ({ isZenMode: !state.isZenMode })),
 
   writes: [],
+  setWrites: (writes) => set({ writes }),
 
   currentWrite: null,
   setCurrentWrite: (write) => set({ currentWrite: write }),
