@@ -63,6 +63,19 @@ export default function TextEditor() {
     }
   }, [editor, setEditor]);
 
+  useEffect(() => {
+    if (editor && currentWrite) {
+      const currentContent = editor.getHTML();
+      const newContent = currentWrite.content || "";
+
+      // Only update if content is different
+      if (currentContent !== newContent) {
+        editor.commands.setContent(newContent);
+      }
+    }
+  }, [currentWrite, editor]);
+
+  // console.log("currentWrite", currentWrite);
   return (
     <div
       className={cn(
