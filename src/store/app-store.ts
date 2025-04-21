@@ -19,7 +19,7 @@ interface AppStore {
   refreshWrites: () => Promise<void>;
 
   editor: Editor | null;
-  setEditor: (editor: Editor) => void;
+  setEditor: (editor: Editor | null) => void;
 }
 
 export const useAppStore = create<AppStore>((set) => ({

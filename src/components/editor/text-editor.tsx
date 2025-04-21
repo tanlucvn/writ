@@ -10,6 +10,7 @@ import { Underline } from "@tiptap/extension-underline";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useEffect } from "react";
+import BubbleToolbar from "./bubble-toolbar";
 
 export default function TextEditor() {
   const {
@@ -83,6 +84,7 @@ export default function TextEditor() {
         isZenMode && "pb-2",
       )}
     >
+      {isZenMode && editor && <BubbleToolbar key={isZenMode.toString()} />}
       <EditorContent editor={editor} className="px-2" />
     </div>
   );
