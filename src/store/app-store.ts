@@ -1,4 +1,5 @@
 import { type Write, getAllWrites, saveWrite } from "@/services/indexedDB";
+import type { Editor } from "@tiptap/react";
 import { create } from "zustand";
 
 interface AppStore {
@@ -16,6 +17,9 @@ interface AppStore {
   setCurrentWrite: (write: Write) => void;
   saveCurrentWrite: () => Promise<void>;
   refreshWrites: () => Promise<void>;
+
+  editor: Editor | null;
+  setEditor: (editor: Editor) => void;
 }
 
 export const useAppStore = create<AppStore>((set) => ({
@@ -42,4 +46,7 @@ export const useAppStore = create<AppStore>((set) => ({
     const allWrites = await getAllWrites();
     set({ writes: allWrites });
   },
+
+  editor: null,
+  setEditor: (editor) => set({ editor }),
 }));

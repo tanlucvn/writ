@@ -1,8 +1,8 @@
 "use client";
 
+import TextEditor from "@/components/editor/text-editor";
 import Header from "@/components/header";
 import Loading from "@/components/loading";
-import TextEditor from "@/components/text-editor";
 import Toolbar from "@/components/toolbar";
 import { createWrite, getLatestWrite, saveWrite } from "@/services/indexedDB";
 import { useAppStore } from "@/store/app-store";

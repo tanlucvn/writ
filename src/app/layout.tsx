@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from "sonner";
 import "./globals.css";
+import "./writer.css";
 
 const inter = Inter({
   subsets: ["latin"],

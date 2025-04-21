@@ -1,0 +1,74 @@
+/* Wrapper for all Editor */
+.editor-wrapper {
+  @apply max-w-2xl mx-auto;
+}
+
+/* ProseMirror core */
+.ProseMirror {
+  @apply min-h-[640px] w-full text-base font-normal leading-relaxed text-foreground outline-none;
+  padding: 0 !important;
+}
+
+.ProseMirror.ProseMirror-focused {
+  @apply outline-none;
+}
+
+/* Placeholder when empty */
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: hsl(var(--muted-foreground));
+  pointer-events: none;
+  height: 0;
+}
+
+/* List */
+.ProseMirror ul {
+  @apply list-disc pl-6;
+}
+
+.ProseMirror ol {
+  @apply list-decimal pl-6;
+}
+
+/* Code block */
+.ProseMirror pre {
+  @apply rounded-lg bg-muted px-4 py-3 mb-6 font-mono;
+}
+
+.ProseMirror pre code {
+  @apply text-sm;
+}
+
+.ProseMirror p code {
+  @apply bg-muted px-1 py-0.5 rounded text-sm font-mono;
+}
+
+/* Blockquote */
+.ProseMirror blockquote {
+  @apply border-l-2 border-primary bg-accent/30 px-4 py-2 my-4;
+}
+
+/* Link */
+.ProseMirror a {
+  @apply text-primary underline;
+}
+
+/* Heading */
+.ProseMirror h2 {
+  @apply text-2xl font-bold mt-6 mb-3;
+}
+
+.ProseMirror h3 {
+  @apply text-xl font-semibold mt-4 mb-2;
+}
+
+/* Horizontal line */
+.ProseMirror hr {
+  @apply my-8 border-t;
+}
+
+/* Highlight */
+.ProseMirror mark {
+  @apply bg-muted text-foreground;
+}
