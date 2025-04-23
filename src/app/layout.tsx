@@ -6,10 +6,10 @@ import { ThemeProvider } from "@/components/theme";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { OpenGraph } from "@/lib/og";
 import { cn } from "@/lib/utils";
+import "@/styles/globals.css";
+import "@/styles/writer.css";
 import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from "sonner";
-import "./globals.css";
-import "./writer.css";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -45,6 +45,7 @@ export default function RootLayout({
         className={cn(
           `${inter.variable} ${spaceGrotesk.variable} ${dmSans.variable}`,
           "font-sans antialiased",
+          "h-screen w-screen p-0",
         )}
       >
         <ThemeProvider>

@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 
 import {
@@ -9,7 +11,6 @@ import {
 } from "@/components/ui/select";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { EditorHeadings, EditorMarks, EditorNodes } from "@/lib/constants";
-import { cn } from "@/lib/utils";
 import { useAppStore } from "@/store/app-store";
 import {
   BoldIcon,
@@ -21,7 +22,7 @@ import {
 } from "lucide-react";
 
 const EditorToolbar = () => {
-  const { editor, isZenMode } = useAppStore();
+  const { editor } = useAppStore();
 
   const EDITOR_HEADINGS = [
     { label: "Normal", value: EditorHeadings.NORMAL },
@@ -120,15 +121,10 @@ const EditorToolbar = () => {
   }, [editor]);
 
   return (
-    <div
-      className={cn(
-        "flex w-max items-center justify-center gap-2",
-        isZenMode && "gap-0 rounded-lg border bg-background",
-      )}
-    >
+    <div className="flex w-max items-center justify-center gap-0 rounded-lg border bg-background">
       {/* Marks group */}
       <ToggleGroup
-        className={cn("h-full", isZenMode && "gap-0")}
+        className="h-full gap-0"
         onValueChange={handleEditorMarksChange}
         type="multiple"
         value={activeMarks}
@@ -136,54 +132,46 @@ const EditorToolbar = () => {
         <ToggleGroupItem
           value={EditorMarks.BOLD}
           aria-label="Bold"
-          className={cn(
-            "h-8 min-w-8 rounded-full text-foreground transition-colors hover:bg-foreground/5 hover:text-foreground",
-            isZenMode && "rounded-none rounded-tl-lg rounded-bl-lg",
-          )}
+          className="rounded-none rounded-tl-lg rounded-bl-lg"
         >
           <BoldIcon className="h-4 w-4" />
         </ToggleGroupItem>
         <ToggleGroupItem
           value={EditorMarks.ITALIC}
           aria-label="Italic"
-          className={cn(
-            "h-8 min-w-8 rounded-full text-foreground transition-colors hover:bg-foreground/5 hover:text-foreground",
-            isZenMode && "rounded-none",
-          )}
+          className="rounded-none"
         >
           <ItalicIcon className="h-4 w-4" />
         </ToggleGroupItem>
         <ToggleGroupItem
           value={EditorMarks.UNDERLINE}
           aria-label="Underline"
-          className="h-8 min-w-8 rounded-full text-foreground transition-colors hover:bg-foreground/5 hover:text-foreground"
+          className="rounded-none"
         >
           <UnderlineIcon className="h-4 w-4" />
         </ToggleGroupItem>
       </ToggleGroup>
 
       {/* Headings select */}
-      {!isZenMode && (
-        <Select
-          onValueChange={handleEditorHeadingMarkChange}
-          value={activeHeadingMark}
-        >
-          <SelectTrigger className="h-8 w-[180px] text-xs">
-            <SelectValue placeholder="Headings" />
-          </SelectTrigger>
-          <SelectContent>
-            {EDITOR_HEADINGS.map((heading) => (
-              <SelectItem key={heading.value} value={heading.value}>
-                {heading.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      )}
+      <Select
+        onValueChange={handleEditorHeadingMarkChange}
+        value={activeHeadingMark}
+      >
+        <SelectTrigger className="h-9 w-[180px] rounded-none border-none text-xs ring-0 hover:bg-muted focus:bg-muted focus:ring-0">
+          <SelectValue placeholder="Headings" />
+        </SelectTrigger>
+        <SelectContent>
+          {EDITOR_HEADINGS.map((heading) => (
+            <SelectItem key={heading.value} value={heading.value}>
+              {heading.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
 
       {/* More marks */}
       <ToggleGroup
-        className={cn("h-full", isZenMode && "gap-0")}
+        className="h-full gap-0"
         onValueChange={handleEditorMarksChange}
         type="multiple"
         value={activeMarks}
@@ -191,10 +179,7 @@ const EditorToolbar = () => {
         <ToggleGroupItem
           value={EditorMarks.HIGHLIGHT}
           aria-label="Highlight"
-          className={cn(
-            "h-8 min-w-8 rounded-full text-foreground transition-colors hover:bg-foreground/5 hover:text-foreground",
-            isZenMode && "rounded-none",
-          )}
+          className="rounded-none"
         >
           <HighlighterIcon className="h-4 w-4" />
         </ToggleGroupItem>
@@ -202,7 +187,7 @@ const EditorToolbar = () => {
 
       {/* Nodes */}
       <ToggleGroup
-        className={cn("h-full", isZenMode && "gap-0")}
+        className="h-full gap-0"
         onValueChange={handleEditorNodesChange}
         type="multiple"
         value={activeNodes}
@@ -210,20 +195,14 @@ const EditorToolbar = () => {
         <ToggleGroupItem
           value={EditorNodes.CODE}
           aria-label="Code Block"
-          className={cn(
-            "h-8 min-w-8 rounded-full text-foreground transition-colors hover:bg-foreground/5 hover:text-foreground",
-            isZenMode && "rounded-none",
-          )}
+          className="rounded-none"
         >
           <CodeIcon className="h-4 w-4" />
         </ToggleGroupItem>
         <ToggleGroupItem
           value={EditorNodes.QUOTE}
           aria-label="Quote"
-          className={cn(
-            "h-8 min-w-8 rounded-full text-foreground transition-colors hover:bg-foreground/5 hover:text-foreground",
-            isZenMode && "rounded-none rounded-tr-lg rounded-br-lg",
-          )}
+          className="rounded-none rounded-tr-lg rounded-br-lg"
         >
           <QuoteIcon className="h-4 w-4" />
         </ToggleGroupItem>

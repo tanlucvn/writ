@@ -102,3 +102,125 @@ pnpm install
 # Start development server
 pnpm dev
 ```
+
+```
+miniwrit
+├─ .editorconfig
+├─ .husky
+│  ├─ commit-msg
+│  ├─ pre-commit
+│  └─ _
+│     ├─ applypatch-msg
+│     ├─ commit-msg
+│     ├─ h
+│     ├─ husky.sh
+│     ├─ post-applypatch
+│     ├─ post-checkout
+│     ├─ post-commit
+│     ├─ post-merge
+│     ├─ post-rewrite
+│     ├─ pre-applypatch
+│     ├─ pre-auto-gc
+│     ├─ pre-commit
+│     ├─ pre-merge-commit
+│     ├─ pre-push
+│     ├─ pre-rebase
+│     └─ prepare-commit-msg
+├─ biome.json
+├─ commitlint.config.js
+├─ next.config.mjs
+├─ package.json
+├─ pnpm-lock.yaml
+├─ postcss.config.mjs
+├─ public
+│  ├─ file.svg
+│  ├─ globe.svg
+│  ├─ icons
+│  │  ├─ android-chrome-192x192.png
+│  │  ├─ android-chrome-512x512.png
+│  │  ├─ apple-touch-icon.png
+│  │  ├─ favicon-16x16.png
+│  │  ├─ favicon-32x32.png
+│  │  ├─ favicon-light.ico
+│  │  └─ favicon.ico
+│  ├─ next.svg
+│  ├─ sw.js
+│  ├─ vercel.svg
+│  └─ window.svg
+├─ README.md
+├─ src
+│  ├─ app
+│  │  ├─ layout.tsx
+│  │  ├─ manifest.ts
+│  │  ├─ page.tsx
+│  │  ├─ robots.ts
+│  │  └─ sitemap.ts
+│  ├─ components
+│  │  ├─ animated-number-badge.tsx
+│  │  ├─ editor
+│  │  │  ├─ editor-toolbar.tsx
+│  │  │  ├─ index.tsx
+│  │  │  └─ writer.tsx
+│  │  ├─ layout
+│  │  │  └─ app-layout.tsx
+│  │  ├─ loading.tsx
+│  │  ├─ logo.tsx
+│  │  ├─ main-menu.tsx
+│  │  ├─ motion
+│  │  │  └─ fade.tsx
+│  │  ├─ number-flow.tsx
+│  │  ├─ settings
+│  │  │  ├─ appearance-section.tsx
+│  │  │  ├─ feedback-section.tsx
+│  │  │  ├─ index.tsx
+│  │  │  ├─ settings-tabs.tsx
+│  │  │  └─ writing-section.tsx
+│  │  ├─ theme-toggle.tsx
+│  │  ├─ theme.tsx
+│  │  ├─ ui
+│  │  │  ├─ badge.tsx
+│  │  │  ├─ button.tsx
+│  │  │  ├─ checkbox.tsx
+│  │  │  ├─ command.tsx
+│  │  │  ├─ credenza.tsx
+│  │  │  ├─ dialog.tsx
+│  │  │  ├─ drawer.tsx
+│  │  │  ├─ dropdown-menu.tsx
+│  │  │  ├─ input.tsx
+│  │  │  ├─ kbd.tsx
+│  │  │  ├─ label.tsx
+│  │  │  ├─ scroll-area.tsx
+│  │  │  ├─ select.tsx
+│  │  │  ├─ separator.tsx
+│  │  │  ├─ switch.tsx
+│  │  │  ├─ tabs.tsx
+│  │  │  ├─ textarea.tsx
+│  │  │  ├─ toggle-group.tsx
+│  │  │  ├─ toggle.tsx
+│  │  │  └─ tooltip.tsx
+│  │  └─ writes
+│  │     ├─ history
+│  │     │  ├─ item.tsx
+│  │     │  └─ sort.tsx
+│  │     └─ writes-history-button.tsx
+│  ├─ hooks
+│  │  └─ use-mobile.ts
+│  ├─ lib
+│  │  ├─ constants.ts
+│  │  ├─ og.ts
+│  │  ├─ sw.ts
+│  │  └─ utils.ts
+│  ├─ pages
+│  │  └─ main-page.tsx
+│  ├─ services
+│  │  └─ indexedDB.ts
+│  ├─ store
+│  │  ├─ app-store.ts
+│  │  └─ dialog-store.tsx
+│  └─ styles
+│     ├─ globals.css
+│     └─ writer.css
+├─ tailwind.config.ts
+└─ tsconfig.json
+
+```

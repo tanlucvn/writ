@@ -4,11 +4,11 @@ export default function Loading({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "flex h-screen w-screen items-center justify-center text-muted-foreground",
+        "fixed z-50 flex h-screen w-screen items-center justify-center bg-background",
         className,
       )}
     >
-      <span className="size-6 animate-ping rounded-full bg-foreground" />
+      <span className="size-4 animate-ping rounded-full bg-foreground" />
     </div>
   );
 }

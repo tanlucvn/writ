@@ -7,10 +7,10 @@ import { useEffect } from "react";
 import { Drawer } from "vaul";
 import { AnimatedNumberBadge } from "../animated-number-badge";
 import { Separator } from "../ui/separator";
-import { HistoryItem } from "./history/history-item";
-import SortDropdown from "./history/sort-dropdown";
+import { HistoryItem } from "./history/item";
+import SortDropdown from "./history/sort";
 
-export default function WriteHistory() {
+export default function WritesHistoryDrawer() {
   const { writes, refreshWrites } = useAppStore();
 
   useEffect(() => {
@@ -21,13 +21,13 @@ export default function WriteHistory() {
     <Drawer.Root direction="right">
       <Drawer.Trigger asChild>
         <Button
-          variant="ghost"
+          variant="outline"
           size="icon"
-          className="relative size-8 rounded-full text-foreground transition-colors hover:bg-foreground/5"
+          className="relative size-8 text-foreground outline-2 outline-border outline-offset-2 transition-colors hover:bg-foreground/5 hover:outline-dashed"
         >
           <HistoryIcon className="size-4" />
           {writes && writes.length > 1 && (
-            <span className="-top-1 -right-1 absolute flex h-4 w-4 items-center justify-center rounded-full bg-primary/10 font-medium text-[10px] text-foreground">
+            <span className="-top-2 -right-1 absolute flex h-4 w-4 select-none items-center justify-center rounded-full bg-primary font-medium text-[10px] text-primary-foreground">
               {writes.length > 9 ? "9+" : writes.length}
             </span>
           )}
@@ -65,7 +65,6 @@ export default function WriteHistory() {
               <div className="flex select-none items-center gap-2">
                 <p className="flex items-center gap-2 text-xs">Writes</p>
                 <AnimatedNumberBadge value={writes.length} />
-                {/* <ViewControl /> */}
               </div>
 
               <SortDropdown />

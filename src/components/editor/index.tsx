@@ -1,5 +1,7 @@
 "use client";
 
+import Writer from "@/components/editor/writer";
+import Loading from "@/components/loading";
 import { cn } from "@/lib/utils";
 import { saveWrite } from "@/services/indexedDB";
 import { useAppStore } from "@/store/app-store";
@@ -7,16 +9,14 @@ import { Highlight } from "@tiptap/extension-highlight";
 import { Placeholder } from "@tiptap/extension-placeholder";
 import { TextStyle } from "@tiptap/extension-text-style";
 import { Underline } from "@tiptap/extension-underline";
-import { EditorContent, useEditor } from "@tiptap/react";
+import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useEffect } from "react";
-import BubbleToolbar from "./bubble-toolbar";
 
-export default function TextEditor() {
+export default function Editor() {
   const {
     fontSize,
     fontFamily,
-    isZenMode,
     currentWrite,
     setCurrentWrite,
     refreshWrites,
@@ -64,28 +64,13 @@ export default function TextEditor() {
     }
   }, [editor, setEditor]);
 
-  useEffect(() => {
-    if (editor && currentWrite) {
-      const currentContent = editor.getHTML();
-      const newContent = currentWrite.content || "";
+  if (!currentWrite) {
+    return <Loading />;
+  }
 
-      // Only update if content is different
-      if (currentContent !== newContent) {
-        editor.commands.setContent(newContent);
-      }
-    }
-  }, [currentWrite, editor]);
-
-  // console.log("currentWrite", currentWrite);
   return (
-    <div
-      className={cn(
-        "mx-auto w-full px-0 py-16 transition-all duration-300",
-        isZenMode && "pb-2",
-      )}
-    >
-      {isZenMode && editor && <BubbleToolbar key={isZenMode.toString()} />}
-      <EditorContent editor={editor} className="px-2" />
-    </div>
+    <>
+      <Writer />
+    </>
   );
 }
