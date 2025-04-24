@@ -48,6 +48,7 @@
     "@radix-ui/react-tooltip": "^1.2.0",
     "@serwist/next": "^9.0.13",
     "@tailwindcss/typography": "^0.5.16",
+    "@tiptap/extension-character-count": "^2.11.7",
     "@tiptap/extension-highlight": "^2.11.7",
     "@tiptap/extension-placeholder": "^2.11.7",
     "@tiptap/extension-text-style": "^2.11.7",

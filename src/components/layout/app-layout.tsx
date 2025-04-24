@@ -2,6 +2,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import type React from "react";
 import type { ReactNode } from "react";
 import EditorToolbar from "../editor/editor-toolbar";
+import WordCount from "../editor/word-count";
 import MainMenu from "../main-menu";
 import Settings from "../settings";
 import WritesHistoryDrawer from "../writes/writes-history-drawer";
@@ -29,6 +30,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
       {/* CONTENT (BODY) */}
       {children}
 
+      <WordCount />
       <Settings />
     </ScrollArea>
   );

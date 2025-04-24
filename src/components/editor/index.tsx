@@ -5,6 +5,7 @@ import Loading from "@/components/loading";
 import { cn } from "@/lib/utils";
 import { saveWrite } from "@/services/db/writes";
 import { useAppStore } from "@/store/app-store";
+import CharacterCount from "@tiptap/extension-character-count";
 import { Highlight } from "@tiptap/extension-highlight";
 import { Placeholder } from "@tiptap/extension-placeholder";
 import { TextStyle } from "@tiptap/extension-text-style";
@@ -30,6 +31,7 @@ export default function Editor() {
       TextStyle,
       Underline,
       Placeholder.configure({ placeholder: "Write something..." }),
+      CharacterCount,
     ],
     content: currentWrite?.content || "",
     onUpdate: ({ editor }) => {
