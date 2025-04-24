@@ -1,3 +1,4 @@
+import { type Tag, getAllTags } from "@/services/db/tags";
 import { type Write, getAllWrites, saveWrite } from "@/services/db/writes";
 import type { Editor } from "@tiptap/react";
 import { create } from "zustand";
@@ -10,8 +11,11 @@ interface AppStore {
   isZenMode: boolean;
   toggleZenMode: () => void;
 
+  initDB: () => Promise<void>;
   writes: Write[];
   setWrites: (writes: Write[]) => void;
+  tags: Tag[];
+  setTags: (tags: Tag[]) => void;
 
   currentWrite: Write | null;
   setCurrentWrite: (write: Write) => void;
@@ -30,8 +34,22 @@ export const useAppStore = create<AppStore>((set) => ({
   isZenMode: false,
   toggleZenMode: () => set((state) => ({ isZenMode: !state.isZenMode })),
 
+  initDB: async () => {
+    try {
+      const allWrites = await getAllWrites();
+      const allTags = await getAllTags();
+
+      const { setWrites, setTags } = useAppStore.getState();
+      setWrites(allWrites);
+      setTags(allTags);
+    } catch (error) {
+      console.error("Error initializing the database:", error);
+    }
+  },
   writes: [],
   setWrites: (writes) => set({ writes }),
+  tags: [],
+  setTags: (tags) => set({ tags }),
 
   currentWrite: null,
   setCurrentWrite: (write) => set({ currentWrite: write }),

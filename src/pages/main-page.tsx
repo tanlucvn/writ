@@ -7,22 +7,25 @@ import { useAppStore } from "@/store/app-store";
 import { useCallback, useEffect } from "react";
 
 export default function MainPage() {
-  const { fontSize, fontFamily, currentWrite, setCurrentWrite } = useAppStore();
+  const { fontSize, fontFamily, currentWrite, setCurrentWrite, initDB } =
+    useAppStore();
 
-  const initializeWrite = useCallback(async () => {
+  const initializeData = useCallback(async () => {
     try {
+      await initDB();
+
       const recent = await getLatestWrite();
       const write = recent ?? createWrite(fontFamily, fontSize);
       if (!recent) await saveWrite(write);
       setCurrentWrite(write);
     } catch (err) {
-      console.error("Failed to init write:", err);
+      console.error("Failed to initialize data:", err);
     }
-  }, [fontFamily, fontSize, setCurrentWrite]);
+  }, [fontFamily, fontSize, initDB, setCurrentWrite]);
 
   useEffect(() => {
-    initializeWrite();
-  }, [initializeWrite]);
+    initializeData();
+  }, [initializeData]);
 
   if (!currentWrite) {
     return <Loading />;
