@@ -16,11 +16,12 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useDialogStore } from "@/store/dialog-store";
-import { BlendIcon, MessageSquareIcon, PenIcon } from "lucide-react";
+import { BlendIcon, MessageSquareIcon, PenIcon, TagIcon } from "lucide-react";
 import { useRef, useState } from "react";
 import Tabs, { type TabOption } from "../motion/animated-tabs";
 import AppearanceSection from "./appearance-section";
 import FeedbackSection from "./feedback-section";
+import TagsSection from "./tags-section";
 import WritingSection from "./writing-section";
 
 const settingsTabs: TabOption[] = [
@@ -28,6 +29,11 @@ const settingsTabs: TabOption[] = [
     label: "Appearance",
     icon: <BlendIcon className="size-4" />,
     content: <AppearanceSection />,
+  },
+  {
+    label: "Tags",
+    icon: <TagIcon className="size-4" />,
+    content: <TagsSection />,
   },
   {
     label: "Writing",
