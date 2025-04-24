@@ -14,7 +14,7 @@ import {
   deleteWrite,
   getAllWrites,
   saveWrite,
-} from "@/services/indexedDB";
+} from "@/services/db/writes";
 import { useAppStore } from "@/store/app-store";
 import { MoreVertical, SaveIcon } from "lucide-react";
 import { useState } from "react";

@@ -2,7 +2,7 @@
 
 import Editor from "@/components/editor";
 import Loading from "@/components/loading";
-import { createWrite, getLatestWrite, saveWrite } from "@/services/indexedDB";
+import { createWrite, getLatestWrite, saveWrite } from "@/services/db/writes";
 import { useAppStore } from "@/store/app-store";
 import { useCallback, useEffect } from "react";
 

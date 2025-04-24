@@ -1,6 +1,6 @@
 "use client";
 
-import { createWrite, saveWrite } from "@/services/indexedDB";
+import { createWrite, saveWrite } from "@/services/db/writes";
 import { useAppStore } from "@/store/app-store";
 import { useDialogStore } from "@/store/dialog-store";
 import {

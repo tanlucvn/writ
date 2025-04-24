@@ -1,4 +1,4 @@
-import { type Write, getAllWrites, saveWrite } from "@/services/indexedDB";
+import { type Write, getAllWrites, saveWrite } from "@/services/db/writes";
 import type { Editor } from "@tiptap/react";
 import { create } from "zustand";
 

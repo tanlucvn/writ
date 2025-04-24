@@ -1,0 +1,52 @@
+import { v4 as uuidv4 } from "uuid";
+import { db } from "./index";
+
+export interface Write {
+  id: string;
+  title: string;
+  content: string;
+  createdAt: Date;
+  updatedAt: Date;
+  fontFamily?: string;
+  fontSize?: number;
+  tagIds?: string[];
+}
+
+// Create a new write object
+export const createWrite = (fontFamily = "inter", fontSize = 16): Write => ({
+  id: uuidv4(),
+  title: "Untitled",
+  content: "",
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  fontFamily,
+  fontSize,
+  tagIds: [],
+});
+
+// Save or update a write in the database
+export const saveWrite = async (write: Write): Promise<Write> => {
+  const updated = { ...write, updatedAt: new Date() };
+  await db.writes.put(updated);
+  return updated;
+};
+
+// Delete a write by ID
+export const deleteWrite = async (id: string) => {
+  await db.writes.delete(id);
+};
+
+// Get a single write by ID
+export const getWrite = async (id: string): Promise<Write | undefined> => {
+  return await db.writes.get(id);
+};
+
+// Get all writes sorted by updatedAt (most recent first)
+export const getAllWrites = async (): Promise<Write[]> => {
+  return await db.writes.orderBy("updatedAt").reverse().toArray();
+};
+
+// Get the most recently updated write
+export const getLatestWrite = async (): Promise<Write | undefined> => {
+  return (await getAllWrites())[0];
+};

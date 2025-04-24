@@ -3,7 +3,7 @@
 import Writer from "@/components/editor/writer";
 import Loading from "@/components/loading";
 import { cn } from "@/lib/utils";
-import { saveWrite } from "@/services/indexedDB";
+import { saveWrite } from "@/services/db/writes";
 import { useAppStore } from "@/store/app-store";
 import { Highlight } from "@tiptap/extension-highlight";
 import { Placeholder } from "@tiptap/extension-placeholder";

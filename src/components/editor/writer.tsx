@@ -1,7 +1,7 @@
 "use client";
 
 import { Textarea } from "@/components/ui/textarea";
-import { saveWrite } from "@/services/indexedDB";
+import { saveWrite } from "@/services/db/writes";
 import { useAppStore } from "@/store/app-store";
 import { EditorContent } from "@tiptap/react";
 
