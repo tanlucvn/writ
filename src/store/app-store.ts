@@ -1,5 +1,11 @@
+import { clearAll } from "@/services/db/dev";
 import { type Tag, getAllTags } from "@/services/db/tags";
-import { type Write, getAllWrites, saveWrite } from "@/services/db/writes";
+import {
+  type Write,
+  createWrite,
+  getAllWrites,
+  saveWrite,
+} from "@/services/db/writes";
 import type { Editor } from "@tiptap/react";
 import { create } from "zustand";
 
@@ -11,7 +17,6 @@ interface AppStore {
   isZenMode: boolean;
   toggleZenMode: () => void;
 
-  initDB: () => Promise<void>;
   writes: Write[];
   setWrites: (writes: Write[]) => void;
   tags: Tag[];
@@ -24,6 +29,9 @@ interface AppStore {
 
   editor: Editor | null;
   setEditor: (editor: Editor | null) => void;
+
+  initDB: () => Promise<void>;
+  clearDB: () => Promise<void>;
 }
 
 export const useAppStore = create<AppStore>((set) => ({
@@ -34,18 +42,6 @@ export const useAppStore = create<AppStore>((set) => ({
   isZenMode: false,
   toggleZenMode: () => set((state) => ({ isZenMode: !state.isZenMode })),
 
-  initDB: async () => {
-    try {
-      const allWrites = await getAllWrites();
-      const allTags = await getAllTags();
-
-      const { setWrites, setTags } = useAppStore.getState();
-      setWrites(allWrites);
-      setTags(allTags);
-    } catch (error) {
-      console.error("Error initializing the database:", error);
-    }
-  },
   writes: [],
   setWrites: (writes) => set({ writes }),
   tags: [],
@@ -67,4 +63,34 @@ export const useAppStore = create<AppStore>((set) => ({
 
   editor: null,
   setEditor: (editor) => set({ editor }),
+
+  initDB: async () => {
+    try {
+      const allWrites = await getAllWrites();
+      const allTags = await getAllTags();
+
+      const { setWrites, setTags } = useAppStore.getState();
+      setWrites(allWrites);
+      setTags(allTags);
+    } catch (error) {
+      console.error("Error initializing the database:", error);
+    }
+  },
+  clearDB: async () => {
+    try {
+      await clearAll();
+
+      const { fontFamily, fontSize } = useAppStore.getState();
+      const newWrite = createWrite(fontFamily, fontSize);
+      await saveWrite(newWrite);
+
+      set({
+        writes: [newWrite],
+        currentWrite: newWrite,
+        tags: [],
+      });
+    } catch (error) {
+      console.error("Failed to clear DB:", error);
+    }
+  },
 }));

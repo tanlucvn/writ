@@ -16,10 +16,17 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useDialogStore } from "@/store/dialog-store";
-import { BlendIcon, MessageSquareIcon, PenIcon, TagIcon } from "lucide-react";
+import {
+  BlendIcon,
+  DatabaseIcon,
+  MessageSquareIcon,
+  PenIcon,
+  TagIcon,
+} from "lucide-react";
 import { useRef, useState } from "react";
 import Tabs, { type TabOption } from "../motion/animated-tabs";
 import AppearanceSection from "./appearance-section";
+import DataSection from "./data-section";
 import FeedbackSection from "./feedback-section";
 import TagsSection from "./tags-section";
 import WritingSection from "./writing-section";
@@ -44,6 +51,11 @@ const settingsTabs: TabOption[] = [
     label: "Feedback",
     icon: <MessageSquareIcon className="size-4" />,
     content: <FeedbackSection />,
+  },
+  {
+    label: "Data",
+    icon: <DatabaseIcon className="size-4" />,
+    content: <DataSection />,
   },
 ] as const;
 
