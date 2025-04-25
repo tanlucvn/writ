@@ -19,7 +19,10 @@ export default function TagChip({ tag, className, onClick }: TagChipProps) {
         className,
       )}
     >
-      <CircleIcon className="size-3 group-hover:hidden" />
+      <CircleIcon
+        fill={tag.color ? tag.color : "#ffffff"}
+        className="size-3 group-hover:hidden"
+      />
       <XIcon className="hidden size-3 text-destructive group-hover:block" />
 
       {tag.name}

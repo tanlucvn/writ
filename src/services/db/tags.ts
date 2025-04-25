@@ -4,14 +4,16 @@ import { db } from "./index";
 export interface Tag {
   id: string;
   name: string;
+  color?: string;
   createdAt: Date;
   updatedAt: Date;
 }
 
 // Create a new tag object
-export const createTag = (name: string): Tag => ({
+export const createTag = (name: string, color?: string): Tag => ({
   id: uuidv4(),
   name,
+  color,
   createdAt: new Date(),
   updatedAt: new Date(),
 });

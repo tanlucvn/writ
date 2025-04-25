@@ -1,56 +1,57 @@
 "use client";
 
+import TagColorPicker from "@/components/settings/tags/color-picker";
 import TagChip from "@/components/tag-chip";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { getTagColors } from "@/lib/colors";
 import { createTag, deleteTag, getAllTags, saveTag } from "@/services/db/tags";
 import { useAppStore } from "@/store/app-store";
 import { DotIcon, PlusIcon } from "lucide-react";
 import { useState } from "react";
 
 export default function TagsSection() {
+  const tagColors = getTagColors();
   const [newTag, setNewTag] = useState("");
+  const [color, setColor] = useState(tagColors[0]);
   const [loading, setLoading] = useState(false);
   const { tags, setTags } = useAppStore();
 
   const handleAddTag = async () => {
     if (!newTag.trim()) return;
-
     setLoading(true);
 
-    const newTagObj = createTag(newTag.trim());
+    const newTagObj = createTag(newTag.trim(), color);
     await saveTag(newTagObj);
 
     setNewTag("");
-
     const updatedTags = await getAllTags();
     setTags(updatedTags);
-
     setLoading(false);
   };
 
   const handleDelete = async (id: string) => {
     await deleteTag(id);
-
     const updatedTags = await getAllTags();
     setTags(updatedTags);
   };
 
   return (
-    <section className="flex flex-col gap-4">
+    <section className="flex flex-col gap-4 p-1">
       <div className="flex items-center gap-2">
         <Input
           value={newTag}
           onChange={(e) => setNewTag(e.target.value)}
-          placeholder="New tag name"
-          className="h-8 rounded-md border text-sm"
+          placeholder="New tag"
+          className="h-8 flex-1 text-sm"
         />
+        <TagColorPicker color={color} onChange={setColor} />
         <Button
-          variant="outline"
           size="icon"
+          variant="outline"
           onClick={handleAddTag}
           disabled={loading}
-          className="h-8"
+          className="size-8"
         >
           {loading ? (
             <DotIcon className="h-4 w-4 animate-ping fill-foreground" />
