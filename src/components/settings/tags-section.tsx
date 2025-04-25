@@ -69,6 +69,7 @@ export default function TagsSection() {
             <TagChip
               key={tag.id}
               tag={tag}
+              deletable
               onClick={() => handleDelete(tag.id)}
             />
           ))
