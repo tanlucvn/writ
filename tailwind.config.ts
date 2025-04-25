@@ -63,6 +63,7 @@ export default {
         sans: ["var(--font-inter)", ...fontFamily.sans],
         spacegrotesk: ["var(--font-spacegrotesk)", ...fontFamily.sans],
         dmsans: ["var(--font-dmsans)", ...fontFamily.sans],
+        mono: ["var(--font-jetbrains-mono)", ...fontFamily.sans],
       },
       keyframes: {
         "accordion-down": {

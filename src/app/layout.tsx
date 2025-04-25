@@ -1,5 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { DM_Sans, Inter, Space_Grotesk } from "next/font/google";
+import {
+  DM_Sans,
+  Inter,
+  JetBrains_Mono,
+  Space_Grotesk,
+} from "next/font/google";
 
 import AppLayout from "@/components/layout/app-layout";
 import { ThemeProvider } from "@/components/theme";
@@ -26,6 +31,11 @@ const dmSans = DM_Sans({
   variable: "--font-dmsans",
 });
 
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains-mono",
+});
+
 export const metadata: Metadata = {
   ...OpenGraph,
 };
@@ -43,7 +53,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          `${inter.variable} ${spaceGrotesk.variable} ${dmSans.variable}`,
+          `${inter.variable} ${spaceGrotesk.variable} ${dmSans.variable} ${jetbrainsMono.variable}`,
           "font-sans antialiased",
           "h-screen w-screen p-0",
         )}

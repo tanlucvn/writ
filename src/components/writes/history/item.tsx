@@ -1,6 +1,8 @@
 "use client";
 
+import TagChip from "@/components/tag-chip";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,6 +10,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import {
   type Write,
@@ -16,8 +23,8 @@ import {
   saveWrite,
 } from "@/services/db/writes";
 import { useAppStore } from "@/store/app-store";
-import { MoreVertical, SaveIcon } from "lucide-react";
-import { useState } from "react";
+import { MoreVertical, PlusIcon, SaveIcon } from "lucide-react";
+import { useMemo, useState } from "react";
 
 type HistoryItemProps = {
   write: Write;
@@ -25,11 +32,22 @@ type HistoryItemProps = {
 };
 
 export function HistoryItem({ write, className }: HistoryItemProps) {
-  const { currentWrite, setCurrentWrite, writes, setWrites, refreshWrites } =
-    useAppStore();
+  const {
+    currentWrite,
+    setCurrentWrite,
+    writes,
+    setWrites,
+    refreshWrites,
+    tags: allTags,
+  } = useAppStore();
 
   const [isRenaming, setIsRenaming] = useState(false);
   const [newTitle, setNewTitle] = useState(write.title || "");
+  const [tagsId, setTagsId] = useState(write.tagIds || []);
+
+  const selectedTags = useMemo(() => {
+    return allTags.filter((tag) => tagsId.includes(tag.id));
+  }, [allTags, tagsId]);
 
   const handleDeleteWrite = async () => {
     await deleteWrite(write.id);
@@ -42,8 +60,12 @@ export function HistoryItem({ write, className }: HistoryItemProps) {
     const trimmed = newTitle.trim();
     if (!trimmed) return;
 
-    if (newTitle && newTitle !== write.title) {
-      const updatedNote = { ...write, title: newTitle, updatedAt: new Date() };
+    if (trimmed !== write.title) {
+      const updatedNote: Write = {
+        ...write,
+        title: trimmed,
+        updatedAt: new Date(),
+      };
       await saveWrite(updatedNote);
       const allWrites = await getAllWrites();
       setWrites(allWrites);
@@ -52,60 +74,125 @@ export function HistoryItem({ write, className }: HistoryItemProps) {
     }
   };
 
+  const toggleTag = async (tagId: string) => {
+    const updatedTagsId = tagsId.includes(tagId)
+      ? tagsId.filter((id) => id !== tagId)
+      : [...tagsId, tagId];
+
+    setTagsId(updatedTagsId);
+
+    const updatedWrite: Write = {
+      ...write,
+      tagIds: updatedTagsId,
+      updatedAt: new Date(),
+    };
+    await saveWrite(updatedWrite);
+    refreshWrites();
+  };
+
   return (
     <div
       className={cn(
-        "relative cursor-pointer rounded-lg border p-3 pr-9 transition hover:bg-muted/50",
+        "relative cursor-pointer rounded-lg border bg-card p-3 pr-9 transition hover:bg-muted/50",
         currentWrite?.id === write.id && "bg-muted",
         className,
       )}
       onClick={() => setCurrentWrite(write)}
     >
-      {isRenaming ? (
-        <div className="flex items-center gap-2">
-          <Input
-            value={newTitle}
-            onChange={(e) => setNewTitle(e.target.value)}
-            onClick={(e) => e.stopPropagation()}
-            className="w-full rounded border px-2 py-1 text-sm"
-            autoFocus
-          />
-          <Button
-            variant="ghost"
-            size="icon"
-            className="size-8 flex-shrink-0 rounded-full text-foreground transition-colors hover:bg-foreground/5"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleRenameWrite();
-            }}
-          >
-            <SaveIcon />
-          </Button>
-        </div>
-      ) : (
-        <>
-          <h3 className="font-medium text-base">{write.title || "Untitled"}</h3>
-          <p className="text-muted-foreground text-xs">
-            Last updated: {new Date(write.updatedAt).toLocaleString()}
-          </p>
-        </>
-      )}
+      <div className="flex flex-col gap-2">
+        {/* Title */}
+        {isRenaming ? (
+          <div className="flex items-center gap-2">
+            <Input
+              value={newTitle}
+              onChange={(e) => setNewTitle(e.target.value)}
+              onClick={(e) => e.stopPropagation()}
+              className="w-full rounded border px-2 py-1 text-sm"
+              autoFocus
+            />
+            <Button
+              variant="ghost"
+              size="icon"
+              className="size-8 flex-shrink-0 rounded-full text-foreground hover:bg-foreground/5"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleRenameWrite();
+              }}
+            >
+              <SaveIcon className="size-4" />
+            </Button>
+          </div>
+        ) : (
+          <>
+            <h3 className="font-medium text-base">
+              {write.title || "Untitled"}
+            </h3>
+            <p className="text-muted-foreground text-xs">
+              Last updated: {new Date(write.updatedAt).toLocaleString()}
+            </p>
+          </>
+        )}
 
+        <div className="flex items-center gap-2">
+          {/* Tag selector popover */}
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={(e) => e.stopPropagation()}
+                className="h-6 w-fit gap-1 px-0 py-0.5 text-muted-foreground text-xs hover:bg-transparent hover:text-foreground"
+              >
+                <PlusIcon className="size-3" />
+                Add tag
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent
+              onClick={(e) => e.stopPropagation()}
+              className="w-48 p-1"
+            >
+              <div className="space-y-1 rounded-md border-2 border-border border-dashed p-1">
+                {allTags.map((tag) => (
+                  <div
+                    key={tag.id}
+                    className="flex items-center gap-2 rounded-md px-2 py-1 hover:bg-muted/30"
+                    onClick={() => toggleTag(tag.id)}
+                  >
+                    <Checkbox checked={tagsId.includes(tag.id)} />
+                    <span className="text-sm">{tag.name}</span>
+                  </div>
+                ))}
+              </div>
+            </PopoverContent>
+          </Popover>
+
+          {/* Tags */}
+          {selectedTags.length > 0 && (
+            <div className="flex flex-wrap items-center gap-2">
+              {selectedTags.map((tag) => (
+                <TagChip key={tag.id} tag={tag} />
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* More actions */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
           <Button
             variant="ghost"
             size="icon"
-            className="absolute top-2 right-2 size-8 rounded-md text-foreground transition-colors hover:bg-foreground/5"
+            className="absolute top-2 right-2 size-8 rounded-md text-foreground hover:bg-foreground/5"
           >
-            <MoreVertical />
+            <MoreVertical className="size-4" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
           <DropdownMenuItem onClick={() => setIsRenaming(true)}>
             Rename
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => handleDeleteWrite()}>
+          <DropdownMenuItem onClick={handleDeleteWrite}>
             Delete
           </DropdownMenuItem>
         </DropdownMenuContent>

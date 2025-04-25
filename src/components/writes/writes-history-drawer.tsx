@@ -1,31 +1,41 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAppStore } from "@/store/app-store";
-import { HistoryIcon, Loader2 } from "lucide-react";
+import { HistoryIcon, Loader2, XIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Drawer } from "vaul";
 import { AnimatedNumberBadge } from "../animated-number-badge";
-import { Input } from "../ui/input";
-import { ScrollArea } from "../ui/scroll-area";
 import { HistoryItem } from "./history/item";
+import { MultiSelectTag } from "./history/multi-select-tag";
 import SortDropdown from "./history/sort";
 
 export default function WritesHistoryDrawer() {
-  const { writes, refreshWrites } = useAppStore();
+  const { writes, tags, refreshWrites } = useAppStore();
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedTags, setSelectedTags] = useState<Set<string>>(new Set());
   const [isRefreshing, setIsRefreshing] = useState(true);
 
-  const filteredWrites = writes.filter((write) =>
-    (write.title || "Untitled")
+  const filteredWrites = writes.filter((write) => {
+    const matchesSearch = (write.title || "Untitled")
       .toLowerCase()
-      .includes(searchQuery.toLowerCase()),
-  );
+      .includes(searchQuery.toLowerCase());
+
+    const matchesTags =
+      selectedTags.size === 0 ||
+      write.tagIds?.some((id) => selectedTags.has(id));
+
+    return matchesSearch && matchesTags;
+  });
 
   useEffect(() => {
     setIsRefreshing(true);
     refreshWrites().finally(() => setIsRefreshing(false));
   }, [refreshWrites]);
+
+  const clearTags = () => setSelectedTags(new Set());
 
   return (
     <Drawer.Root direction="right">
@@ -51,12 +61,12 @@ export default function WritesHistoryDrawer() {
             <div className="flex h-full w-full flex-1 flex-col overflow-hidden">
               <div className="flex flex-col gap-4 px-4 pt-4">
                 <div className="flex flex-col gap-1">
+                  <p className="font-mono text-muted-foreground text-xs">
+                    View all the previous writes and drafts.
+                  </p>
                   <Drawer.Title className="font-medium text-base text-foreground">
                     Write History
                   </Drawer.Title>
-                  <p className="text-muted-foreground text-sm">
-                    View all the previous writes and drafts.
-                  </p>
                 </div>
 
                 <Input
@@ -65,6 +75,27 @@ export default function WritesHistoryDrawer() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="text-sm"
                 />
+
+                {tags.length > 0 && (
+                  <div className="flex items-center justify-between gap-2">
+                    <MultiSelectTag
+                      availableTags={tags}
+                      selectedTags={selectedTags}
+                      setSelectedTags={setSelectedTags}
+                    />
+                    {selectedTags.size > 0 && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="flex items-center gap-1 text-xs"
+                        onClick={clearTags}
+                      >
+                        <XIcon className="size-4" />
+                        Clear
+                      </Button>
+                    )}
+                  </div>
+                )}
               </div>
 
               <div className="h-full flex-1 overflow-hidden">
@@ -91,7 +122,7 @@ export default function WritesHistoryDrawer() {
               </div>
             </div>
 
-            <div className="border-t-2 border-dashed bg-background/80 backdrop-blur-md transition-opacity duration-300 hover:bg-background/90">
+            <div className="border-t-2 border-dashed">
               <div
                 className="flex items-center justify-between px-4 py-2 text-xs"
                 data-vaul-no-drag
