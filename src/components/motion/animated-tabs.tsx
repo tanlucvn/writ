@@ -31,7 +31,7 @@ export default function Tabs({
   return (
     <div className={cn("my-4 w-full space-y-4 p-4", className)}>
       {/* Tabs */}
-      <div className="relative flex w-full items-center gap-0 rounded-full bg-primary/5">
+      <div className="relative flex w-full items-center justify-evenly gap-0 rounded-full bg-primary/5">
         {tabs.map((tabItem) => {
           const isActive = tab === tabItem.label;
           return (
@@ -40,12 +40,12 @@ export default function Tabs({
               variant="ghost"
               onClick={() => setTab(tabItem.label)}
               className={cn(
-                "relative z-10 w-fit rounded-full bg-transparent text-muted-foreground hover:bg-transparent",
+                "relative z-10 w-full max-w-[200px] rounded-full bg-transparent text-muted-foreground hover:bg-transparent",
                 isActive && "text-foreground",
               )}
             >
               {tabItem.icon}
-              <span>{tabItem.label}</span>
+              {isActive && <span>{tabItem.label}</span>}
               {isActive && (
                 <motion.div
                   layoutId="highlight"
