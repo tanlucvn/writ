@@ -66,6 +66,12 @@ export default function Editor() {
     }
   }, [editor, setEditor]);
 
+  useEffect(() => {
+    if (editor && currentWrite) {
+      editor.commands.setContent(currentWrite.content || "", false);
+    }
+  }, [currentWrite, editor]);
+
   if (!currentWrite) {
     return <Loading />;
   }
