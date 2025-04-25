@@ -45,6 +45,10 @@ export function MultiSelectTag({
 
       <PopoverContent className="w-48 p-1">
         <div className="h-full w-full rounded-md border-2 border-border border-dashed p-1">
+          <p className="px-1.5 py-1 font-mono text-muted-foreground text-xs">
+            Select tags to filter
+          </p>
+
           <div className="space-y-1">
             {availableTags.map((tag) => (
               <div

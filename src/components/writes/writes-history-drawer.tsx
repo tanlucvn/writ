@@ -55,7 +55,7 @@ export default function WritesHistoryDrawer() {
       </Drawer.Trigger>
 
       <Drawer.Portal>
-        <Drawer.Overlay className="fixed inset-0 bg-black/40" />
+        <Drawer.Overlay className="fixed inset-0 z-20 bg-black/40" />
         <Drawer.Content className="fixed right-0 bottom-0 z-40 h-full w-[450px] max-w-xs overflow-hidden rounded-tl-xl rounded-bl-xl border bg-background p-1 shadow-xl outline-none sm:max-w-md md:max-w-lg">
           <div className="flex h-full w-full flex-col rounded-tl-xl rounded-bl-xl border-2 border-border border-dashed">
             <div className="flex h-full w-full flex-1 flex-col overflow-hidden">
@@ -112,7 +112,7 @@ export default function WritesHistoryDrawer() {
                       </p>
                     </div>
                   ) : (
-                    <div className="space-y-3">
+                    <div className="space-y-3 p-1">
                       {filteredWrites.map((write) => (
                         <HistoryItem key={write.id} write={write} />
                       ))}

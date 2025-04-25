@@ -208,7 +208,9 @@ export default function MainMenu() {
           <DropdownMenuSeparator />
 
           <div className="flex items-center justify-between p-1">
-            <p className="text-muted-foreground text-sm">Version: 1.0</p>
+            <p className="font-mono text-muted-foreground text-sm">
+              Version: 1.0
+            </p>
             <ThemeSwitcher />
           </div>
         </div>

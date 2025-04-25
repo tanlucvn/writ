@@ -21,7 +21,7 @@ export default function TagChip({
     <div
       onClick={() => onClick?.(tag)}
       className={cn(
-        "relative flex cursor-pointer select-none items-center gap-1 rounded-full border border-border px-2 py-0.5 text-foreground text-xs outline-double outline-2 outline-border outline-offset-2",
+        "relative flex cursor-pointer select-none items-center gap-1 rounded-full border border-border px-2 py-0.5 text-foreground text-xs outline-double outline-1 outline-border outline-offset-2",
         deletable && "group hover:border-destructive",
         className,
       )}

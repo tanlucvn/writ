@@ -23,7 +23,7 @@ import {
   saveWrite,
 } from "@/services/db/writes";
 import { useAppStore } from "@/store/app-store";
-import { MoreVertical, PlusIcon, SaveIcon } from "lucide-react";
+import { CheckIcon, MoreVertical, PlusIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 
 type HistoryItemProps = {
@@ -93,8 +93,8 @@ export function HistoryItem({ write, className }: HistoryItemProps) {
   return (
     <div
       className={cn(
-        "relative cursor-pointer rounded-lg border bg-card p-3 pr-9 transition hover:bg-muted/50",
-        currentWrite?.id === write.id && "bg-muted",
+        "relative cursor-pointer rounded-lg border bg-card p-3 pr-9 outline-double outline-2 outline-border outline-offset-2 transition hover:bg-muted/50 hover:outline-dashed",
+        currentWrite?.id === write.id && "bg-muted/50",
         className,
       )}
       onClick={() => setCurrentWrite(write)}
@@ -102,24 +102,24 @@ export function HistoryItem({ write, className }: HistoryItemProps) {
       <div className="flex flex-col gap-2">
         {/* Title */}
         {isRenaming ? (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-0">
             <Input
               value={newTitle}
               onChange={(e) => setNewTitle(e.target.value)}
               onClick={(e) => e.stopPropagation()}
-              className="w-full rounded border px-2 py-1 text-sm"
+              className="h-8 flex-1 rounded-tr-none rounded-br-none border-r-0 text-sm focus-visible:ring-0"
               autoFocus
             />
             <Button
-              variant="ghost"
               size="icon"
-              className="size-8 flex-shrink-0 rounded-full text-foreground hover:bg-foreground/5"
+              variant="outline"
+              className="size-8 rounded-tl-none rounded-bl-none border-l-0 bg-muted"
               onClick={(e) => {
                 e.stopPropagation();
                 handleRenameWrite();
               }}
             >
-              <SaveIcon className="size-4" />
+              <CheckIcon className="size-4" />
             </Button>
           </div>
         ) : (
@@ -144,14 +144,18 @@ export function HistoryItem({ write, className }: HistoryItemProps) {
                 className="h-6 w-fit gap-1 px-0 py-0.5 text-muted-foreground text-xs hover:bg-transparent hover:text-foreground"
               >
                 <PlusIcon className="size-3" />
-                Add tag
+                Tags
               </Button>
             </PopoverTrigger>
             <PopoverContent
               onClick={(e) => e.stopPropagation()}
               className="w-48 p-1"
             >
-              <div className="space-y-1 rounded-md border-2 border-border border-dashed p-1">
+              <div className="h-full w-full rounded-md border-2 border-border border-dashed p-1">
+                <p className="px-1.5 py-1 font-mono text-muted-foreground text-xs">
+                  Select tags
+                </p>
+
                 {allTags.map((tag) => (
                   <div
                     key={tag.id}

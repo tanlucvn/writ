@@ -47,15 +47,21 @@ export default function SortDropdown() {
       </SelectTrigger>
 
       <SelectContent>
-        {WRITE_SORT_OPTIONS.map((option) => (
-          <SelectItem
-            key={option.value}
-            value={option.value}
-            className="text-xs"
-          >
-            {option.label}
-          </SelectItem>
-        ))}
+        <div className="h-full w-full rounded-md border-2 border-border border-dashed p-1">
+          <p className="px-1.5 py-1 font-mono text-muted-foreground text-xs">
+            Sort by
+          </p>
+
+          {WRITE_SORT_OPTIONS.map((option) => (
+            <SelectItem
+              key={option.value}
+              value={option.value}
+              className="text-xs hover:bg-accent"
+            >
+              {option.label}
+            </SelectItem>
+          ))}
+        </div>
       </SelectContent>
     </Select>
   );
