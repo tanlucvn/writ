@@ -58,6 +58,7 @@ export default function Editor() {
         style: `font-size: ${fontSize}px;`,
       },
     },
+    immediatelyRender: false,
   });
 
   useEffect(() => {
@@ -68,7 +69,9 @@ export default function Editor() {
 
   useEffect(() => {
     if (editor && currentWrite) {
-      editor.commands.setContent(currentWrite.content || "", false);
+      if (editor.getHTML() !== (currentWrite.content || "")) {
+        editor.commands.setContent(currentWrite.content || "", false);
+      }
     }
   }, [currentWrite, editor]);
 
