@@ -7,6 +7,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
+import { createWrite, saveWrite } from "@/services/db/writes";
+import { useAppStore } from "@/store/app-store";
 import { useDialogStore } from "@/store/dialog-store";
 import { useTabStore } from "@/store/tab-store";
 import { motion } from "framer-motion";
@@ -25,6 +27,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { toast } from "sonner";
 import { ThemeSwitcher } from "../theme";
 
 type NavMenuLinkProps = {
@@ -112,11 +115,22 @@ const NavMenuSection = ({ title, children, onBack }: NavMenuSectionProps) => (
 );
 
 const WritesTab = ({ onBack }: { onBack: () => void }) => {
+  const { setCurrentWrite, refreshWrites } = useAppStore();
   const { setWritesHistoryOpen } = useDialogStore();
+
+  const handleCreateWrite = async () => {
+    const newWrite = createWrite();
+    await saveWrite(newWrite);
+
+    toast.success("New write created successfully!");
+
+    setCurrentWrite(newWrite);
+    refreshWrites();
+  };
 
   return (
     <NavMenuSection title="Writes" onBack={onBack}>
-      <Button variant="outline" className="text-xs">
+      <Button variant="outline" className="text-xs" onClick={handleCreateWrite}>
         <PlusIcon />
         Create New
       </Button>
