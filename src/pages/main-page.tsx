@@ -1,5 +1,6 @@
 "use client";
 import Editor from "@/components/editor";
+import BubbleToolbar from "@/components/editor/bubble-toolbar";
 import EditorToolbar from "@/components/editor/editor-toolbar";
 import Loading from "@/components/loading";
 import { createWrite, getLatestWrite, saveWrite } from "@/services/db/writes";
@@ -7,8 +8,14 @@ import { useAppStore } from "@/store/app-store";
 import { useCallback, useEffect } from "react";
 
 export default function MainPage() {
-  const { fontSize, fontFamily, currentWrite, setCurrentWrite, initDB } =
-    useAppStore();
+  const {
+    fontSize,
+    fontFamily,
+    currentWrite,
+    setCurrentWrite,
+    initDB,
+    editorMode,
+  } = useAppStore();
 
   const initializeData = useCallback(async () => {
     try {
@@ -33,7 +40,7 @@ export default function MainPage() {
 
   return (
     <>
-      <EditorToolbar />
+      {editorMode === "bubble" ? <BubbleToolbar /> : <EditorToolbar />}
       <Editor />
     </>
   );

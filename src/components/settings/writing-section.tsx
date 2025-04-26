@@ -10,9 +10,18 @@ import {
 } from "@/components/ui/select";
 import { useAppStore } from "@/store/app-store";
 import { MinusIcon, PlusIcon } from "lucide-react";
+import { Separator } from "../ui/separator";
 
 export default function WritingSection() {
-  const { fontFamily, setFontFamily, fontSize, setFontSize } = useAppStore();
+  const {
+    fontFamily,
+    setFontFamily,
+    fontSize,
+    setFontSize,
+    editorMode,
+    setEditorMode,
+  } = useAppStore();
+
   const handleDecrease = () => setFontSize(Math.max(fontSize - 1, 12));
   const handleIncrease = () => setFontSize(Math.min(fontSize + 1, 32));
 
@@ -68,6 +77,24 @@ export default function WritingSection() {
               <PlusIcon />
             </Button>
           </div>
+        </div>
+      </div>
+
+      <Separator />
+
+      <div className="flex flex-col gap-2">
+        <span className="text-muted-foreground text-sm">Editor Mode</span>
+        <div className="flex items-center justify-between space-x-2">
+          <Label htmlFor="editor-mode">Mode</Label>
+          <Select value={editorMode} onValueChange={setEditorMode}>
+            <SelectTrigger className="h-8 w-[180px] text-xs">
+              <SelectValue placeholder="Editor Mode" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="bubble">Bubble</SelectItem>
+              <SelectItem value="floating">Floating</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </div>
     </div>

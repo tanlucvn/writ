@@ -121,7 +121,7 @@ const EditorToolbar = () => {
   }, [editor]);
 
   return (
-    <div className="mt-4 flex w-max items-center justify-center gap-0 rounded-lg border bg-accent/20 outline-double outline-2 outline-border outline-offset-2">
+    <div className="sticky top-6 z-[1] mt-4 flex h-8 w-max items-center justify-center gap-0 rounded-lg border bg-secondary text-muted-foreground outline-double outline-2 outline-border outline-offset-2">
       {/* Marks group */}
       <ToggleGroup
         className="h-full gap-0"
@@ -132,21 +132,21 @@ const EditorToolbar = () => {
         <ToggleGroupItem
           value={EditorMarks.BOLD}
           aria-label="Bold"
-          className="rounded-none rounded-tl-lg rounded-bl-lg"
+          className="h-8 rounded-none rounded-tl-lg rounded-bl-lg hover:text-foreground"
         >
           <BoldIcon className="h-4 w-4" />
         </ToggleGroupItem>
         <ToggleGroupItem
           value={EditorMarks.ITALIC}
           aria-label="Italic"
-          className="rounded-none"
+          className="rounded-none hover:text-foreground"
         >
           <ItalicIcon className="h-4 w-4" />
         </ToggleGroupItem>
         <ToggleGroupItem
           value={EditorMarks.UNDERLINE}
           aria-label="Underline"
-          className="rounded-none"
+          className="h-8 rounded-none hover:text-foreground"
         >
           <UnderlineIcon className="h-4 w-4" />
         </ToggleGroupItem>
@@ -157,15 +157,21 @@ const EditorToolbar = () => {
         onValueChange={handleEditorHeadingMarkChange}
         value={activeHeadingMark}
       >
-        <SelectTrigger className="h-9 w-[180px] rounded-none border-none text-xs ring-0 hover:bg-muted focus:bg-muted focus:ring-0">
+        <SelectTrigger className="h-8 w-full rounded-none border-none text-xs ring-0 hover:bg-muted hover:text-foreground focus:bg-muted focus:ring-0 sm:w-[180px]">
           <SelectValue placeholder="Headings" />
         </SelectTrigger>
-        <SelectContent>
-          {EDITOR_HEADINGS.map((heading) => (
-            <SelectItem key={heading.value} value={heading.value}>
-              {heading.label}
-            </SelectItem>
-          ))}
+        <SelectContent className="mt-1 rounded-2xl">
+          <div className="h-full w-full rounded-xl border-2 border-border border-dashed p-1">
+            {EDITOR_HEADINGS.map((heading) => (
+              <SelectItem
+                key={heading.value}
+                value={heading.value}
+                className="rounded-lg text-xs"
+              >
+                {heading.label}
+              </SelectItem>
+            ))}
+          </div>
         </SelectContent>
       </Select>
 
@@ -179,7 +185,7 @@ const EditorToolbar = () => {
         <ToggleGroupItem
           value={EditorMarks.HIGHLIGHT}
           aria-label="Highlight"
-          className="rounded-none"
+          className="h-8 rounded-none hover:text-foreground"
         >
           <HighlighterIcon className="h-4 w-4" />
         </ToggleGroupItem>
@@ -195,14 +201,14 @@ const EditorToolbar = () => {
         <ToggleGroupItem
           value={EditorNodes.CODE}
           aria-label="Code Block"
-          className="rounded-none"
+          className="h-8 rounded-none hover:text-foreground"
         >
           <CodeIcon className="h-4 w-4" />
         </ToggleGroupItem>
         <ToggleGroupItem
           value={EditorNodes.QUOTE}
           aria-label="Quote"
-          className="rounded-none rounded-tr-lg rounded-br-lg"
+          className="h-8 rounded-none rounded-tr-lg rounded-br-lg hover:text-foreground"
         >
           <QuoteIcon className="h-4 w-4" />
         </ToggleGroupItem>

@@ -29,6 +29,8 @@ interface AppStore {
 
   editor: Editor | null;
   setEditor: (editor: Editor | null) => void;
+  editorMode: "floating" | "bubble";
+  setEditorMode: (mode: "floating" | "bubble") => void;
 
   initDB: () => Promise<void>;
   clearDB: () => Promise<void>;
@@ -63,6 +65,8 @@ export const useAppStore = create<AppStore>((set) => ({
 
   editor: null,
   setEditor: (editor) => set({ editor }),
+  editorMode: "floating",
+  setEditorMode: (mode) => set({ editorMode: mode }),
 
   initDB: async () => {
     try {

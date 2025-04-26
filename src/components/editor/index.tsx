@@ -5,6 +5,7 @@ import Loading from "@/components/loading";
 import { cn } from "@/lib/utils";
 import { saveWrite } from "@/services/db/writes";
 import { useAppStore } from "@/store/app-store";
+import { BubbleMenu } from "@tiptap/extension-bubble-menu";
 import CharacterCount from "@tiptap/extension-character-count";
 import { Highlight } from "@tiptap/extension-highlight";
 import { Placeholder } from "@tiptap/extension-placeholder";
@@ -32,6 +33,11 @@ export default function Editor() {
       Underline,
       Placeholder.configure({ placeholder: "Write something..." }),
       CharacterCount,
+      BubbleMenu.configure({
+        tippyOptions: {
+          arrow: true,
+        },
+      }),
     ],
     content: currentWrite?.content || "",
     onUpdate: ({ editor }) => {
