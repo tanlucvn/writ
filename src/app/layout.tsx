@@ -11,6 +11,7 @@ import {
   DM_Sans,
   Inter,
   JetBrains_Mono,
+  Outfit,
   Space_Grotesk,
 } from "next/font/google";
 import { Toaster } from "sonner";
@@ -35,6 +36,11 @@ const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
 });
 
+const outfit = Outfit({
+  subsets: ["latin"],
+  variable: "--font-outfit",
+});
+
 export const metadata: Metadata = {
   ...OpenGraph,
 };
@@ -52,7 +58,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          `${inter.variable} ${spaceGrotesk.variable} ${dmSans.variable} ${jetbrainsMono.variable}`,
+          `${inter.variable} ${spaceGrotesk.variable} ${dmSans.variable} ${jetbrainsMono.variable} ${outfit.variable}`,
           "font-sans antialiased",
           "h-screen w-screen overflow-x-hidden p-0",
         )}

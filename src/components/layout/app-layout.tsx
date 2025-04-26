@@ -10,7 +10,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <Sidebar />
 
       <main className="flex w-screen items-center justify-center">
-        <div className="flex min-h-dvh w-[620px] flex-col items-center border-r border-l px-2 py-10">
+        <div className="flex min-h-dvh w-full flex-col items-center border-r border-l px-2 py-10 sm:w-[620px]">
           <HeaderCard />
           <EditorToolbar />
           {children}

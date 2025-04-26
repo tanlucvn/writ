@@ -6,7 +6,7 @@ export function HeaderCard() {
       <MainMenu />
 
       <div className="flex flex-col items-center justify-center space-y-1">
-        <h1 className="font-bold text-xs">miniwrit</h1>
+        <h1 className="font-bold font-outfit text-sm">miniwrit</h1>
         <p className="text-muted-foreground text-xs">
           A clean, minimal app to write thoughts.
         </p>
