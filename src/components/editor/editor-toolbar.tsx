@@ -121,7 +121,7 @@ const EditorToolbar = () => {
   }, [editor]);
 
   return (
-    <div className="flex w-max items-center justify-center gap-0 rounded-lg border bg-accent/20 outline-double outline-2 outline-border outline-offset-2">
+    <div className="mt-4 flex w-max items-center justify-center gap-0 rounded-lg border bg-accent/20 outline-double outline-2 outline-border outline-offset-2">
       {/* Marks group */}
       <ToggleGroup
         className="h-full gap-0"

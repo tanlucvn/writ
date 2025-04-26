@@ -1,12 +1,4 @@
-import type { Metadata, Viewport } from "next";
-import {
-  DM_Sans,
-  Inter,
-  JetBrains_Mono,
-  Space_Grotesk,
-} from "next/font/google";
-
-import AppLayout from "@/components/layout/app-layout";
+import Layout from "@/components/layout/app-layout";
 import { ThemeProvider } from "@/components/theme";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { OpenGraph } from "@/lib/og";
@@ -14,6 +6,13 @@ import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import "@/styles/writer.css";
 import { Analytics } from "@vercel/analytics/react";
+import type { Metadata, Viewport } from "next";
+import {
+  DM_Sans,
+  Inter,
+  JetBrains_Mono,
+  Space_Grotesk,
+} from "next/font/google";
 import { Toaster } from "sonner";
 
 const inter = Inter({
@@ -55,12 +54,12 @@ export default function RootLayout({
         className={cn(
           `${inter.variable} ${spaceGrotesk.variable} ${dmSans.variable} ${jetbrainsMono.variable}`,
           "font-sans antialiased",
-          "h-screen w-screen p-0",
+          "h-screen w-screen overflow-x-hidden p-0",
         )}
       >
         <ThemeProvider>
           <TooltipProvider>
-            <AppLayout>{children}</AppLayout>
+            <Layout>{children}</Layout>
             <Toaster />
             <Analytics />
           </TooltipProvider>

@@ -1,39 +1,25 @@
-import { ScrollArea } from "@/components/ui/scroll-area";
-import type React from "react";
-import type { ReactNode } from "react";
+import { HeaderCard } from "../common/header-card";
+import { Sidebar } from "../common/sidebar";
 import EditorToolbar from "../editor/editor-toolbar";
-import WordCount from "../editor/word-count";
-import MainMenu from "../main-menu";
 import Settings from "../settings";
-import WritesHistoryDrawer from "../writes/writes-history-drawer";
+import WritesHistory from "../writes/writes-history";
 
-interface AppLayoutProps {
-  children: ReactNode;
-}
-
-export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <ScrollArea className="relative h-screen w-screen">
-      {/* HEADER */}
-      <section className="fixed top-0 left-0 z-10 grid w-screen grid-cols-5">
-        <div className="flex items-center justify-start gap-4 p-4">
-          <MainMenu />
-        </div>
-        <div className="col-span-3 flex items-center justify-center p-4">
+    <>
+      <Sidebar />
+
+      <main className="flex w-screen items-center justify-center">
+        <div className="flex min-h-dvh w-[620px] flex-col items-center border-r border-l px-2 py-10">
+          <HeaderCard />
           <EditorToolbar />
+          {children}
         </div>
-        <div className="flex items-center justify-end p-4">
-          <WritesHistoryDrawer />
-        </div>
-      </section>
+      </main>
 
-      {/* CONTENT (BODY) */}
-      {children}
-
-      <WordCount />
+      {/* Dialog, Drawer, Sheet , ... */}
       <Settings />
-    </ScrollArea>
+      <WritesHistory />
+    </>
   );
-};
-
-export default AppLayout;
+}

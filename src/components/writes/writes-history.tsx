@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAppStore } from "@/store/app-store";
-import { HistoryIcon, Loader2, XIcon } from "lucide-react";
+import { useDialogStore } from "@/store/dialog-store";
+import { Loader2, XIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Drawer } from "vaul";
 import { AnimatedNumberBadge } from "../animated-number-badge";
@@ -12,8 +13,9 @@ import { HistoryItem } from "./history/item";
 import { MultiSelectTag } from "./history/multi-select-tag";
 import SortDropdown from "./history/sort";
 
-export default function WritesHistoryDrawer() {
+export default function WritesHistory() {
   const { writes, tags, refreshWrites } = useAppStore();
+  const { isWritesHistoryOpen, setWritesHistoryOpen } = useDialogStore();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTags, setSelectedTags] = useState<Set<string>>(new Set());
   const [isRefreshing, setIsRefreshing] = useState(true);
@@ -38,22 +40,11 @@ export default function WritesHistoryDrawer() {
   const clearTags = () => setSelectedTags(new Set());
 
   return (
-    <Drawer.Root direction="right">
-      <Drawer.Trigger asChild>
-        <Button
-          variant="outline"
-          size="icon"
-          className="relative size-8 text-foreground outline-2 outline-border outline-offset-2 transition-colors hover:bg-foreground/5 hover:outline-dashed"
-        >
-          <HistoryIcon className="size-4" />
-          {writes.length > 1 && (
-            <span className="-top-2 -right-1 absolute flex h-4 w-4 select-none items-center justify-center rounded-full bg-primary font-medium text-[10px] text-primary-foreground">
-              {writes.length > 9 ? "9+" : writes.length}
-            </span>
-          )}
-        </Button>
-      </Drawer.Trigger>
-
+    <Drawer.Root
+      direction="right"
+      open={isWritesHistoryOpen}
+      onOpenChange={setWritesHistoryOpen}
+    >
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 z-20 bg-black/40" />
         <Drawer.Content className="fixed right-0 bottom-0 z-40 h-full w-[450px] max-w-xs overflow-hidden rounded-tl-xl rounded-bl-xl border bg-background p-1 shadow-xl outline-none sm:max-w-md md:max-w-lg">

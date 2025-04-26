@@ -1,6 +1,6 @@
 /* ProseMirror core */
 .ProseMirror {
-  @apply min-h-[640px] w-full text-base font-normal leading-relaxed text-foreground outline-none;
+  @apply text-base font-normal leading-relaxed text-foreground outline-none;
   padding: 0 !important;
 }
 
@@ -28,7 +28,7 @@
 
 /* Code block */
 .ProseMirror pre {
-  @apply rounded-lg bg-muted px-4 py-3 mb-6 font-mono;
+  @apply bg-muted text-foreground px-4 py-3 mb-6 font-mono;
 }
 
 .ProseMirror pre code {
@@ -41,7 +41,7 @@
 
 /* Blockquote */
 .ProseMirror blockquote {
-  @apply border-l-2 border-primary bg-accent/30 px-4 py-2 my-4;
+  @apply border-l-2 border-primary bg-accent/30 px-4 my-1;
 }
 
 /* Link */
@@ -56,6 +56,11 @@
 
 .ProseMirror h3 {
   @apply text-xl font-semibold mt-4 mb-2;
+}
+
+/* Paragraph */
+.ProseMirror p {
+  @apply my-1;
 }
 
 /* Horizontal line */

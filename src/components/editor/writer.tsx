@@ -1,9 +1,8 @@
 "use client";
-
-import { Textarea } from "@/components/ui/textarea";
 import { saveWrite } from "@/services/db/writes";
 import { useAppStore } from "@/store/app-store";
 import { EditorContent } from "@tiptap/react";
+import { Input } from "../ui/input";
 
 export default function Writer() {
   const { editor, currentWrite, setCurrentWrite, refreshWrites } =
@@ -23,13 +22,12 @@ export default function Writer() {
   };
 
   return (
-    <section className="z-[2] flex h-full w-full flex-grow flex-col items-center justify-start">
-      <div className="flex h-full w-full flex-col items-center justify-start gap-6 px-4 pt-32 pb-24 md:pb-16 lg:px-0">
+    <section className="flex h-full w-full flex-grow flex-col items-center justify-start px-6">
+      <div className="flex h-full w-full flex-col items-center justify-start gap-6 p-6 md:pb-16 lg:px-0">
         <div className="w-full max-w-2xl">
-          <Textarea
-            className="flex min-h-[48px] w-full resize-none items-center overflow-y-hidden border-0 bg-transparent p-0 font-semibold text-foreground text-xl leading-snug focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 lg:text-3xl lg:leading-snug"
+          <Input
+            className="border-none p-0 font-semibold text-2xl shadow-none outline-none focus-visible:ring-0 md:text-xl"
             placeholder="Untitled"
-            rows={1}
             value={currentWrite?.title}
             onChange={(e) => handleTitleChange(e.target.value)}
           />

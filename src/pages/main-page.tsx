@@ -1,5 +1,4 @@
 "use client";
-
 import Editor from "@/components/editor";
 import Loading from "@/components/loading";
 import { createWrite, getLatestWrite, saveWrite } from "@/services/db/writes";
