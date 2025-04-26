@@ -1,5 +1,6 @@
 import { HeaderCard } from "../common/header-card";
 import { Sidebar } from "../common/sidebar";
+import MusicPlayer from "../music-player";
 import ScollToTop from "../scroll-to-top";
 import Settings from "../settings";
 import WritesHistory from "../writes/writes-history";
@@ -16,7 +17,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
       </main>
 
-      <ScollToTop />
+      <div className="fixed right-4 bottom-4 flex items-center justify-center gap-4">
+        <ScollToTop />
+        <MusicPlayer />
+      </div>
 
       {/* Dialog, Drawer, Sheet , ... */}
       <Settings />

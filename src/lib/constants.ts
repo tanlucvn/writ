@@ -24,3 +24,22 @@ export enum EditorNodes {
   CODE = "codeBlock",
   QUOTE = "blockquote",
 }
+
+export const musicStations = [
+  {
+    label: "Meditation",
+    url: "https://www.youtube.com/watch?v=FjHGZj2IjBk&t=614s",
+  },
+  {
+    label: "In The Green",
+    url: "https://www.youtube.com/watch?v=2PudHraDfis&t=4128s",
+  },
+  {
+    label: "Break Time",
+    url: "https://www.youtube.com/watch?v=m8PILb6pHqw",
+  },
+  {
+    label: "Study Night",
+    url: "https://www.youtube.com/watch?v=yiRyARPDSPA&t=973s",
+  },
+];
