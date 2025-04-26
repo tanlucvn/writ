@@ -1,5 +1,6 @@
 "use client";
 import Editor from "@/components/editor";
+import EditorToolbar from "@/components/editor/editor-toolbar";
 import Loading from "@/components/loading";
 import { createWrite, getLatestWrite, saveWrite } from "@/services/db/writes";
 import { useAppStore } from "@/store/app-store";
@@ -32,6 +33,7 @@ export default function MainPage() {
 
   return (
     <>
+      <EditorToolbar />
       <Editor />
     </>
   );
