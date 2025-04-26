@@ -1,5 +1,6 @@
 import { HeaderCard } from "../common/header-card";
 import { Sidebar } from "../common/sidebar";
+import ScollToTop from "../scroll-to-top";
 import Settings from "../settings";
 import WritesHistory from "../writes/writes-history";
 
@@ -14,6 +15,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           {children}
         </div>
       </main>
+
+      <ScollToTop />
 
       {/* Dialog, Drawer, Sheet , ... */}
       <Settings />
