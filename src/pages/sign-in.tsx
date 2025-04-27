@@ -13,6 +13,8 @@ export default function SignInPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const redirectUrl = process.env.NEXT_PUBLIC_URL || window.location.origin;
+
   const signInWithEmail = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -49,7 +51,7 @@ export default function SignInPage() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider,
       options: {
-        redirectTo: `${window.location.origin}/`,
+        redirectTo: redirectUrl,
       },
     });
 
