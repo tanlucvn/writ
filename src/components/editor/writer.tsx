@@ -4,6 +4,7 @@ import { useAppStore } from "@/store/app-store";
 import { EditorContent } from "@tiptap/react";
 import { Input } from "../ui/input";
 
+import { syncDexieToSupabase } from "@/services/sync";
 import { useEffect, useState } from "react";
 
 export default function Writer() {
@@ -26,6 +27,7 @@ export default function Writer() {
         updatedAt: new Date(),
       };
       await saveWrite(updated);
+      await syncDexieToSupabase();
       setCurrentWrite(updated);
       refreshWrites();
     }, 500);

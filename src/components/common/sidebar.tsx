@@ -5,6 +5,7 @@ import { type Tab, useTabStore } from "@/store/tab-store";
 import TimeDisplay from "../editor/time-display";
 import WordCount from "../editor/word-count";
 import { Button } from "../ui/button";
+import { UserButton } from "./user-button";
 
 export function Sidebar() {
   const { tab, setTab } = useTabStore();
@@ -25,7 +26,7 @@ export function Sidebar() {
             key={item.value}
             onClick={() => setTab(item.value as Tab)}
             className={cn(
-              "h-fit px-0 py-0 text-muted-foreground text-xs hover:bg-transparent",
+              "h-fit px-0 py-0 text-muted-foreground text-xs outline-none ring-0 hover:bg-transparent focus-visible:ring-0",
               tab === item.value && "text-foreground",
             )}
           >
@@ -35,6 +36,8 @@ export function Sidebar() {
       </div>
 
       <div className="flex select-none flex-col items-start space-y-2 text-muted-foreground text-xs">
+        <UserButton />
+
         <TimeDisplay />
         <WordCount />
       </div>

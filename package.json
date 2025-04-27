@@ -50,6 +50,7 @@
     "@radix-ui/react-toggle-group": "^1.1.7",
     "@radix-ui/react-tooltip": "^1.2.0",
     "@serwist/next": "^9.0.13",
+    "@supabase/supabase-js": "^2.49.4",
     "@tailwindcss/typography": "^0.5.16",
     "@tiptap/extension-bubble-menu": "^2.11.7",
     "@tiptap/extension-character-count": "^2.11.7",

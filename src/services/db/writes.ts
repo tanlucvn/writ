@@ -10,6 +10,7 @@ export interface Write {
   fontFamily?: string;
   fontSize?: number;
   tagIds?: string[];
+  synced: number;
 }
 
 // Create a new write object
@@ -22,11 +23,12 @@ export const createWrite = (fontFamily = "inter", fontSize = 16): Write => ({
   fontFamily,
   fontSize,
   tagIds: [],
+  synced: 0,
 });
 
 // Save or update a write in the database
 export const saveWrite = async (write: Write): Promise<Write> => {
-  const updated = { ...write, updatedAt: new Date() };
+  const updated = { ...write, updatedAt: new Date(), synced: 0 };
   await db.writes.put(updated);
   return updated;
 };

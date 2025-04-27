@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export type Tab = "writes" | "about" | "privacy";
+export type Tab = "writes" | "about" | "privacy" | "signin";
 
 interface TabStore {
   tab: Tab;

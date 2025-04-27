@@ -3,6 +3,7 @@
 import AboutPage from "@/pages/about";
 import MainPage from "@/pages/main-page";
 import PrivacyPage from "@/pages/privacy";
+import SignInPage from "@/pages/sign-in";
 import { useTabStore } from "@/store/tab-store";
 
 export default function Home() {
@@ -13,6 +14,7 @@ export default function Home() {
       {tab === "writes" && <MainPage />}
       {tab === "about" && <AboutPage />}
       {tab === "privacy" && <PrivacyPage />}
+      {tab === "signin" && <SignInPage />}
     </>
   );
 }

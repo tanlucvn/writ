@@ -18,6 +18,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { useDialogStore } from "@/store/dialog-store";
 import {
   BlendIcon,
+  CloudIcon,
   DatabaseIcon,
   MessageSquareIcon,
   PenIcon,
@@ -28,6 +29,7 @@ import Tabs, { type TabOption } from "../motion/animated-tabs";
 import AppearanceSection from "./appearance-section";
 import DataSection from "./data-section";
 import FeedbackSection from "./feedback-section";
+import SyncSection from "./sync-section";
 import TagsSection from "./tags-section";
 import WritingSection from "./writing-section";
 
@@ -51,6 +53,11 @@ const settingsTabs: TabOption[] = [
     label: "Feedback",
     icon: <MessageSquareIcon className="size-4" />,
     content: <FeedbackSection />,
+  },
+  {
+    label: "Sync Data",
+    icon: <CloudIcon className="size-4" />,
+    content: <SyncSection />,
   },
   {
     label: "Data",

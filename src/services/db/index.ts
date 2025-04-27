@@ -7,7 +7,7 @@ const db = new Dexie("miniwritDB");
 
 // Define schema and tables
 db.version(1).stores({
-  writes: "id, updatedAt, *tagIds", // *tagIds enables multiEntry indexing
+  writes: "id, updatedAt, synced, *tagIds", // *tagIds enables multiEntry indexing
   tags: "id, updatedAt",
 });
 
