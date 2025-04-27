@@ -6,13 +6,16 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import { createWrite, saveWrite } from "@/services/db/writes";
 import { useAppStore } from "@/store/app-store";
+import { useAuthStore } from "@/store/auth-store";
 import { useDialogStore } from "@/store/dialog-store";
 import { useTabStore } from "@/store/tab-store";
 import { motion } from "framer-motion";
 import {
+  ArrowUpRightIcon,
   BadgeInfoIcon,
   CircleHelpIcon,
   CircleIcon,
@@ -24,6 +27,7 @@ import {
   PlusIcon,
   SettingsIcon,
   ShieldIcon,
+  UserIcon,
   XIcon,
 } from "lucide-react";
 import Link from "next/link";
@@ -162,10 +166,32 @@ const SessionsTab = ({ onBack }: { onBack: () => void }) => (
   </NavMenuSection>
 );
 
+const AccountsTab = ({ onBack }: { onBack: () => void }) => {
+  const { logout } = useAuthStore();
+
+  const handleLogout = async () => {
+    await logout();
+
+    toast.success("Logged out successfully!");
+    onBack();
+  };
+
+  return (
+    <NavMenuSection title="Accounts" onBack={onBack}>
+      <Button variant="outline" className="text-xs" onClick={handleLogout}>
+        <ArrowUpRightIcon />
+        Log out
+      </Button>
+    </NavMenuSection>
+  );
+};
+
 const MainMenu = (): React.ReactElement => {
   const { setSettingsOpen, setMusicPlayerOpen } = useDialogStore();
   const { setTab } = useTabStore();
+  const { user } = useAuthStore();
   const [activeTab, setActiveTab] = useState<string>("home");
+  const isMobile = useIsMobile();
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
@@ -197,6 +223,9 @@ const MainMenu = (): React.ReactElement => {
             )}
             {activeTab === "sessions" && (
               <SessionsTab onBack={() => handleTabChange("home")} />
+            )}
+            {activeTab === "accounts" && (
+              <AccountsTab onBack={() => handleTabChange("home")} />
             )}
             {activeTab === "home" && (
               <ul className="grid w-full grid-cols-2 gap-x-2 gap-y-2">
@@ -238,18 +267,38 @@ const MainMenu = (): React.ReactElement => {
                 >
                   Github
                 </NavMenuLink>
-                <NavMenuItem
-                  icon={<BadgeInfoIcon size={15} />}
-                  onClick={() => setTab("about")}
-                >
-                  About
-                </NavMenuItem>
-                <NavMenuItem
-                  icon={<ShieldIcon size={15} />}
-                  onClick={() => setTab("privacy")}
-                >
-                  Privacy
-                </NavMenuItem>
+                {isMobile && !user && (
+                  <NavMenuItem
+                    icon={<UserIcon size={15} />}
+                    onClick={() => setTab("signin")}
+                  >
+                    Sign in
+                  </NavMenuItem>
+                )}
+                {isMobile && user && (
+                  <NavMenuItem
+                    icon={<UserIcon size={15} />}
+                    onClick={() => handleTabChange("accounts")}
+                  >
+                    Accounts
+                  </NavMenuItem>
+                )}
+                {isMobile && (
+                  <NavMenuItem
+                    icon={<BadgeInfoIcon size={15} />}
+                    onClick={() => setTab("about")}
+                  >
+                    About
+                  </NavMenuItem>
+                )}
+                {isMobile && (
+                  <NavMenuItem
+                    icon={<ShieldIcon size={15} />}
+                    onClick={() => setTab("privacy")}
+                  >
+                    Privacy
+                  </NavMenuItem>
+                )}
               </ul>
             )}
           </motion.div>
