@@ -4,8 +4,11 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import {
   AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
+  AlertDialogFooter,
   AlertDialogTitle,
 } from "../ui/alert-dialog";
 import { Button } from "../ui/button";
@@ -136,26 +139,22 @@ export default function SyncSection() {
                 <span className="text-foreground">cannot be undone</span>.
               </span>
             </AlertDialogDescription>
-            <div className="flex items-center justify-end gap-4">
-              <Button
-                size="sm"
-                variant="outline"
-                className="border outline-double outline-2 outline-border outline-offset-2"
+            <AlertDialogFooter className="mt-4 gap-1">
+              <AlertDialogCancel
+                className="h-8 border px-2 text-xs outline-double outline-2 outline-border outline-offset-2"
                 onClick={() => setSyncDialogOpen(false)}
                 disabled={syncing}
               >
                 Cancel
-              </Button>
-              <Button
-                size="sm"
-                variant="secondary"
-                className="border outline-double outline-2 outline-border outline-offset-2"
+              </AlertDialogCancel>
+              <AlertDialogAction
+                className="h-8 border bg-secondary px-2 text-foreground text-xs outline-double outline-2 outline-border outline-offset-2"
                 onClick={confirmSync}
                 disabled={syncing}
               >
                 Confirm
-              </Button>
-            </div>
+              </AlertDialogAction>
+            </AlertDialogFooter>
           </div>
         </AlertDialogContent>
       </AlertDialog>

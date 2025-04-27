@@ -135,18 +135,14 @@ const WritesTab = ({ onBack }: { onBack: () => void }) => {
 
   return (
     <NavMenuSection title="Writes" onBack={onBack}>
-      <Button
-        variant="outline"
-        className="rounded-lg text-xs outline-double outline-1 outline-border outline-offset-1 hover:bg-secondary"
-        onClick={handleCreateWrite}
-      >
+      <Button variant="outline" className="text-xs" onClick={handleCreateWrite}>
         <PlusIcon />
         Create New
       </Button>
 
       <Button
         variant="outline"
-        className="rounded-lg text-xs outline-double outline-1 outline-border outline-offset-1 hover:bg-secondary"
+        className="text-xs"
         onClick={() => setWritesHistoryOpen(true)}
       >
         <LibraryBigIcon />
@@ -158,18 +154,12 @@ const WritesTab = ({ onBack }: { onBack: () => void }) => {
 
 const SessionsTab = ({ onBack }: { onBack: () => void }) => (
   <NavMenuSection title="Write Sessions" onBack={onBack}>
-    <Button
-      variant="outline"
-      className="rounded-lg text-xs outline-double outline-1 outline-border outline-offset-1 hover:bg-secondary"
-    >
+    <Button variant="outline" className="text-xs">
       <PlusIcon />
       Create New
     </Button>
 
-    <Button
-      variant="outline"
-      className="rounded-lg text-xs outline-double outline-1 outline-border outline-offset-1 hover:bg-secondary"
-    >
+    <Button variant="outline" className="text-xs">
       <LibraryBigIcon />
       View History
     </Button>
@@ -188,11 +178,7 @@ const AccountsTab = ({ onBack }: { onBack: () => void }) => {
 
   return (
     <NavMenuSection title="Accounts" onBack={onBack}>
-      <Button
-        variant="outline"
-        className="rounded-lg text-xs outline-double outline-1 outline-border outline-offset-1 hover:bg-secondary"
-        onClick={handleLogout}
-      >
+      <Button variant="outline" className="text-xs" onClick={handleLogout}>
         <ArrowUpRightIcon />
         Log out
       </Button>
@@ -242,116 +228,82 @@ const MainMenu = (): React.ReactElement => {
               <AccountsTab onBack={() => handleTabChange("home")} />
             )}
             {activeTab === "home" && (
-              <div className="flex flex-col space-y-4">
-                <div className="flex flex-col space-y-2">
-                  <p className="font-mono text-muted-foreground text-xs">
-                    Explore
-                  </p>
-                  <div className="grid w-full grid-cols-2 gap-x-2 gap-y-2">
-                    <NavMenuItem
-                      icon={<PenIcon size={15} />}
-                      onClick={() => handleTabChange("writes")}
-                    >
-                      Writes
-                    </NavMenuItem>
-                    <NavMenuItem
-                      icon={<PenIcon size={15} />}
-                      onClick={() => handleTabChange("sessions")}
-                    >
-                      Write Sessions
-                    </NavMenuItem>
-
-                    <NavMenuItem
-                      icon={<MusicIcon size={15} />}
-                      onClick={() => setMusicPlayerOpen(true)}
-                    >
-                      Music
-                    </NavMenuItem>
-                    <NavMenuItem icon={<FocusIcon size={15} />}>
-                      Focus Mode
-                    </NavMenuItem>
-
-                    <NavMenuItem
-                      icon={<SettingsIcon size={15} />}
-                      onClick={() => setSettingsOpen(true)}
-                    >
-                      Settings
-                    </NavMenuItem>
-
-                    <NavMenuItem icon={<CircleHelpIcon size={15} />}>
-                      Help
-                    </NavMenuItem>
-                  </div>
-                </div>
-
+              <ul className="grid w-full grid-cols-2 gap-x-2 gap-y-2">
+                <NavMenuItem
+                  icon={<PenIcon size={15} />}
+                  onClick={() => handleTabChange("writes")}
+                >
+                  Writes
+                </NavMenuItem>
+                <NavMenuItem
+                  icon={<PenIcon size={15} />}
+                  onClick={() => handleTabChange("sessions")}
+                >
+                  Write Sessions
+                </NavMenuItem>
+                <NavMenuItem icon={<FocusIcon size={15} />}>
+                  Focus Mode
+                </NavMenuItem>
+                <NavMenuItem
+                  icon={<SettingsIcon size={15} />}
+                  onClick={() => setSettingsOpen(true)}
+                >
+                  Settings
+                </NavMenuItem>
+                <NavMenuItem
+                  icon={<MusicIcon size={15} />}
+                  onClick={() => setMusicPlayerOpen(true)}
+                >
+                  Music
+                </NavMenuItem>
+                <NavMenuItem icon={<CircleHelpIcon size={15} />}>
+                  Help
+                </NavMenuItem>
+                <NavMenuLink
+                  href="https://github.com/tanlucvn/miniwrit"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  icon={<GithubIcon size={15} />}
+                >
+                  Github
+                </NavMenuLink>
                 {isMobile && !user && (
-                  <div className="flex flex-col space-y-2">
-                    <p className="font-mono text-muted-foreground text-xs">
-                      Accounts
-                    </p>
-                    <div className="grid w-full grid-cols-2 gap-x-2 gap-y-2">
-                      <NavMenuItem
-                        icon={<UserIcon size={15} />}
-                        onClick={() => setTab("signin")}
-                      >
-                        Sign in
-                      </NavMenuItem>
-                    </div>
-                  </div>
+                  <NavMenuItem
+                    icon={<UserIcon size={15} />}
+                    onClick={() => setTab("signin")}
+                  >
+                    Sign in
+                  </NavMenuItem>
                 )}
                 {isMobile && user && (
-                  <div className="flex flex-col space-y-2">
-                    <p className="font-mono text-muted-foreground text-xs">
-                      Accounts
-                    </p>
-                    <div className="grid w-full grid-cols-2 gap-x-2 gap-y-2">
-                      <NavMenuItem
-                        icon={<UserIcon size={15} />}
-                        onClick={() => handleTabChange("accounts")}
-                      >
-                        My Account
-                      </NavMenuItem>
-                    </div>
-                  </div>
+                  <NavMenuItem
+                    icon={<UserIcon size={15} />}
+                    onClick={() => handleTabChange("accounts")}
+                  >
+                    Accounts
+                  </NavMenuItem>
                 )}
-
-                <div className="flex flex-col space-y-2">
-                  <p className="font-mono text-muted-foreground text-xs">
-                    Resources
-                  </p>
-                  <div className="grid w-full grid-cols-2 gap-x-2 gap-y-2">
-                    <NavMenuLink
-                      href="https://github.com/tanlucvn/miniwrit"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      icon={<GithubIcon size={15} />}
-                    >
-                      Github
-                    </NavMenuLink>
-
-                    {isMobile && (
-                      <NavMenuItem
-                        icon={<BadgeInfoIcon size={15} />}
-                        onClick={() => setTab("about")}
-                      >
-                        About
-                      </NavMenuItem>
-                    )}
-                    {isMobile && (
-                      <NavMenuItem
-                        icon={<ShieldIcon size={15} />}
-                        onClick={() => setTab("privacy")}
-                      >
-                        Privacy
-                      </NavMenuItem>
-                    )}
-                  </div>
-                </div>
-              </div>
+                {isMobile && (
+                  <NavMenuItem
+                    icon={<BadgeInfoIcon size={15} />}
+                    onClick={() => setTab("about")}
+                  >
+                    About
+                  </NavMenuItem>
+                )}
+                {isMobile && (
+                  <NavMenuItem
+                    icon={<ShieldIcon size={15} />}
+                    onClick={() => setTab("privacy")}
+                  >
+                    Privacy
+                  </NavMenuItem>
+                )}
+              </ul>
             )}
           </motion.div>
 
-          <div className="mt-4 flex items-center justify-between border-t pt-1">
+          <div className="mt-2 flex items-center justify-between border-t pt-1">
             <p className="font-mono text-muted-foreground text-xs">
               Version: 0.1.0
             </p>

@@ -40,7 +40,7 @@ export default function Tabs({
               variant="ghost"
               onClick={() => setTab(tabItem.label)}
               className={cn(
-                "relative z-10 w-full max-w-[200px] rounded-full bg-transparent text-muted-foreground hover:bg-transparent",
+                "relative z-10 w-full max-w-[200px] rounded-full bg-transparent text-muted-foreground text-xs hover:bg-transparent",
                 isActive && "text-foreground",
               )}
             >

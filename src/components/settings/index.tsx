@@ -17,9 +17,9 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useDialogStore } from "@/store/dialog-store";
 import {
+  ArchiveIcon,
   BlendIcon,
   CloudIcon,
-  DatabaseIcon,
   MessageSquareIcon,
   PenIcon,
   TagIcon,
@@ -27,8 +27,8 @@ import {
 import { useRef, useState } from "react";
 import Tabs, { type TabOption } from "../motion/animated-tabs";
 import AppearanceSection from "./appearance-section";
-import DataSection from "./data-section";
 import FeedbackSection from "./feedback-section";
+import StorageSection from "./storage-section";
 import SyncSection from "./sync-section";
 import TagsSection from "./tags-section";
 import WritingSection from "./writing-section";
@@ -55,14 +55,14 @@ const settingsTabs: TabOption[] = [
     content: <FeedbackSection />,
   },
   {
-    label: "Sync Data",
+    label: "Backup & Sync",
     icon: <CloudIcon className="size-4" />,
     content: <SyncSection />,
   },
   {
-    label: "Data",
-    icon: <DatabaseIcon className="size-4" />,
-    content: <DataSection />,
+    label: "Storage",
+    icon: <ArchiveIcon className="size-4" />,
+    content: <StorageSection />,
   },
 ] as const;
 
@@ -81,8 +81,8 @@ export default function Settings() {
       <CredenzaDescription className="sr-only">
         Change your app settings.
       </CredenzaDescription>
-      <CredenzaContent className="border-none p-1">
-        <div className="h-full w-full rounded-md border-2 border-border border-dashed p-1">
+      <CredenzaContent className="!rounded-2xl p-1">
+        <div className="h-full w-full rounded-xl border-2 border-border border-dashed p-1">
           {!isMobile ? (
             <Command
               loop
@@ -103,19 +103,19 @@ export default function Settings() {
                     {settingsTabs.map((tab) => (
                       <CommandItem
                         key={tab.label}
-                        className="flex items-center justify-start gap-2"
+                        className="flex items-center justify-start gap-2 rounded-tr-lg rounded-br-lg text-muted-foreground data-[selected=true]:text-foreground"
                       >
                         {tab.icon}
                         {tab.label}
                       </CommandItem>
                     ))}
                   </CommandGroup>
-                  <CommandEmpty className="p-2 text-base">
-                    No Results.
+                  <CommandEmpty className="p-2 text-xs">
+                    No results.
                   </CommandEmpty>
                 </CommandList>
                 <ScrollArea
-                  className="col-start-2 row-span-2 row-start-1 h-full max-h-[375px] flex-1 overflow-auto border-l-2 pt-2 pr-2 pl-4"
+                  className="col-start-2 row-span-2 row-start-1 h-full max-h-[375px] flex-1 overflow-auto border-l pt-2 pr-2 pl-4"
                   ref={contentRef}
                 >
                   {settingsTabs.find((tab) => tab.label === page)?.content}
