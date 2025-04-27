@@ -11,7 +11,14 @@ import { musicStations } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { useDialogStore } from "@/store/dialog-store";
 import { useMusicStore } from "@/store/music-store";
-import { CircleIcon, PauseIcon, PlayIcon, PlusIcon } from "lucide-react";
+import {
+  CircleIcon,
+  PauseIcon,
+  PlayIcon,
+  PlusIcon,
+  SkipBackIcon,
+  SkipForwardIcon,
+} from "lucide-react";
 import { Suspense, useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import { Drawer } from "vaul";
@@ -30,6 +37,8 @@ const MusicPlayer = () => {
     setMounted,
     customStations,
     addCustomStation,
+    previousStation,
+    nextStation,
   } = useMusicStore();
   const { isMusicPlayerOpen, setMusicPlayerOpen } = useDialogStore();
 
@@ -83,14 +92,15 @@ const MusicPlayer = () => {
                             setStation(url);
                             if (!isPlaying) togglePlay();
                           }}
-                          className={`group cursor-pointer rounded-xl border p-4 text-center text-xs outline-double outline-2 outline-border outline-offset-2 transition ${
-                            isSelected && "bg-secondary"
-                          }`}
+                          className={cn(
+                            "group cursor-pointer rounded-xl border p-4 text-center text-xs outline-double outline-2 outline-border outline-offset-2 transition hover:bg-muted/50",
+                            isSelected && "bg-muted/50",
+                          )}
                         >
                           <div className="flex flex-col items-center gap-2">
                             <CircleIcon
                               className={cn(
-                                "size-4 rounded-full stroke-border outline-double outline-2 outline-border outline-offset-2",
+                                "size-4 rounded-full stroke-border outline-double outline-1 outline-border outline-offset-1",
                                 isSelected && "fill-current",
                               )}
                             />
@@ -164,18 +174,38 @@ const MusicPlayer = () => {
                 />
               </div>
 
-              <Button
-                onClick={togglePlay}
-                size="icon"
-                variant="secondary"
-                className="w-full outline-double outline-2 outline-border outline-offset-2"
-              >
-                {isPlaying ? (
-                  <PauseIcon className="h-4 w-4" />
-                ) : (
-                  <PlayIcon className="h-4 w-4" />
-                )}
-              </Button>
+              <div className="flex items-center justify-between gap-3">
+                <Button
+                  onClick={previousStation}
+                  size="icon"
+                  variant="secondary"
+                  className="flex-1 outline-double outline-2 outline-border outline-offset-2"
+                >
+                  <SkipBackIcon className="h-4 w-4" />
+                </Button>
+
+                <Button
+                  onClick={togglePlay}
+                  size="icon"
+                  variant="secondary"
+                  className="flex-1 outline-double outline-2 outline-border outline-offset-2"
+                >
+                  {isPlaying ? (
+                    <PauseIcon className="h-4 w-4" />
+                  ) : (
+                    <PlayIcon className="h-4 w-4" />
+                  )}
+                </Button>
+
+                <Button
+                  onClick={nextStation}
+                  size="icon"
+                  variant="secondary"
+                  className="flex-1 outline-double outline-2 outline-border outline-offset-2"
+                >
+                  <SkipForwardIcon className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
           </div>
         </Drawer.Content>
