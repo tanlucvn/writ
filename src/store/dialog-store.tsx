@@ -6,6 +6,9 @@ interface DialogStore {
 
   isWritesHistoryOpen: boolean;
   setWritesHistoryOpen: (open: boolean) => void;
+
+  isMusicPlayerOpen: boolean;
+  setMusicPlayerOpen: (open: boolean) => void;
 }
 
 export const useDialogStore = create<DialogStore>((set) => ({
@@ -14,4 +17,7 @@ export const useDialogStore = create<DialogStore>((set) => ({
 
   isWritesHistoryOpen: false,
   setWritesHistoryOpen: (open) => set({ isWritesHistoryOpen: open }),
+
+  isMusicPlayerOpen: false,
+  setMusicPlayerOpen: (open) => set({ isMusicPlayerOpen: open }),
 }));

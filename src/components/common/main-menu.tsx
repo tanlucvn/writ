@@ -19,6 +19,7 @@ import {
   FocusIcon,
   GithubIcon,
   LibraryBigIcon,
+  MusicIcon,
   PenIcon,
   PlusIcon,
   SettingsIcon,
@@ -162,7 +163,7 @@ const SessionsTab = ({ onBack }: { onBack: () => void }) => (
 );
 
 const MainMenu = (): React.ReactElement => {
-  const { setSettingsOpen } = useDialogStore();
+  const { setSettingsOpen, setMusicPlayerOpen } = useDialogStore();
   const { setTab } = useTabStore();
   const [activeTab, setActiveTab] = useState<string>("home");
 
@@ -219,6 +220,12 @@ const MainMenu = (): React.ReactElement => {
                   onClick={() => setSettingsOpen(true)}
                 >
                   Settings
+                </NavMenuItem>
+                <NavMenuItem
+                  icon={<MusicIcon size={15} />}
+                  onClick={() => setMusicPlayerOpen(true)}
+                >
+                  Music
                 </NavMenuItem>
                 <NavMenuItem icon={<CircleHelpIcon size={15} />}>
                   Help

@@ -19,12 +19,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       <div className="fixed right-4 bottom-4 flex items-center justify-center gap-4">
         <ScollToTop />
-        <MusicPlayer />
       </div>
 
       {/* Dialog, Drawer, Sheet , ... */}
       <Settings />
       <WritesHistory />
+      <MusicPlayer />
     </>
   );
 }

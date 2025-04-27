@@ -28,11 +28,11 @@ export enum EditorNodes {
 export const musicStations = [
   {
     label: "Meditation",
-    url: "https://www.youtube.com/watch?v=FjHGZj2IjBk&t=614s",
+    url: "https://www.youtube.com/watch?v=FjHGZj2IjBk",
   },
   {
     label: "In The Green",
-    url: "https://www.youtube.com/watch?v=2PudHraDfis&t=4128s",
+    url: "https://www.youtube.com/watch?v=2PudHraDfis",
   },
   {
     label: "Break Time",
@@ -40,6 +40,6 @@ export const musicStations = [
   },
   {
     label: "Study Night",
-    url: "https://www.youtube.com/watch?v=yiRyARPDSPA&t=973s",
+    url: "https://www.youtube.com/watch?v=yiRyARPDSPA",
   },
 ];
