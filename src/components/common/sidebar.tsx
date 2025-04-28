@@ -1,6 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { useAppStore } from "@/store/app-store";
 import { type Tab, useTabStore } from "@/store/tab-store";
 import TimeDisplay from "../editor/time-display";
 import WordCount from "../editor/word-count";
@@ -9,6 +10,7 @@ import { UserButton } from "./user-button";
 
 export function Sidebar() {
   const { tab, setTab } = useTabStore();
+  const { isZenMode } = useAppStore();
 
   const tabs = [
     { label: "Writes", value: "writes" },
@@ -17,7 +19,13 @@ export function Sidebar() {
   ];
 
   return (
-    <nav className="-translate-x-[470px] fixed top-[42px] bottom-[40px] left-1/2 flex w-[120px] transform flex-col justify-between p-4">
+    <nav
+      className={cn(
+        "-translate-x-[470px] fixed top-[42px] bottom-[40px] left-1/2 flex w-[120px] transform flex-col justify-between p-4",
+        isZenMode &&
+          "pointer-events-none opacity-0 transition-all delay-75 duration-150",
+      )}
+    >
       <div className="flex flex-col items-start space-y-2 text-xs">
         {tabs.map((item) => (
           <Button

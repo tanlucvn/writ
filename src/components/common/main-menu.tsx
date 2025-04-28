@@ -201,6 +201,7 @@ const AccountsTab = ({ onBack }: { onBack: () => void }) => {
 };
 
 const MainMenu = (): React.ReactElement => {
+  const { toggleZenMode } = useAppStore();
   const { setSettingsOpen, setMusicPlayerOpen } = useDialogStore();
   const { setTab } = useTabStore();
   const { user } = useAuthStore();
@@ -267,7 +268,10 @@ const MainMenu = (): React.ReactElement => {
                     >
                       Music
                     </NavMenuItem>
-                    <NavMenuItem icon={<FocusIcon size={15} />}>
+                    <NavMenuItem
+                      icon={<FocusIcon size={15} />}
+                      onClick={toggleZenMode}
+                    >
                       Focus Mode
                     </NavMenuItem>
 
