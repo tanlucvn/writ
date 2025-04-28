@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useAppStore } from "@/store/app-store";
+import { useAppSettingsStore } from "@/store/app-settings-store";
 import { type Tab, useTabStore } from "@/store/tab-store";
 import TimeDisplay from "../editor/time-display";
 import WordCount from "../editor/word-count";
@@ -10,7 +10,7 @@ import { UserButton } from "./user-button";
 
 export function Sidebar() {
   const { tab, setTab } = useTabStore();
-  const { isZenMode } = useAppStore();
+  const { isZenMode } = useAppSettingsStore();
 
   const tabs = [
     { label: "Writes", value: "writes" },

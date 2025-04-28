@@ -10,18 +10,7 @@ import type { Editor } from "@tiptap/react";
 import { toast } from "sonner";
 import { create } from "zustand";
 
-export type AppColor = "default" | "beige";
-
 interface AppStore {
-  fontSize: number;
-  setFontSize: (size: number) => void;
-  fontFamily: string;
-  setFontFamily: (family: string) => void;
-  isZenMode: boolean;
-  toggleZenMode: () => void;
-  appColor: AppColor;
-  setAppColor: (color: AppColor) => void;
-
   writes: Write[];
   setWrites: (writes: Write[]) => void;
   tags: Tag[];
@@ -44,15 +33,6 @@ interface AppStore {
 }
 
 export const useAppStore = create<AppStore>((set) => ({
-  fontSize: 16,
-  setFontSize: (size) => set({ fontSize: Math.min(Math.max(size, 12), 32) }), // Min 12 - Max 32
-  fontFamily: "inter",
-  setFontFamily: (family) => set({ fontFamily: family }),
-  isZenMode: false,
-  toggleZenMode: () => set((state) => ({ isZenMode: !state.isZenMode })),
-  appColor: "default",
-  setAppColor: (color) => set({ appColor: color }),
-
   writes: [],
   setWrites: (writes) => set({ writes }),
   tags: [],
@@ -69,9 +49,8 @@ export const useAppStore = create<AppStore>((set) => ({
   },
 
   createNewWrite: async () => {
-    const { fontFamily, fontSize, setCurrentWrite, refreshWrites } =
-      useAppStore.getState();
-    const newWrite = createWrite(fontFamily, fontSize);
+    const { setCurrentWrite, refreshWrites } = useAppStore.getState();
+    const newWrite = createWrite("inter", 16);
     await saveWrite(newWrite);
 
     toast.success("New write created successfully!");
@@ -105,8 +84,7 @@ export const useAppStore = create<AppStore>((set) => ({
     try {
       await clearAll();
 
-      const { fontFamily, fontSize } = useAppStore.getState();
-      const newWrite = createWrite(fontFamily, fontSize);
+      const newWrite = createWrite("inter", 16);
       await saveWrite(newWrite);
 
       set({

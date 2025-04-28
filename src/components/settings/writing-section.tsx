@@ -8,19 +8,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useAppSettingsStore } from "@/store/app-settings-store";
 import { useAppStore } from "@/store/app-store";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { Separator } from "../ui/separator";
 
 export default function WritingSection() {
-  const {
-    fontFamily,
-    setFontFamily,
-    fontSize,
-    setFontSize,
-    editorMode,
-    setEditorMode,
-  } = useAppStore();
+  const { editorMode, setEditorMode } = useAppStore();
+  const { fontFamily, setFontFamily, fontSize, setFontSize } =
+    useAppSettingsStore();
 
   const handleDecrease = () => setFontSize(Math.max(fontSize - 1, 12));
   const handleIncrease = () => setFontSize(Math.min(fontSize + 1, 32));

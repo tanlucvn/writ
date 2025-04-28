@@ -1,5 +1,6 @@
 "use client";
 
+import { useAppSettingsStore } from "@/store/app-settings-store";
 import { useAppStore } from "@/store/app-store";
 import { useDialogStore } from "@/store/dialog-store";
 import { useTheme } from "next-themes";
@@ -14,7 +15,8 @@ import WritesHistory from "../modals/writes-history";
 import ScollToTop from "../scroll-to-top";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const { toggleZenMode, createNewWrite, appColor } = useAppStore();
+  const { createNewWrite } = useAppStore();
+  const { appColor, toggleZenMode } = useAppSettingsStore();
   const { setIsHelpDialogOpen, setMusicPlayerOpen, setSettingsOpen } =
     useDialogStore();
   const { theme } = useTheme();

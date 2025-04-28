@@ -1,11 +1,11 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useAppStore } from "@/store/app-store";
+import { useAppSettingsStore } from "@/store/app-settings-store";
 import { MainMenu } from "./main-menu";
 
 export function HeaderCard() {
-  const { isZenMode } = useAppStore();
+  const { isZenMode } = useAppSettingsStore();
 
   return (
     <div className="flex w-full flex-col items-center justify-center space-y-4 border-b pb-10">

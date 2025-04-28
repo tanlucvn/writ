@@ -9,6 +9,7 @@ import {
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import {} from "@/services/db/writes";
+import { useAppSettingsStore } from "@/store/app-settings-store";
 import { useAppStore } from "@/store/app-store";
 import { useAuthStore } from "@/store/auth-store";
 import { useDialogStore } from "@/store/dialog-store";
@@ -191,7 +192,7 @@ const AccountsTab = ({ onBack }: { onBack: () => void }) => {
 };
 
 const MainMenu = (): React.ReactElement => {
-  const { toggleZenMode } = useAppStore();
+  const { toggleZenMode } = useAppSettingsStore();
   const { setSettingsOpen, setMusicPlayerOpen, setIsHelpDialogOpen } =
     useDialogStore();
   const { setTab } = useTabStore();

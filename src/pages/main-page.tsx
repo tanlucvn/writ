@@ -4,18 +4,13 @@ import BubbleToolbar from "@/components/editor/bubble-toolbar";
 import EditorToolbar from "@/components/editor/editor-toolbar";
 import Loading from "@/components/loading";
 import { createWrite, getLatestWrite, saveWrite } from "@/services/db/writes";
+import { useAppSettingsStore } from "@/store/app-settings-store";
 import { useAppStore } from "@/store/app-store";
 import { useCallback, useEffect } from "react";
 
 export default function MainPage() {
-  const {
-    fontSize,
-    fontFamily,
-    currentWrite,
-    setCurrentWrite,
-    initDB,
-    editorMode,
-  } = useAppStore();
+  const { currentWrite, setCurrentWrite, initDB, editorMode } = useAppStore();
+  const { fontSize, fontFamily } = useAppSettingsStore();
 
   const initializeData = useCallback(async () => {
     try {

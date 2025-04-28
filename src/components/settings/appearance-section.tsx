@@ -1,6 +1,6 @@
 import { ThemeSwitcher } from "@/components/theme";
 import { Label } from "@/components/ui/label";
-import { type AppColor, useAppStore } from "@/store/app-store";
+import { type AppColor, useAppSettingsStore } from "@/store/app-settings-store";
 import {
   Select,
   SelectContent,
@@ -10,7 +10,7 @@ import {
 } from "../ui/select";
 
 export default function AppearanceSection() {
-  const { appColor, setAppColor } = useAppStore();
+  const { appColor, setAppColor } = useAppSettingsStore();
 
   return (
     <div className="flex flex-col gap-5">

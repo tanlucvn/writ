@@ -4,6 +4,7 @@ import Writer from "@/components/editor/writer";
 import Loading from "@/components/loading";
 import { cn } from "@/lib/utils";
 import { saveWrite } from "@/services/db/writes";
+import { useAppSettingsStore } from "@/store/app-settings-store";
 import { useAppStore } from "@/store/app-store";
 import { BubbleMenu } from "@tiptap/extension-bubble-menu";
 import CharacterCount from "@tiptap/extension-character-count";
@@ -16,14 +17,9 @@ import StarterKit from "@tiptap/starter-kit";
 import { useEffect } from "react";
 
 export default function Editor() {
-  const {
-    fontSize,
-    fontFamily,
-    currentWrite,
-    setCurrentWrite,
-    refreshWrites,
-    setEditor,
-  } = useAppStore();
+  const { currentWrite, setCurrentWrite, refreshWrites, setEditor } =
+    useAppStore();
+  const { fontSize, fontFamily } = useAppSettingsStore();
 
   const editor = useEditor({
     extensions: [
