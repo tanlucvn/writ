@@ -69,14 +69,23 @@ export default function SyncSection() {
 
   return (
     <div className="flex flex-col space-y-5">
-      <div className="flex flex-col space-y-2">
+      <div className="flex flex-col space-y-4">
         {!user ? (
           <div className="text-left text-foreground text-sm">
             Please log in to sync your data.
           </div>
         ) : (
           <>
-            <div className="flex flex-col space-y-4 p-1">
+            <div className="space-y-4 p-1">
+              <div className="space-y-1">
+                <h1 className="font-bold font-mono text-xs">
+                  Sync Local Data to Cloud
+                </h1>
+                <p className="text-muted-foreground text-sm">
+                  This will overwrite your cloud data with the local data. Make
+                  sure your local data is up-to-date before syncing.
+                </p>
+              </div>
               <Button
                 size="sm"
                 variant="secondary"
@@ -86,7 +95,18 @@ export default function SyncSection() {
               >
                 Sync Local Data to Cloud
               </Button>
+            </div>
 
+            <div className="space-y-4 p-1">
+              <div className="space-y-1">
+                <h1 className="font-bold font-mono text-xs">
+                  Sync Cloud Data to Local
+                </h1>
+                <p className="text-muted-foreground text-sm">
+                  This will overwrite your local data with the cloud data.
+                  Ensure that your cloud data is up-to-date before syncing.
+                </p>
+              </div>
               <Button
                 size="sm"
                 variant="ghost"
@@ -102,10 +122,11 @@ export default function SyncSection() {
       </div>
       <hr />
       <div className="text-muted-foreground text-sm">
-        Keep your writes and ideas seamlessly synced across devices and the
-        cloud for an uninterrupted writing experience. Choose your preferred
-        sync direction based on your needs and enjoy effortless access to your
-        content anywhere.
+        Keep your <span className="text-foreground">writes</span> and ideas
+        seamlessly synced across devices and the{" "}
+        <span className="text-foreground">cloud</span> for an uninterrupted
+        writing experience. Choose your preferred sync direction based on your
+        needs and enjoy effortless access to your content anywhere.
       </div>
 
       <AlertDialog open={syncDialogOpen} onOpenChange={setSyncDialogOpen}>
