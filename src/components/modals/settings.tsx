@@ -26,12 +26,12 @@ import {
 } from "lucide-react";
 import { useRef, useState } from "react";
 import Tabs, { type TabOption } from "../motion/animated-tabs";
-import AppearanceSection from "./appearance-section";
-import FeedbackSection from "./feedback-section";
-import StorageSection from "./storage-section";
-import SyncSection from "./sync-section";
-import TagsSection from "./tags-section";
-import WritingSection from "./writing-section";
+import AppearanceSection from "../settings/appearance-section";
+import FeedbackSection from "../settings/feedback-section";
+import StorageSection from "../settings/storage-section";
+import SyncSection from "../settings/sync-section";
+import TagsSection from "../settings/tags-section";
+import WritingSection from "../settings/writing-section";
 
 const settingsTabs: TabOption[] = [
   {

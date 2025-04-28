@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/popover";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
-import { createWrite, saveWrite } from "@/services/db/writes";
+import {} from "@/services/db/writes";
 import { useAppStore } from "@/store/app-store";
 import { useAuthStore } from "@/store/auth-store";
 import { useDialogStore } from "@/store/dialog-store";
@@ -120,25 +120,15 @@ const NavMenuSection = ({ title, children, onBack }: NavMenuSectionProps) => (
 );
 
 const WritesTab = ({ onBack }: { onBack: () => void }) => {
-  const { setCurrentWrite, refreshWrites } = useAppStore();
+  const { createNewWrite } = useAppStore();
   const { setWritesHistoryOpen } = useDialogStore();
-
-  const handleCreateWrite = async () => {
-    const newWrite = createWrite();
-    await saveWrite(newWrite);
-
-    toast.success("New write created successfully!");
-
-    setCurrentWrite(newWrite);
-    refreshWrites();
-  };
 
   return (
     <NavMenuSection title="Writes" onBack={onBack}>
       <Button
         variant="outline"
         className="rounded-lg text-xs outline-double outline-1 outline-border outline-offset-1 hover:bg-secondary"
-        onClick={handleCreateWrite}
+        onClick={createNewWrite}
       >
         <PlusIcon />
         Create New
@@ -202,7 +192,8 @@ const AccountsTab = ({ onBack }: { onBack: () => void }) => {
 
 const MainMenu = (): React.ReactElement => {
   const { toggleZenMode } = useAppStore();
-  const { setSettingsOpen, setMusicPlayerOpen } = useDialogStore();
+  const { setSettingsOpen, setMusicPlayerOpen, setIsHelpDialogOpen } =
+    useDialogStore();
   const { setTab } = useTabStore();
   const { user } = useAuthStore();
   const [activeTab, setActiveTab] = useState<string>("home");
@@ -282,7 +273,10 @@ const MainMenu = (): React.ReactElement => {
                       Settings
                     </NavMenuItem>
 
-                    <NavMenuItem icon={<CircleHelpIcon size={15} />}>
+                    <NavMenuItem
+                      icon={<CircleHelpIcon size={15} />}
+                      onClick={() => setIsHelpDialogOpen(true)}
+                    >
                       Help
                     </NavMenuItem>
                   </div>

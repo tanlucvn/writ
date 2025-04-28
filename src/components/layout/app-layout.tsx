@@ -1,11 +1,27 @@
+"use client";
+
+import { useAppStore } from "@/store/app-store";
+import { useDialogStore } from "@/store/dialog-store";
+import { useHotkeys } from "react-hotkeys-hook";
 import { HeaderCard } from "../common/header-card";
 import { Sidebar } from "../common/sidebar";
-import MusicPlayer from "../music-player";
+import HelpDialog from "../modals/help-dialog";
+import MusicPlayer from "../modals/music-player";
+import Settings from "../modals/settings";
+import WritesHistory from "../modals/writes-history";
 import ScollToTop from "../scroll-to-top";
-import Settings from "../settings";
-import WritesHistory from "../writes/writes-history";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const { toggleZenMode, createNewWrite } = useAppStore();
+  const { setIsHelpDialogOpen, setMusicPlayerOpen, setSettingsOpen } =
+    useDialogStore();
+
+  useHotkeys("alt+z", toggleZenMode);
+  useHotkeys("alt+n", createNewWrite);
+  useHotkeys("alt+h", () => setIsHelpDialogOpen(true));
+  useHotkeys("alt+m", () => setMusicPlayerOpen(true));
+  useHotkeys("alt+s", () => setSettingsOpen(true));
+
   return (
     <>
       <Sidebar />
@@ -25,6 +41,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <Settings />
       <WritesHistory />
       <MusicPlayer />
+      <HelpDialog />
     </>
   );
 }

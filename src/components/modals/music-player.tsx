@@ -22,8 +22,8 @@ import {
 import { Suspense, useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import { Drawer } from "vaul";
-import { Input } from "./ui/input";
-import { ScrollArea } from "./ui/scroll-area";
+import { Input } from "../ui/input";
+import { ScrollArea } from "../ui/scroll-area";
 
 const MusicPlayer = () => {
   const {

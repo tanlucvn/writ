@@ -7,6 +7,7 @@ import {
   saveWrite,
 } from "@/services/db/writes";
 import type { Editor } from "@tiptap/react";
+import { toast } from "sonner";
 import { create } from "zustand";
 
 interface AppStore {
@@ -25,6 +26,8 @@ interface AppStore {
   currentWrite: Write | null;
   setCurrentWrite: (write: Write) => void;
   saveCurrentWrite: () => Promise<void>;
+
+  createNewWrite: () => Promise<void>;
   refreshWrites: () => Promise<void>;
 
   editor: Editor | null;
@@ -57,6 +60,18 @@ export const useAppStore = create<AppStore>((set) => ({
       await saveWrite(currentWrite);
       await refreshWrites();
     }
+  },
+
+  createNewWrite: async () => {
+    const { fontFamily, fontSize, setCurrentWrite, refreshWrites } =
+      useAppStore.getState();
+    const newWrite = createWrite(fontFamily, fontSize);
+    await saveWrite(newWrite);
+
+    toast.success("New write created successfully!");
+
+    setCurrentWrite(newWrite);
+    refreshWrites();
   },
   refreshWrites: async () => {
     const allWrites = await getAllWrites();

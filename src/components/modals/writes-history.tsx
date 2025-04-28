@@ -9,9 +9,9 @@ import { Loader2, XIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Drawer } from "vaul";
 import { AnimatedNumberBadge } from "../animated-number-badge";
-import { HistoryItem } from "./history/item";
-import { MultiSelectTag } from "./history/multi-select-tag";
-import SortDropdown from "./history/sort";
+import { HistoryItem } from "../writes/item";
+import { MultiSelectTag } from "../writes/multi-select-tag";
+import SortDropdown from "../writes/sort";
 
 export default function WritesHistory() {
   const { writes, tags, refreshWrites } = useAppStore();

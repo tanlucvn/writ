@@ -9,6 +9,9 @@ interface DialogStore {
 
   isMusicPlayerOpen: boolean;
   setMusicPlayerOpen: (open: boolean) => void;
+
+  isHelpDialogOpen: boolean;
+  setIsHelpDialogOpen: (open: boolean) => void;
 }
 
 export const useDialogStore = create<DialogStore>((set) => ({
@@ -20,4 +23,7 @@ export const useDialogStore = create<DialogStore>((set) => ({
 
   isMusicPlayerOpen: false,
   setMusicPlayerOpen: (open) => set({ isMusicPlayerOpen: open }),
+
+  isHelpDialogOpen: false,
+  setIsHelpDialogOpen: (open) => set({ isHelpDialogOpen: open }),
 }));
