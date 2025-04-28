@@ -10,6 +10,8 @@ import type { Editor } from "@tiptap/react";
 import { toast } from "sonner";
 import { create } from "zustand";
 
+export type AppColor = "default" | "beige";
+
 interface AppStore {
   fontSize: number;
   setFontSize: (size: number) => void;
@@ -17,6 +19,8 @@ interface AppStore {
   setFontFamily: (family: string) => void;
   isZenMode: boolean;
   toggleZenMode: () => void;
+  appColor: AppColor;
+  setAppColor: (color: AppColor) => void;
 
   writes: Write[];
   setWrites: (writes: Write[]) => void;
@@ -46,6 +50,8 @@ export const useAppStore = create<AppStore>((set) => ({
   setFontFamily: (family) => set({ fontFamily: family }),
   isZenMode: false,
   toggleZenMode: () => set((state) => ({ isZenMode: !state.isZenMode })),
+  appColor: "default",
+  setAppColor: (color) => set({ appColor: color }),
 
   writes: [],
   setWrites: (writes) => set({ writes }),

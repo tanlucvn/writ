@@ -2,6 +2,8 @@
 
 import { useAppStore } from "@/store/app-store";
 import { useDialogStore } from "@/store/dialog-store";
+import { useTheme } from "next-themes";
+import { useEffect } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { HeaderCard } from "../common/header-card";
 import { Sidebar } from "../common/sidebar";
@@ -12,15 +14,20 @@ import WritesHistory from "../modals/writes-history";
 import ScollToTop from "../scroll-to-top";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const { toggleZenMode, createNewWrite } = useAppStore();
+  const { toggleZenMode, createNewWrite, appColor } = useAppStore();
   const { setIsHelpDialogOpen, setMusicPlayerOpen, setSettingsOpen } =
     useDialogStore();
+  const { theme } = useTheme();
 
   useHotkeys("alt+z", toggleZenMode);
   useHotkeys("alt+n", createNewWrite);
   useHotkeys("alt+h", () => setIsHelpDialogOpen(true));
   useHotkeys("alt+m", () => setMusicPlayerOpen(true));
   useHotkeys("alt+s", () => setSettingsOpen(true));
+
+  useEffect(() => {
+    document.documentElement.className = `${appColor} ${theme}`;
+  }, [appColor, theme]);
 
   return (
     <>
