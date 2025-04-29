@@ -24,7 +24,7 @@ export default function WritingSection() {
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-col gap-2">
-        <span className="text-muted-foreground text-sm">Fonts</span>
+        <span className="font-mono text-muted-foreground text-sm">Fonts</span>
         <div className="flex items-center justify-between space-x-2">
           <Label htmlFor="hide-favicons">Write font</Label>
           <Select
@@ -79,7 +79,9 @@ export default function WritingSection() {
       <Separator />
 
       <div className="flex flex-col gap-2">
-        <span className="text-muted-foreground text-sm">Editor Mode</span>
+        <span className="font-mono text-muted-foreground text-sm">
+          Editor Mode
+        </span>
         <div className="flex items-center justify-between space-x-2">
           <Label htmlFor="editor-mode">Mode</Label>
           <Select value={editorMode} onValueChange={setEditorMode}>

@@ -97,7 +97,7 @@ export default function Settings() {
                   className="w-full"
                 />
               </div>
-              <div className="grid h-full grid-cols-[150px_auto] grid-rows-[1fr_30px] gap-4">
+              <div className="grid h-full grid-cols-[150px_auto] grid-rows-[1fr_30px] gap-2">
                 <CommandList>
                   <CommandGroup>
                     {settingsTabs.map((tab) => (
@@ -115,10 +115,12 @@ export default function Settings() {
                   </CommandEmpty>
                 </CommandList>
                 <ScrollArea
-                  className="col-start-2 row-span-2 row-start-1 h-full max-h-[375px] flex-1 overflow-auto border-l pt-2 pr-2 pl-4"
+                  className="col-start-2 row-span-2 row-start-1 h-full max-h-[375px] flex-1 overflow-auto border-l"
                   ref={contentRef}
                 >
-                  {settingsTabs.find((tab) => tab.label === page)?.content}
+                  <div className="size-full pt-2 pr-2 pl-4">
+                    {settingsTabs.find((tab) => tab.label === page)?.content}
+                  </div>
                 </ScrollArea>
               </div>
             </Command>

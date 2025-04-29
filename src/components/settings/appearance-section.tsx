@@ -1,5 +1,6 @@
 import { ThemeSwitcher } from "@/components/theme";
 import { Label } from "@/components/ui/label";
+import { COLOR_OPTIONS } from "@/lib/constants";
 import { type AppColor, useAppSettingsStore } from "@/store/app-settings-store";
 import {
   Select,
@@ -12,10 +13,14 @@ import {
 export default function AppearanceSection() {
   const { appColor, setAppColor } = useAppSettingsStore();
 
+  const selectedColor = COLOR_OPTIONS.find((opt) => opt.value === appColor);
+
   return (
     <div className="flex flex-col gap-5">
       <div className="flex flex-col gap-2">
-        <span className="text-muted-foreground text-sm">App color</span>
+        <span className="font-mono text-muted-foreground text-sm">
+          App color
+        </span>
         <div className="flex items-center justify-between space-x-2">
           <Label htmlFor="color-select">Color</Label>
           <Select
@@ -25,12 +30,24 @@ export default function AppearanceSection() {
             <SelectTrigger id="color-select" className="h-8 w-[180px] text-xs">
               <SelectValue placeholder="Select a color" />
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="default">Default</SelectItem>
-              <SelectItem value="beige">Beige</SelectItem>
+            <SelectContent className="rounded-2xl">
+              <div className="h-full w-full rounded-xl border-2 border-border border-dashed p-1">
+                {COLOR_OPTIONS.map((option) => (
+                  <SelectItem
+                    key={option.value}
+                    value={option.value}
+                    className="rounded-lg"
+                  >
+                    <span className="font-medium text-xs">{option.label}</span>
+                  </SelectItem>
+                ))}
+              </div>
             </SelectContent>
           </Select>
         </div>
+        {selectedColor && (
+          <p className="text-muted-foreground text-xs">{selectedColor.desc}</p>
+        )}
       </div>
       <hr />
       <div className="flex flex-col gap-2 text-muted-foreground text-sm">

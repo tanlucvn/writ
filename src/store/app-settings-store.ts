@@ -1,7 +1,7 @@
 import { loadFromLocalStorage, saveToLocalStorage } from "@/lib/local-storage";
 import { create } from "zustand";
 
-export type AppColor = "default" | "beige";
+export type AppColor = "default" | "beige" | "olive" | "ash" | "fog" | "mono";
 
 interface AppSettingsStore {
   fontSize: number;
