@@ -6,7 +6,7 @@ import {
   getWritesCountByDay,
 } from "@/services/db/statistics";
 import { useDialogStore } from "@/store/dialog-store";
-import { ChevronLeft, ChevronRight, RotateCwIcon } from "lucide-react";
+import { ChevronLeft, ChevronRight, RotateCwIcon, XIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Drawer } from "vaul";
 import { Button } from "./ui/button";
@@ -71,16 +71,24 @@ const StatsDashboard = () => {
     >
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 z-20 bg-black/40" />
-        <Drawer.Content className="fixed right-0 bottom-0 z-40 h-full w-[450px] max-w-xs overflow-hidden rounded-tl-xl rounded-bl-xl border bg-background p-1 shadow-xl outline-none sm:max-w-md md:max-w-lg">
-          <div className="flex h-full w-full flex-col rounded-tl-xl rounded-bl-xl border-2 border-border border-dashed">
+        <Drawer.Content className="fixed right-0 bottom-0 z-40 h-full w-full overflow-hidden rounded-tl-xl rounded-bl-xl border bg-background p-1 shadow-xl outline-none sm:w-[450px] sm:max-w-md md:max-w-lg">
+          <div className="flex h-full w-full flex-col rounded-xl border-2 border-border border-dashed sm:rounded-tr-none sm:rounded-br-none">
             <div className="flex flex-col gap-4 px-4 pt-4">
-              <div className="flex flex-col gap-1">
+              <div className="relative flex flex-col gap-1">
                 <p className="font-mono text-muted-foreground text-xs">
                   Track your writing activity by month.
                 </p>
                 <Drawer.Title className="font-medium text-base text-foreground">
                   Writing Statistics
                 </Drawer.Title>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="absolute right-0 size-8"
+                  onClick={() => setStatisticsOpen(false)}
+                >
+                  <XIcon />
+                </Button>
               </div>
 
               <div className="grid grid-cols-3 gap-3 text-center text-foreground text-sm">
@@ -147,7 +155,7 @@ const StatsDashboard = () => {
                           <span key={day}>{day}</span>
                         ))}
                       </div>
-                      <div className="grid w-full max-w-sm grid-cols-7 place-items-center gap-1">
+                      <div className="grid w-full max-w-sm grid-cols-7 place-items-center gap-2">
                         {Array.from({ length: daysInMonth }, (_, index) => {
                           const date = new Date(
                             Date.UTC(year, month, index + 1),
