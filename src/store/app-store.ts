@@ -10,6 +10,8 @@ import type { Editor } from "@tiptap/react";
 import { toast } from "sonner";
 import { create } from "zustand";
 
+export type SyncStatus = "idle" | "syncing" | "success" | "error";
+
 interface AppStore {
   writes: Write[];
   setWrites: (writes: Write[]) => void;
@@ -26,6 +28,9 @@ interface AppStore {
   setEditor: (editor: Editor | null) => void;
   editorMode: "floating" | "bubble";
   setEditorMode: (mode: "floating" | "bubble") => void;
+
+  syncStatus: SyncStatus;
+  setSyncStatus: (status: SyncStatus) => void;
 
   initDB: () => Promise<void>;
   clearDB: () => Promise<void>;
@@ -59,6 +64,9 @@ export const useAppStore = create<AppStore>((set) => ({
   setEditor: (editor) => set({ editor }),
   editorMode: "floating",
   setEditorMode: (mode) => set({ editorMode: mode }),
+
+  syncStatus: "idle",
+  setSyncStatus: (syncStatus) => set({ syncStatus }),
 
   initDB: async () => {
     try {

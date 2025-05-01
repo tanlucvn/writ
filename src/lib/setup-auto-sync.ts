@@ -2,9 +2,11 @@ import { syncDexieToSupabase } from "@/services/sync";
 import { useAppSettingsStore } from "@/store/app-settings-store";
 
 export const setupAutoSync = ({
+  onStart,
   onSuccess,
   onError,
 }: {
+  onStart?: () => void;
   onSuccess?: () => void;
   onError?: (e: unknown) => void;
 }): (() => void) => {
@@ -13,6 +15,7 @@ export const setupAutoSync = ({
   const intervalId = setInterval(
     async () => {
       try {
+        onStart?.();
         await syncDexieToSupabase();
         onSuccess?.();
       } catch (e) {

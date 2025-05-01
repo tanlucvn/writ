@@ -2,12 +2,13 @@
 
 import { setupAutoSync } from "@/lib/setup-auto-sync";
 import { useAppSettingsStore } from "@/store/app-settings-store";
+import { useAppStore } from "@/store/app-store";
 import { useAuthStore } from "@/store/auth-store";
 import { useEffect, useRef } from "react";
-import { toast } from "sonner";
 
 export function AutoSyncInitializer() {
   const { user } = useAuthStore();
+  const { setSyncStatus } = useAppStore();
   const { isAutoSync } = useAppSettingsStore();
   const hasInitialized = useRef(false);
 
@@ -18,15 +19,16 @@ export function AutoSyncInitializer() {
 
     hasInitialized.current = true;
     const cleanup = setupAutoSync({
-      onSuccess: () => toast.success("Auto sync successful!"),
-      onError: () => toast.error("Auto sync failed."),
+      onStart: () => setSyncStatus("syncing"),
+      onSuccess: () => setSyncStatus("success"),
+      onError: () => setSyncStatus("error"),
     });
 
     return () => {
       cleanup();
       hasInitialized.current = false;
     };
-  }, [user, isAutoSync]);
+  }, [user, isAutoSync, setSyncStatus]);
 
   return null;
 }

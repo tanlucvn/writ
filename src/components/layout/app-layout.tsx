@@ -15,6 +15,7 @@ import Settings from "../modals/settings";
 import WritesHistory from "../modals/writes-history";
 import ScollToTop from "../scroll-to-top";
 import StatsDashboard from "../statistics";
+import { SyncIndicator } from "../sync-indicator";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { createNewWrite } = useAppStore();
@@ -44,7 +45,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </div>
       </main>
 
-      <div className="fixed right-4 bottom-4 flex items-center justify-center gap-4">
+      <div className="fixed bottom-4 left-4 flex items-center justify-center gap-4">
         <ScollToTop />
       </div>
 
@@ -57,6 +58,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       {/* Auto Sync */}
       <AutoSyncInitializer />
+      <SyncIndicator />
     </>
   );
 }
