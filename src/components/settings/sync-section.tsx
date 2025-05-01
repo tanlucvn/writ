@@ -1,6 +1,7 @@
 import { syncDexieToSupabase, syncSupabaseToDexie } from "@/services/sync";
 import { useAppSettingsStore } from "@/store/app-settings-store";
 import { useAuthStore } from "@/store/auth-store";
+import { MoveRightIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import {
@@ -13,8 +14,15 @@ import {
   AlertDialogTitle,
 } from "../ui/alert-dialog";
 import { Button } from "../ui/button";
-import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import { Switch } from "../ui/switch";
 
 export default function SyncSection() {
   const [syncing, setSyncing] = useState(false);
@@ -23,7 +31,10 @@ export default function SyncSection() {
     "dexieToSupabase" | "supabaseToDexie" | null
   >(null);
   const { user, fetchSession } = useAuthStore();
-  const { syncInterval, setSyncInterval } = useAppSettingsStore();
+  const { syncInterval, setSyncInterval, isAutoSync, toggleAutoSync } =
+    useAppSettingsStore();
+
+  const recommendedOptions = [1, 5, 10, 15, 30, 60]; // in minutes
 
   useEffect(() => {
     if (!user) {
@@ -72,37 +83,65 @@ export default function SyncSection() {
   };
 
   return (
-    <div className="flex flex-col space-y-5">
-      <div className="flex flex-col space-y-4">
+    <div className="flex flex-col space-y-6">
+      <div className="flex flex-col space-y-6">
         {!user ? (
           <div className="text-left text-foreground text-sm">
             Please log in to sync your data.
           </div>
         ) : (
           <>
-            <div className="space-y-2">
-              <p className="font-mono text-muted-foreground text-xs">
-                Set the interval (in minutes) for automatic data sync.
-              </p>
-              <Label className="font-medium text-sm">Sync Interval</Label>
-              <Input
-                type="number"
-                value={syncInterval}
-                onChange={(e) => setSyncInterval(Number(e.target.value))}
-                min={1}
-                max={60}
-                disabled={syncing}
-              />
-            </div>
+            <div className="flex flex-col space-y-2">
+              <span className="font-mono text-muted-foreground text-xs">
+                Automation
+              </span>
+              <div className="flex items-center justify-between space-x-2">
+                <Label htmlFor="auto-sync">Auto sync</Label>
+                <Switch
+                  id="auto-sync"
+                  checked={isAutoSync}
+                  onCheckedChange={toggleAutoSync}
+                />
+              </div>
 
-            <div className="space-y-4 p-1">
+              <Select
+                disabled={!isAutoSync}
+                value={syncInterval.toString()}
+                onValueChange={(value) => setSyncInterval(Number(value))}
+              >
+                <SelectTrigger className="h-8">
+                  <SelectValue placeholder="Select interval" />
+                </SelectTrigger>
+                <SelectContent className="rounded-2xl">
+                  <div className="h-full w-full rounded-xl border-2 border-border border-dashed p-1">
+                    {recommendedOptions.map((minutes) => (
+                      <SelectItem key={minutes} value={minutes.toString()}>
+                        <span className="font-medium text-xs">
+                          Every {minutes} {minutes === 1 ? "minute" : "minutes"}
+                        </span>
+                      </SelectItem>
+                    ))}
+                  </div>
+                </SelectContent>
+              </Select>
+              <p className="text-muted-foreground text-xs">
+                Set how often to sync data automatically (in minutes).
+              </p>
+            </div>
+            <hr />
+            <div className="space-y-2">
+              <span className="font-mono text-muted-foreground text-xs">
+                Sync Options
+              </span>
               <div className="space-y-1">
-                <h1 className="font-bold font-mono text-xs">
-                  Sync Local Data to Cloud
-                </h1>
-                <p className="text-muted-foreground text-sm">
-                  This will overwrite your cloud data with the local data. Make
-                  sure your local data is up-to-date before syncing.
+                <Label className="flex items-center gap-1">
+                  <span>Local</span>
+                  <MoveRightIcon className="h-3.5 w-3.5" />
+                  <span>Cloud</span>
+                </Label>
+
+                <p className="text-muted-foreground text-xs">
+                  This will overwrite cloud data with your current local data.
                 </p>
               </div>
               <Button
@@ -112,18 +151,20 @@ export default function SyncSection() {
                 onClick={handleSyncDexieToSupabase}
                 disabled={syncing}
               >
-                Sync Local Data to Cloud
+                Sync Local to Cloud
               </Button>
             </div>
 
-            <div className="space-y-4 p-1">
+            <div className="space-y-2">
               <div className="space-y-1">
-                <h1 className="font-bold font-mono text-xs">
-                  Sync Cloud Data to Local
-                </h1>
-                <p className="text-muted-foreground text-sm">
-                  This will overwrite your local data with the cloud data.
-                  Ensure that your cloud data is up-to-date before syncing.
+                <Label className="flex items-center gap-1">
+                  <span>Cloud</span>
+                  <MoveRightIcon className="h-3.5 w-3.5" />
+                  <span>Local</span>
+                </Label>
+                <p className="text-muted-foreground text-xs">
+                  This will overwrite local data with the data from cloud
+                  storage.
                 </p>
               </div>
               <Button
@@ -133,7 +174,7 @@ export default function SyncSection() {
                 onClick={handleSyncSupabaseToDexie}
                 disabled={syncing}
               >
-                Sync Cloud Data to Local
+                Sync Cloud to Local
               </Button>
             </div>
           </>
@@ -141,11 +182,9 @@ export default function SyncSection() {
       </div>
       <hr />
       <div className="text-muted-foreground text-sm">
-        Keep your <span className="text-foreground">writes</span> and ideas
-        seamlessly synced across devices and the{" "}
-        <span className="text-foreground">cloud</span> for an uninterrupted
-        writing experience. Choose your preferred sync direction based on your
-        needs and enjoy effortless access to your content anywhere.
+        Seamlessly sync your <span className="text-foreground">ideas</span>{" "}
+        across devices and the <span className="text-foreground">cloud</span>{" "}
+        for a smooth writing flow.
       </div>
 
       <AlertDialog open={syncDialogOpen} onOpenChange={setSyncDialogOpen}>

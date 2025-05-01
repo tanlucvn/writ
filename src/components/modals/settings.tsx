@@ -81,7 +81,7 @@ export default function Settings() {
       <CredenzaDescription className="sr-only">
         Change your app settings.
       </CredenzaDescription>
-      <CredenzaContent className="!rounded-2xl p-1">
+      <CredenzaContent className="!rounded-2xl w-full max-w-xl p-1 max-md:max-w-none">
         <div className="h-full w-full rounded-xl border-2 border-border border-dashed p-1">
           {!isMobile ? (
             <Command
@@ -118,7 +118,7 @@ export default function Settings() {
                   className="col-start-2 row-span-2 row-start-1 h-full max-h-[375px] flex-1 overflow-auto border-l"
                   ref={contentRef}
                 >
-                  <div className="size-full pt-2 pr-2 pl-4">
+                  <div className="size-full pt-2 pr-4 pl-4">
                     {settingsTabs.find((tab) => tab.label === page)?.content}
                   </div>
                 </ScrollArea>

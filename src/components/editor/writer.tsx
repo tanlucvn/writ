@@ -1,12 +1,11 @@
 "use client";
+
 import { saveWrite } from "@/services/db/writes";
 import { useAppStore } from "@/store/app-store";
 import { EditorContent } from "@tiptap/react";
-import { Input } from "../ui/input";
-
-import { syncDexieToSupabase } from "@/services/sync";
 import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
+import { Input } from "../ui/input";
 
 export default function Writer() {
   const { editor, currentWrite, setCurrentWrite, refreshWrites } =
@@ -28,7 +27,7 @@ export default function Writer() {
         updatedAt: DateTime.utc().toISO(),
       };
       await saveWrite(updated);
-      await syncDexieToSupabase();
+
       setCurrentWrite(updated);
       refreshWrites();
     }, 500);

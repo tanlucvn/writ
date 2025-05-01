@@ -22,9 +22,9 @@ export default function WritingSection() {
   const handleIncrease = () => setFontSize(Math.min(fontSize + 1, 32));
 
   return (
-    <div className="flex flex-col gap-5">
-      <div className="flex flex-col gap-2">
-        <span className="font-mono text-muted-foreground text-sm">Fonts</span>
+    <div className="flex flex-col space-y-6">
+      <div className="flex flex-col space-y-2">
+        <span className="font-mono text-muted-foreground text-xs">Fonts</span>
         <div className="flex items-center justify-between space-x-2">
           <Label htmlFor="hide-favicons">Write font</Label>
           <Select
@@ -78,8 +78,8 @@ export default function WritingSection() {
 
       <Separator />
 
-      <div className="flex flex-col gap-2">
-        <span className="font-mono text-muted-foreground text-sm">
+      <div className="flex flex-col space-y-2">
+        <span className="font-mono text-muted-foreground text-xs">
           Editor Mode
         </span>
         <div className="flex items-center justify-between space-x-2">

@@ -7,10 +7,10 @@ export const setupAutoSync = ({
 }: {
   onSuccess?: () => void;
   onError?: (e: unknown) => void;
-}) => {
+}): (() => void) => {
   const { syncInterval } = useAppSettingsStore.getState();
 
-  setInterval(
+  const intervalId = setInterval(
     async () => {
       try {
         await syncDexieToSupabase();
@@ -21,4 +21,6 @@ export const setupAutoSync = ({
     },
     syncInterval * 60 * 1000,
   );
+
+  return () => clearInterval(intervalId);
 };

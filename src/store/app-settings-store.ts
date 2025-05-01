@@ -18,6 +18,9 @@ interface AppSettingsStore {
 
   syncInterval: number; // minutes
   setSyncInterval: (interval: number) => void;
+
+  isAutoSync: boolean;
+  toggleAutoSync: () => void;
 }
 
 export const useAppSettingsStore = create<AppSettingsStore>((set) => {
@@ -26,6 +29,7 @@ export const useAppSettingsStore = create<AppSettingsStore>((set) => {
   const savedZenMode = loadFromLocalStorage("isZenMode", false);
   const savedAppColor = loadFromLocalStorage("appColor", "default");
   const savedSyncInterval = loadFromLocalStorage("syncInterval", 5); // Default 5 minutes
+  const savedIsAutoSync = loadFromLocalStorage("isAutoSync", false);
 
   return {
     fontSize: savedFontSize,
@@ -59,6 +63,15 @@ export const useAppSettingsStore = create<AppSettingsStore>((set) => {
     setSyncInterval: (interval) => {
       set({ syncInterval: interval });
       saveToLocalStorage("syncInterval", interval);
+    },
+
+    isAutoSync: savedIsAutoSync,
+    toggleAutoSync: () => {
+      set((state) => {
+        const newAutoSync = !state.isAutoSync;
+        saveToLocalStorage("isAutoSync", newAutoSync);
+        return { isAutoSync: newAutoSync };
+      });
     },
   };
 });

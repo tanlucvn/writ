@@ -16,9 +16,9 @@ export default function AppearanceSection() {
   const selectedColor = COLOR_OPTIONS.find((opt) => opt.value === appColor);
 
   return (
-    <div className="flex flex-col gap-5">
-      <div className="flex flex-col gap-2">
-        <span className="font-mono text-muted-foreground text-sm">
+    <div className="flex flex-col space-y-6">
+      <div className="flex flex-col space-y-2">
+        <span className="font-mono text-muted-foreground text-xs">
           App color
         </span>
         <div className="flex items-center justify-between space-x-2">
@@ -50,9 +50,14 @@ export default function AppearanceSection() {
         )}
       </div>
       <hr />
-      <div className="flex flex-col gap-2 text-muted-foreground text-sm">
-        <Label htmlFor="theme">Theme</Label>
-        <ThemeSwitcher />
+      <div className="flex flex-col space-y-2">
+        <span className="font-mono text-muted-foreground text-xs">
+          App theme
+        </span>
+        <div className="flex items-center justify-between">
+          <Label htmlFor="theme">Theme</Label>
+          <ThemeSwitcher />
+        </div>
       </div>
     </div>
   );
