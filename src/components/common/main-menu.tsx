@@ -18,6 +18,7 @@ import { motion } from "framer-motion";
 import {
   ArrowUpRightIcon,
   BadgeInfoIcon,
+  ChartPieIcon,
   CircleHelpIcon,
   CircleIcon,
   FocusIcon,
@@ -193,8 +194,12 @@ const AccountsTab = ({ onBack }: { onBack: () => void }) => {
 
 const MainMenu = (): React.ReactElement => {
   const { toggleZenMode } = useAppSettingsStore();
-  const { setSettingsOpen, setMusicPlayerOpen, setIsHelpDialogOpen } =
-    useDialogStore();
+  const {
+    setSettingsOpen,
+    setMusicPlayerOpen,
+    setIsHelpDialogOpen,
+    setStatisticsOpen,
+  } = useDialogStore();
   const { setTab } = useTabStore();
   const { user } = useAuthStore();
   const [activeTab, setActiveTab] = useState<string>("home");
@@ -247,6 +252,7 @@ const MainMenu = (): React.ReactElement => {
                     >
                       Writes
                     </NavMenuItem>
+
                     <NavMenuItem
                       icon={<PenIcon size={15} />}
                       onClick={() => handleTabChange("sessions")}
@@ -260,6 +266,7 @@ const MainMenu = (): React.ReactElement => {
                     >
                       Music
                     </NavMenuItem>
+
                     <NavMenuItem
                       icon={<FocusIcon size={15} />}
                       onClick={toggleZenMode}
@@ -279,6 +286,13 @@ const MainMenu = (): React.ReactElement => {
                       onClick={() => setIsHelpDialogOpen(true)}
                     >
                       Help
+                    </NavMenuItem>
+
+                    <NavMenuItem
+                      icon={<ChartPieIcon size={15} />}
+                      onClick={() => setStatisticsOpen(true)}
+                    >
+                      Statistics
                     </NavMenuItem>
                   </div>
                 </div>

@@ -13,6 +13,7 @@ import MusicPlayer from "../modals/music-player";
 import Settings from "../modals/settings";
 import WritesHistory from "../modals/writes-history";
 import ScollToTop from "../scroll-to-top";
+import StatsDashboard from "../statistics";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { createNewWrite } = useAppStore();
@@ -51,6 +52,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <WritesHistory />
       <MusicPlayer />
       <HelpDialog />
+      <StatsDashboard />
     </>
   );
 }
