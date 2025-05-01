@@ -152,7 +152,7 @@ const StatsDashboard = () => {
                           const date = new Date(
                             Date.UTC(year, month, index + 1),
                           );
-                          const formattedDate = date.toISOString().slice(0, 10);
+                          const formattedDate = date.toISOString().slice(0, 10); // Formatted yyyy-mm-dd
                           const dayOfMonth = (index + 1)
                             .toString()
                             .padStart(2, "0");

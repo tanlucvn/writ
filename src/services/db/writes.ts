@@ -1,3 +1,4 @@
+import { DateTime } from "luxon";
 import { v4 as uuidv4 } from "uuid";
 import { db } from "./index";
 
@@ -18,8 +19,8 @@ export const createWrite = (fontFamily = "inter", fontSize = 16): Write => ({
   id: uuidv4(),
   title: "Untitled",
   content: "",
-  createdAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString(),
+  createdAt: DateTime.utc().toISO(),
+  updatedAt: DateTime.utc().toISO(),
   fontFamily,
   fontSize,
   tagIds: [],
@@ -28,7 +29,7 @@ export const createWrite = (fontFamily = "inter", fontSize = 16): Write => ({
 
 // Save or update a write in the database
 export const saveWrite = async (write: Write): Promise<Write> => {
-  const updated = { ...write, updatedAt: new Date().toISOString(), synced: 0 };
+  const updated = { ...write, updatedAt: DateTime.utc().toISO(), synced: 0 };
   await db.writes.put(updated);
   return updated;
 };

@@ -14,6 +14,7 @@ import { TextStyle } from "@tiptap/extension-text-style";
 import { Underline } from "@tiptap/extension-underline";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import { DateTime } from "luxon";
 import { useEffect } from "react";
 
 export default function Editor() {
@@ -44,7 +45,7 @@ export default function Editor() {
       const updated = {
         ...currentWrite,
         content,
-        updatedAt: new Date().toISOString(),
+        updatedAt: DateTime.utc().toISO(),
       };
 
       setCurrentWrite(updated);

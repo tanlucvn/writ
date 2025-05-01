@@ -1,3 +1,4 @@
+import { DateTime } from "luxon";
 import { v4 as uuidv4 } from "uuid";
 import { db } from "./index";
 
@@ -14,13 +15,13 @@ export const createTag = (name: string, color?: string): Tag => ({
   id: uuidv4(),
   name,
   color,
-  createdAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString(),
+  createdAt: DateTime.utc().toISO(),
+  updatedAt: DateTime.utc().toISO(),
 });
 
 // Save or update a tag in the database
 export const saveTag = async (tag: Tag): Promise<Tag> => {
-  const updated = { ...tag, updatedAt: new Date().toISOString() };
+  const updated = { ...tag, updatedAt: DateTime.utc().toISO() };
   await db.tags.put(updated);
   return updated;
 };

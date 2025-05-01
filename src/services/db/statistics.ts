@@ -14,7 +14,7 @@ export const getWritesCountByDay = async (): Promise<Map<string, number>> => {
 
     // Filter write each days
     const writesOnThisDay = writes.filter((write) => {
-      const writeDate = new Date(write.createdAt).toISOString().split("T")[0];
+      const writeDate = write.createdAt.split("T")[0]; // Because createdAt is ISO string
       return writeDate === formattedDate;
     });
 

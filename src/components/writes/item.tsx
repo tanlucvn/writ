@@ -24,6 +24,7 @@ import {
 } from "@/services/db/writes";
 import { useAppStore } from "@/store/app-store";
 import { CheckIcon, MoreVertical, PlusIcon } from "lucide-react";
+import { DateTime } from "luxon";
 import { useMemo, useState } from "react";
 
 type HistoryItemProps = {
@@ -64,7 +65,7 @@ export function HistoryItem({ write, className }: HistoryItemProps) {
       const updatedNote: Write = {
         ...write,
         title: trimmed,
-        updatedAt: new Date().toISOString(),
+        updatedAt: DateTime.utc().toISO(),
       };
       await saveWrite(updatedNote);
       const allWrites = await getAllWrites();
@@ -84,7 +85,7 @@ export function HistoryItem({ write, className }: HistoryItemProps) {
     const updatedWrite: Write = {
       ...write,
       tagIds: updatedTagsId,
-      updatedAt: new Date().toISOString(),
+      updatedAt: DateTime.utc().toISO(),
     };
     await saveWrite(updatedWrite);
     refreshWrites();

@@ -5,6 +5,7 @@ import { EditorContent } from "@tiptap/react";
 import { Input } from "../ui/input";
 
 import { syncDexieToSupabase } from "@/services/sync";
+import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
 
 export default function Writer() {
@@ -24,7 +25,7 @@ export default function Writer() {
       const updated = {
         ...currentWrite,
         title: title,
-        updatedAt: new Date().toISOString(),
+        updatedAt: DateTime.utc().toISO(),
       };
       await saveWrite(updated);
       await syncDexieToSupabase();
