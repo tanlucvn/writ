@@ -64,7 +64,7 @@ export function HistoryItem({ write, className }: HistoryItemProps) {
       const updatedNote: Write = {
         ...write,
         title: trimmed,
-        updatedAt: new Date(),
+        updatedAt: new Date().toISOString(),
       };
       await saveWrite(updatedNote);
       const allWrites = await getAllWrites();
@@ -84,7 +84,7 @@ export function HistoryItem({ write, className }: HistoryItemProps) {
     const updatedWrite: Write = {
       ...write,
       tagIds: updatedTagsId,
-      updatedAt: new Date(),
+      updatedAt: new Date().toISOString(),
     };
     await saveWrite(updatedWrite);
     refreshWrites();

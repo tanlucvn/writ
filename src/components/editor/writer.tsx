@@ -24,7 +24,7 @@ export default function Writer() {
       const updated = {
         ...currentWrite,
         title: title,
-        updatedAt: new Date(),
+        updatedAt: new Date().toISOString(),
       };
       await saveWrite(updated);
       await syncDexieToSupabase();

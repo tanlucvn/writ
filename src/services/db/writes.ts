@@ -5,8 +5,8 @@ export interface Write {
   id: string;
   title: string;
   content: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   fontFamily?: string;
   fontSize?: number;
   tagIds?: string[];
@@ -18,8 +18,8 @@ export const createWrite = (fontFamily = "inter", fontSize = 16): Write => ({
   id: uuidv4(),
   title: "Untitled",
   content: "",
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
   fontFamily,
   fontSize,
   tagIds: [],
@@ -28,7 +28,7 @@ export const createWrite = (fontFamily = "inter", fontSize = 16): Write => ({
 
 // Save or update a write in the database
 export const saveWrite = async (write: Write): Promise<Write> => {
-  const updated = { ...write, updatedAt: new Date(), synced: 0 };
+  const updated = { ...write, updatedAt: new Date().toISOString(), synced: 0 };
   await db.writes.put(updated);
   return updated;
 };

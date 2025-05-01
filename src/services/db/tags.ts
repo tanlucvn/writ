@@ -5,8 +5,8 @@ export interface Tag {
   id: string;
   name: string;
   color?: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 }
 
 // Create a new tag object
@@ -14,13 +14,13 @@ export const createTag = (name: string, color?: string): Tag => ({
   id: uuidv4(),
   name,
   color,
-  createdAt: new Date(),
-  updatedAt: new Date(),
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
 });
 
 // Save or update a tag in the database
 export const saveTag = async (tag: Tag): Promise<Tag> => {
-  const updated = { ...tag, updatedAt: new Date() };
+  const updated = { ...tag, updatedAt: new Date().toISOString() };
   await db.tags.put(updated);
   return updated;
 };

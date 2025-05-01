@@ -44,7 +44,7 @@ export default function Editor() {
       const updated = {
         ...currentWrite,
         content,
-        updatedAt: new Date(),
+        updatedAt: new Date().toISOString(),
       };
 
       setCurrentWrite(updated);

@@ -147,11 +147,12 @@ const StatsDashboard = () => {
                           <span key={day}>{day}</span>
                         ))}
                       </div>
-                      <div className="grid w-full max-w-sm grid-cols-7 place-items-center space-x-1 space-y-2">
+                      <div className="grid w-full max-w-sm grid-cols-7 place-items-center gap-1">
                         {Array.from({ length: daysInMonth }, (_, index) => {
-                          const date = new Date(year, month, index + 1);
-                          const formattedDate =
-                            date.toLocaleDateString("sv-SE");
+                          const date = new Date(
+                            Date.UTC(year, month, index + 1),
+                          );
+                          const formattedDate = date.toISOString().slice(0, 10);
                           const dayOfMonth = (index + 1)
                             .toString()
                             .padStart(2, "0");
