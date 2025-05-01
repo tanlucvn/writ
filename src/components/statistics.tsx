@@ -1,9 +1,11 @@
 import { cn } from "@/lib/utils";
 import {
-  getSyncedWritesCount,
-  getUnsyncedWritesCount,
-  getWritesCount,
-  getWritesCountByDay,
+  getSyncedWriteCount,
+  getSyncedWriteCountByDay,
+  getTotalWriteCount,
+  getUnsyncedWriteCount,
+  getUnsyncedWriteCountByDay,
+  getWriteCountByDay,
 } from "@/services/db/statistics";
 import { useDialogStore } from "@/store/dialog-store";
 import { ChevronLeft, ChevronRight, RotateCwIcon, XIcon } from "lucide-react";
@@ -11,12 +13,19 @@ import { useEffect, useState } from "react";
 import { Drawer } from "vaul";
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
-import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
+import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
+import {} from "./ui/tooltip";
 
 const StatsDashboard = () => {
   const [writesByDate, setWritesByDate] = useState<Map<string, number>>(
     new Map(),
   );
+  const [syncedWritesByDate, setSyncedWritesByDate] = useState<
+    Map<string, number>
+  >(new Map());
+  const [unsyncedWritesByDate, setUnsyncedWritesByDate] = useState<
+    Map<string, number>
+  >(new Map());
   const { isStatisticsOpen, setStatisticsOpen } = useDialogStore();
   const [currentDate, setCurrentDate] = useState(new Date());
 
@@ -26,14 +35,22 @@ const StatsDashboard = () => {
 
   useEffect(() => {
     const fetchStats = async () => {
-      const writesData = await getWritesCountByDay();
+      const writesData = await getWriteCountByDay();
       setWritesByDate(writesData);
 
-      const total = await getWritesCount();
+      const syncedWritesData = await getSyncedWriteCountByDay();
+      setSyncedWritesByDate(syncedWritesData);
+
+      const unsyncedWritesData = await getUnsyncedWriteCountByDay();
+      setUnsyncedWritesByDate(unsyncedWritesData);
+
+      const total = await getTotalWriteCount();
       setTotalWrites(total);
-      const synced = await getSyncedWritesCount();
+
+      const synced = await getSyncedWriteCount();
       setSyncedWrites(synced);
-      const unsynced = await getUnsyncedWritesCount();
+
+      const unsynced = await getUnsyncedWriteCount();
       setUnsyncedWrites(unsynced);
     };
     fetchStats();
@@ -71,7 +88,7 @@ const StatsDashboard = () => {
     >
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 z-20 bg-black/40" />
-        <Drawer.Content className="fixed right-0 bottom-0 z-40 h-full w-full overflow-hidden rounded-tl-xl rounded-bl-xl border bg-background p-1 shadow-xl outline-none sm:w-[450px] sm:max-w-md md:max-w-lg">
+        <Drawer.Content className="fixed right-0 bottom-0 z-40 h-full w-full overflow-hidden rounded-none border bg-background p-1 shadow-xl outline-none sm:w-[450px] sm:max-w-md sm:rounded-tl-xl sm:rounded-bl-xl md:max-w-lg">
           <div className="flex h-full w-full flex-col rounded-xl border-2 border-border border-dashed sm:rounded-tr-none sm:rounded-br-none">
             <div className="flex flex-col gap-4 px-4 pt-4">
               <div className="relative flex flex-col gap-1">
@@ -150,7 +167,7 @@ const StatsDashboard = () => {
 
                     {/* Calendar Days */}
                     <div className="flex flex-col items-center justify-center">
-                      <div className="mt-2 grid w-full max-w-sm grid-cols-7 text-center text-[10px] text-muted-foreground">
+                      <div className="mt-2 grid w-full max-w-sm grid-cols-7 gap-2 text-center text-[10px] text-muted-foreground">
                         {weekdays.map((day) => (
                           <span key={day}>{day}</span>
                         ))}
@@ -165,25 +182,58 @@ const StatsDashboard = () => {
                             .toString()
                             .padStart(2, "0");
                           const writes = writesByDate.get(formattedDate) || 0;
+                          const syncedWrites =
+                            syncedWritesByDate.get(formattedDate) || 0;
+                          const unsyncedWrites =
+                            unsyncedWritesByDate.get(formattedDate) || 0;
 
                           return (
-                            <Tooltip key={formattedDate}>
-                              <TooltipTrigger asChild>
+                            <Popover key={formattedDate}>
+                              <PopoverTrigger asChild>
                                 <div
                                   className={cn(
                                     "flex size-8 items-center justify-center rounded-md border text-xs outline-double outline-1 outline-border outline-offset-1",
                                     writes > 0
                                       ? "bg-primary text-primary-foreground outline-primary/50"
                                       : "bg-muted text-muted-foreground hover:bg-accent hover:text-accent-foreground",
+                                    "cursor-pointer",
                                   )}
                                 >
                                   {dayOfMonth}
                                 </div>
-                              </TooltipTrigger>
-                              <TooltipContent className="text-xs">
-                                {writes} write{writes !== 1 ? "s" : ""}
-                              </TooltipContent>
-                            </Tooltip>
+                              </PopoverTrigger>
+                              <PopoverContent className="w-48 rounded-2xl p-1 text-xs">
+                                <div className="h-full w-full space-y-1 rounded-xl border-2 border-border border-dashed p-2">
+                                  <p className="text-[10px] text-muted-foreground">
+                                    {formattedDate}
+                                  </p>
+                                  <div className="flex justify-between text-foreground">
+                                    <span className="font-mono text-muted-foreground">
+                                      Total:
+                                    </span>
+                                    <span className="font-medium">
+                                      {writes}
+                                    </span>
+                                  </div>
+                                  <div className="flex justify-between text-foreground">
+                                    <span className="font-mono text-muted-foreground">
+                                      Synced:
+                                    </span>
+                                    <span className="font-medium">
+                                      {syncedWrites}
+                                    </span>
+                                  </div>
+                                  <div className="flex justify-between text-foreground">
+                                    <span className="font-mono text-muted-foreground">
+                                      Unsynced:
+                                    </span>
+                                    <span className="font-medium">
+                                      {unsyncedWrites}
+                                    </span>
+                                  </div>
+                                </div>
+                              </PopoverContent>
+                            </Popover>
                           );
                         })}
                       </div>
