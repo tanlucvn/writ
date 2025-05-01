@@ -6,6 +6,7 @@ import { useDialogStore } from "@/store/dialog-store";
 import { useTheme } from "next-themes";
 import { useEffect } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
+import { AutoSyncInitializer } from "../auto-sync-initializer";
 import { HeaderCard } from "../common/header-card";
 import { Sidebar } from "../common/sidebar";
 import HelpDialog from "../modals/help-dialog";
@@ -53,6 +54,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <MusicPlayer />
       <HelpDialog />
       <StatsDashboard />
+
+      {/* Auto Sync */}
+      <AutoSyncInitializer />
     </>
   );
 }

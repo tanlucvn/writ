@@ -1,4 +1,5 @@
 import { syncDexieToSupabase, syncSupabaseToDexie } from "@/services/sync";
+import { useAppSettingsStore } from "@/store/app-settings-store";
 import { useAuthStore } from "@/store/auth-store";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -12,6 +13,8 @@ import {
   AlertDialogTitle,
 } from "../ui/alert-dialog";
 import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 
 export default function SyncSection() {
   const [syncing, setSyncing] = useState(false);
@@ -20,6 +23,7 @@ export default function SyncSection() {
     "dexieToSupabase" | "supabaseToDexie" | null
   >(null);
   const { user, fetchSession } = useAuthStore();
+  const { syncInterval, setSyncInterval } = useAppSettingsStore();
 
   useEffect(() => {
     if (!user) {
@@ -76,6 +80,21 @@ export default function SyncSection() {
           </div>
         ) : (
           <>
+            <div className="space-y-2">
+              <p className="font-mono text-muted-foreground text-xs">
+                Set the interval (in minutes) for automatic data sync.
+              </p>
+              <Label className="font-medium text-sm">Sync Interval</Label>
+              <Input
+                type="number"
+                value={syncInterval}
+                onChange={(e) => setSyncInterval(Number(e.target.value))}
+                min={1}
+                max={60}
+                disabled={syncing}
+              />
+            </div>
+
             <div className="space-y-4 p-1">
               <div className="space-y-1">
                 <h1 className="font-bold font-mono text-xs">
