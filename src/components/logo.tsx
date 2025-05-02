@@ -1,23 +1,27 @@
 import type React from "react";
 
-const Logo: React.FC<{ className?: string }> = ({
-  className = "w-12 h-12",
-}) => {
+const Logo: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg
-      className={className}
-      viewBox="0 0 100 100"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      {...props}
     >
-      <rect
-        x="0"
-        y="0"
-        width="100"
-        height="100"
-        rx="20"
-        fill="hsl(var(--secondary))"
+      <path
+        d="M4 4C6 6, 12 6, 12 12"
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeLinecap="round"
       />
-      <circle cx="50" cy="50" r="20" fill="hsl(var(--primary))" />
+      <path
+        d="M12 12C12 18, 18 18, 20 20"
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeLinecap="round"
+      />
     </svg>
   );
 };

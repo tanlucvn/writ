@@ -20,7 +20,6 @@ import {
   BadgeInfoIcon,
   ChartPieIcon,
   CircleHelpIcon,
-  CircleIcon,
   FocusIcon,
   GithubIcon,
   LibraryBigIcon,
@@ -35,6 +34,7 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
+import Logo from "../logo";
 import { ThemeSwitcher } from "../theme";
 
 type NavMenuLinkProps = {
@@ -213,11 +213,11 @@ const MainMenu = (): React.ReactElement => {
     <Popover>
       <PopoverTrigger asChild>
         <Button
-          className="size-8 outline-2 outline-border outline-offset-2 hover:outline-dashed"
+          className="size-8 outline-2 outline-border outline-offset-2"
           size="icon"
           variant="secondary"
         >
-          <CircleIcon className="fill-primary" />
+          <Logo />
         </Button>
       </PopoverTrigger>
 
