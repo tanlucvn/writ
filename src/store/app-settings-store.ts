@@ -21,6 +21,9 @@ interface AppSettingsStore {
 
   isAutoSync: boolean;
   toggleAutoSync: () => void;
+
+  sortOption: string;
+  setSortOption: (option: string) => void;
 }
 
 export const useAppSettingsStore = create<AppSettingsStore>((set) => {
@@ -30,6 +33,7 @@ export const useAppSettingsStore = create<AppSettingsStore>((set) => {
   const savedAppColor = loadFromLocalStorage("appColor", "default");
   const savedSyncInterval = loadFromLocalStorage("syncInterval", 5); // Default 5 minutes
   const savedIsAutoSync = loadFromLocalStorage("isAutoSync", false);
+  const savedSortOption = loadFromLocalStorage("sortOption", "updated-desc");
 
   return {
     fontSize: savedFontSize,
@@ -72,6 +76,12 @@ export const useAppSettingsStore = create<AppSettingsStore>((set) => {
         saveToLocalStorage("isAutoSync", newAutoSync);
         return { isAutoSync: newAutoSync };
       });
+    },
+
+    sortOption: savedSortOption,
+    setSortOption: (option) => {
+      set({ sortOption: option });
+      saveToLocalStorage("sortOption", option);
     },
   };
 });

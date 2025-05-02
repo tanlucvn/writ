@@ -44,9 +44,9 @@ export const getWrite = async (id: string): Promise<Write | undefined> => {
   return await db.writes.get(id);
 };
 
-// Get all writes sorted by updatedAt (most recent first)
+// Get all writes
 export const getAllWrites = async (): Promise<Write[]> => {
-  return await db.writes.orderBy("updatedAt").reverse().toArray();
+  return await db.writes.toArray();
 };
 
 // Get the most recently updated write

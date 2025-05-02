@@ -1,3 +1,4 @@
+import { sortWrites } from "@/lib/utils";
 import { clearAll } from "@/services/db/dev";
 import { type Tag, getAllTags } from "@/services/db/tags";
 import {
@@ -9,6 +10,7 @@ import {
 import type { Editor } from "@tiptap/react";
 import { toast } from "sonner";
 import { create } from "zustand";
+import { useAppSettingsStore } from "./app-settings-store";
 
 export type SyncStatus = "idle" | "syncing" | "success" | "error";
 
@@ -57,7 +59,9 @@ export const useAppStore = create<AppStore>((set) => ({
   },
   refreshWrites: async () => {
     const allWrites = await getAllWrites();
-    set({ writes: allWrites });
+    const sortOption = useAppSettingsStore.getState().sortOption;
+    const sortedWrites = sortWrites(allWrites, sortOption);
+    set({ writes: sortedWrites });
   },
 
   editor: null,
@@ -73,13 +77,17 @@ export const useAppStore = create<AppStore>((set) => ({
       const allWrites = await getAllWrites();
       const allTags = await getAllTags();
 
+      const sortOption = useAppSettingsStore.getState().sortOption;
+      const sortedWrites = sortWrites(allWrites, sortOption);
+
       const { setWrites, setTags } = useAppStore.getState();
-      setWrites(allWrites);
+      setWrites(sortedWrites);
       setTags(allTags);
     } catch (error) {
       console.error("Error initializing the database:", error);
     }
   },
+
   clearDB: async () => {
     try {
       await clearAll();
