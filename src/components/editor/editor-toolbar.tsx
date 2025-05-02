@@ -20,6 +20,8 @@ import {
   QuoteIcon,
   UnderlineIcon,
 } from "lucide-react";
+import { Kbd } from "../ui/kbd";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 const EditorToolbar = () => {
   const { editor } = useAppStore();
@@ -129,27 +131,59 @@ const EditorToolbar = () => {
         type="multiple"
         value={activeMarks}
       >
-        <ToggleGroupItem
-          value={EditorMarks.BOLD}
-          aria-label="Bold"
-          className="h-8 rounded-none rounded-tl-lg rounded-bl-lg hover:text-foreground"
-        >
-          <BoldIcon className="h-4 w-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem
-          value={EditorMarks.ITALIC}
-          aria-label="Italic"
-          className="rounded-none hover:text-foreground"
-        >
-          <ItalicIcon className="h-4 w-4" />
-        </ToggleGroupItem>
-        <ToggleGroupItem
-          value={EditorMarks.UNDERLINE}
-          aria-label="Underline"
-          className="h-8 rounded-none hover:text-foreground"
-        >
-          <UnderlineIcon className="h-4 w-4" />
-        </ToggleGroupItem>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <ToggleGroupItem
+              value={EditorMarks.BOLD}
+              aria-label="Bold"
+              className="h-8 rounded-none rounded-tl-lg rounded-bl-lg hover:text-foreground"
+            >
+              <BoldIcon className="h-4 w-4" />
+            </ToggleGroupItem>
+          </TooltipTrigger>
+          <TooltipContent
+            side="top"
+            className="mb-1 flex items-center justify-center gap-2"
+          >
+            <p className="font-medium">Bold</p> <Kbd keys="Ctrl+B" />
+          </TooltipContent>
+        </Tooltip>
+
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <ToggleGroupItem
+              value={EditorMarks.ITALIC}
+              aria-label="Italic"
+              className="h-8 rounded-none hover:text-foreground"
+            >
+              <ItalicIcon className="h-4 w-4" />
+            </ToggleGroupItem>
+          </TooltipTrigger>
+          <TooltipContent
+            side="top"
+            className="mb-1 flex items-center justify-center gap-2"
+          >
+            <p className="font-medium">Italic</p> <Kbd keys="Ctrl+I" />
+          </TooltipContent>
+        </Tooltip>
+
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <ToggleGroupItem
+              value={EditorMarks.UNDERLINE}
+              aria-label="Underline"
+              className="h-8 rounded-none hover:text-foreground"
+            >
+              <UnderlineIcon className="h-4 w-4" />
+            </ToggleGroupItem>
+          </TooltipTrigger>
+          <TooltipContent
+            side="top"
+            className="mb-1 flex items-center justify-center gap-2"
+          >
+            <p className="font-medium">Underline</p> <Kbd keys="Ctrl+U" />
+          </TooltipContent>
+        </Tooltip>
       </ToggleGroup>
 
       {/* Headings select */}

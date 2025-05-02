@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { useAppStore } from "@/store/app-store";
 import { MoveLeftIcon, MoveRightIcon } from "lucide-react";
 import { Button } from "../ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 export function RightBar() {
   const { writes, currentWrite, setCurrentWrite } = useAppStore();
@@ -39,32 +40,46 @@ export function RightBar() {
       {/* Bottom content */}
       <div className="flex flex-col items-start">
         <div className="flex items-center justify-center gap-3">
-          <Button
-            variant="secondary"
-            size="sm"
-            className="h-4 text-muted-foreground text-xs outline-double outline-2 outline-border outline-offset-2"
-            onClick={handlePrev}
-            disabled={
-              !currentWrite ||
-              writes.findIndex((w) => w.id === currentWrite.id) === 0
-            }
-          >
-            <MoveLeftIcon />
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="secondary"
+                size="sm"
+                className="h-4 text-muted-foreground text-xs outline-double outline-2 outline-border outline-offset-2"
+                onClick={handlePrev}
+                disabled={
+                  !currentWrite ||
+                  writes.findIndex((w) => w.id === currentWrite.id) === 0
+                }
+              >
+                <MoveLeftIcon />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent className="mb-1">
+              <p>Go to previous write</p>
+            </TooltipContent>
+          </Tooltip>
 
-          <Button
-            variant="secondary"
-            size="sm"
-            className="h-4 text-muted-foreground text-xs outline-double outline-2 outline-border outline-offset-2"
-            onClick={handleNext}
-            disabled={
-              !currentWrite ||
-              writes.findIndex((w) => w.id === currentWrite.id) ===
-                writes.length - 1
-            }
-          >
-            <MoveRightIcon />
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="secondary"
+                size="sm"
+                className="h-4 text-muted-foreground text-xs outline-double outline-2 outline-border outline-offset-2"
+                onClick={handleNext}
+                disabled={
+                  !currentWrite ||
+                  writes.findIndex((w) => w.id === currentWrite.id) ===
+                    writes.length - 1
+                }
+              >
+                <MoveRightIcon />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent className="mb-1">
+              <p>Go to next write</p>
+            </TooltipContent>
+          </Tooltip>
         </div>
       </div>
     </aside>
