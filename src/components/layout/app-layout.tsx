@@ -4,11 +4,13 @@ import { createWrite, getLatestWrite, saveWrite } from "@/services/db/writes";
 import { useAppSettingsStore } from "@/store/app-settings-store";
 import { useAppStore } from "@/store/app-store";
 import { useDialogStore } from "@/store/dialog-store";
+import { useTabStore } from "@/store/tab-store";
 import { useTheme } from "next-themes";
 import { useCallback, useEffect } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { AutoSyncInitializer } from "../auto-sync-initializer";
 import { HeaderCard } from "../common/header-card";
+import { RightBar } from "../common/right-bar";
 import { Sidebar } from "../common/sidebar";
 import HelpDialog from "../modals/help-dialog";
 import MusicPlayer from "../modals/music-player";
@@ -24,6 +26,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     useAppSettingsStore();
   const { setIsHelpDialogOpen, setMusicPlayerOpen, setSettingsOpen } =
     useDialogStore();
+  const { tab } = useTabStore();
   const { theme } = useTheme();
 
   const initializeData = useCallback(async () => {
@@ -56,6 +59,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Sidebar />
+      {tab === "writes" && <RightBar />}
 
       <main className="flex w-screen items-center justify-center">
         <div className="flex min-h-dvh w-full flex-col items-center border-r border-l px-2 py-10 sm:w-[620px]">

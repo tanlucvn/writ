@@ -47,7 +47,7 @@ export function Sidebar() {
         <UserButton />
 
         <TimeDisplay />
-        <WordCount />
+        {tab === "writes" && <WordCount />}
       </div>
     </nav>
   );
