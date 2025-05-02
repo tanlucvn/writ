@@ -1,6 +1,10 @@
 import * as FadeIn from "@/components/motion/fade";
+import { Button } from "@/components/ui/button";
+import { useTabStore } from "@/store/tab-store";
+import { ArrowLeftIcon } from "lucide-react";
 
 export default function AboutPage() {
+  const { setTab } = useTabStore();
   return (
     <FadeIn.Container className="mx-auto max-w-md px-4 py-20 text-center">
       <FadeIn.Item>
@@ -17,6 +21,16 @@ export default function AboutPage() {
             <span className="font-medium text-foreground">tanlucvn</span>
           </p>
         </div>
+
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={() => setTab("writes")}
+          className="mt-8 h-6 text-xs outline-double outline-2 outline-border outline-offset-2"
+        >
+          <ArrowLeftIcon className="mr-1 h-4 w-4" />
+          Back
+        </Button>
       </FadeIn.Item>
     </FadeIn.Container>
   );

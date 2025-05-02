@@ -5,10 +5,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { supabase } from "@/services/supabase";
+import { useTabStore } from "@/store/tab-store";
+import { ArrowLeftIcon } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
 export default function SignInPage() {
+  const { setTab } = useTabStore();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -121,6 +125,16 @@ export default function SignInPage() {
               Reset it here
             </span>
           </p>
+
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => setTab("writes")}
+            className="mt-8 h-6 text-xs outline-double outline-2 outline-border outline-offset-2"
+          >
+            <ArrowLeftIcon className="mr-1 h-4 w-4" />
+            Back
+          </Button>
         </div>
       </FadeIn.Item>
     </FadeIn.Container>
