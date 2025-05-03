@@ -7,7 +7,7 @@ import {
 } from "../ui/credenza";
 import { Kbd } from "../ui/kbd";
 
-export default function HelpDialog() {
+const HelpDialog = () => {
   const { isHelpDialogOpen, setIsHelpDialogOpen } = useDialogStore();
   return (
     <Credenza open={isHelpDialogOpen} onOpenChange={setIsHelpDialogOpen}>
@@ -56,4 +56,6 @@ export default function HelpDialog() {
       </CredenzaContent>
     </Credenza>
   );
-}
+};
+
+export default HelpDialog;

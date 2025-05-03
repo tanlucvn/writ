@@ -5,11 +5,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import type { Tag } from "@/services/db/tags";
+import type { Tag } from "@/types";
 import { TagIcon } from "lucide-react";
 import type { Dispatch, SetStateAction } from "react";
 
-export function MultiSelectTag({
+const MultiSelectTag = ({
   availableTags,
   selectedTags,
   setSelectedTags,
@@ -17,7 +17,7 @@ export function MultiSelectTag({
   availableTags: Tag[];
   selectedTags: Set<string>;
   setSelectedTags: Dispatch<SetStateAction<Set<string>>>;
-}) {
+}) => {
   const toggleTag = (tagId: string) => {
     setSelectedTags((prev) => {
       const newSet = new Set(prev);
@@ -68,4 +68,6 @@ export function MultiSelectTag({
       </PopoverContent>
     </Popover>
   );
-}
+};
+
+export default MultiSelectTag;

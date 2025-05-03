@@ -1,9 +1,8 @@
 "use client";
 
-import Writer from "@/components/editor/writer";
 import Loading from "@/components/loading";
 import { cn } from "@/lib/utils";
-import { saveWrite } from "@/services/db/writes";
+import { dexie } from "@/services";
 import { useAppSettingsStore } from "@/store/app-settings-store";
 import { useAppStore } from "@/store/app-store";
 import { BubbleMenu } from "@tiptap/extension-bubble-menu";
@@ -16,9 +15,10 @@ import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { DateTime } from "luxon";
 import { useEffect } from "react";
+import Writer from "./writer";
 
-export default function Editor() {
-  const { currentWrite, setCurrentWrite, refreshWrites, setEditor } =
+const Editor = () => {
+  const { currentContent, setCurrentContent, refreshWrites, setEditor } =
     useAppStore();
   const { fontSize, fontFamily } = useAppSettingsStore();
 
@@ -36,20 +36,20 @@ export default function Editor() {
         },
       }),
     ],
-    content: currentWrite?.content || "",
+    content: currentContent?.content || "",
     onUpdate: ({ editor }) => {
-      if (!currentWrite) return;
+      if (!currentContent) return;
 
       const content = editor.getHTML();
 
       const updated = {
-        ...currentWrite,
+        ...currentContent,
         content,
         updatedAt: DateTime.utc().toISO(),
       };
 
-      setCurrentWrite(updated);
-      saveWrite(updated);
+      setCurrentContent(updated);
+      dexie.saveWrite(updated);
       refreshWrites();
     },
     editorProps: {
@@ -71,14 +71,14 @@ export default function Editor() {
   }, [editor, setEditor]);
 
   useEffect(() => {
-    if (editor && currentWrite) {
-      if (editor.getHTML() !== (currentWrite.content || "")) {
-        editor.commands.setContent(currentWrite.content || "", false);
+    if (editor && currentContent) {
+      if (editor.getHTML() !== (currentContent.content || "")) {
+        editor.commands.setContent(currentContent.content || "", false);
       }
     }
-  }, [currentWrite, editor]);
+  }, [currentContent, editor]);
 
-  if (!currentWrite) {
+  if (!currentContent) {
     return <Loading />;
   }
 
@@ -87,4 +87,6 @@ export default function Editor() {
       <Writer />
     </>
   );
-}
+};
+
+export default Editor;

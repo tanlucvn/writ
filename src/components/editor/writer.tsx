@@ -1,39 +1,39 @@
 "use client";
 
-import { saveWrite } from "@/services/db/writes";
+import { dexie } from "@/services";
 import { useAppStore } from "@/store/app-store";
 import { EditorContent } from "@tiptap/react";
 import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 
-export default function Writer() {
-  const { editor, currentWrite, setCurrentWrite, refreshWrites } =
+const Writer = () => {
+  const { editor, currentContent, setCurrentContent, refreshWrites } =
     useAppStore();
-  const [title, setTitle] = useState(currentWrite?.title || "");
+  const [title, setTitle] = useState(currentContent?.title || "");
 
   useEffect(() => {
-    setTitle(currentWrite?.title || "");
-  }, [currentWrite?.title]);
+    setTitle(currentContent?.title || "");
+  }, [currentContent?.title]);
 
   useEffect(() => {
     const timeout = setTimeout(async () => {
-      if (!currentWrite) return;
-      if (title === currentWrite.title) return;
+      if (!currentContent) return;
+      if (title === currentContent.title) return;
 
       const updated = {
-        ...currentWrite,
+        ...currentContent,
         title: title,
         updatedAt: DateTime.utc().toISO(),
       };
-      await saveWrite(updated);
+      await dexie.saveWrite(updated);
 
-      setCurrentWrite(updated);
+      setCurrentContent(updated);
       refreshWrites();
     }, 500);
 
     return () => clearTimeout(timeout);
-  }, [title, currentWrite, refreshWrites, setCurrentWrite]);
+  }, [title, currentContent, refreshWrites, setCurrentContent]);
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-start space-y-6 p-6">
@@ -47,4 +47,6 @@ export default function Writer() {
       <EditorContent editor={editor} className="w-full" />
     </div>
   );
-}
+};
+
+export default Writer;

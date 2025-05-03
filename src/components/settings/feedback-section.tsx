@@ -1,4 +1,4 @@
-export default function FeedbackSection() {
+const FeedbackSection = () => {
   return (
     <div>
       <div className="text-muted-foreground text-sm">
@@ -14,4 +14,6 @@ export default function FeedbackSection() {
       </div>
     </div>
   );
-}
+};
+
+export default FeedbackSection;

@@ -12,7 +12,7 @@ import { useAuthStore } from "@/store/auth-store";
 import { useTabStore } from "@/store/tab-store";
 import { useEffect } from "react";
 
-export function UserButton() {
+const UserButton = () => {
   const { user, isLoading, fetchSession, logout } = useAuthStore();
   const { setTab } = useTabStore();
 
@@ -65,4 +65,6 @@ export function UserButton() {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
+};
+
+export default UserButton;

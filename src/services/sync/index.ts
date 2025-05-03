@@ -1,8 +1,8 @@
-import { db } from "./db";
-import { supabase } from "./supabase";
+import { supabase } from "@/services";
+import { db } from "../dexie/client";
 
 export const syncDexieToSupabase = async () => {
-  const { data: user, error } = await supabase.auth.getUser();
+  const { data: user, error } = await supabase.supabaseClient.auth.getUser();
   if (error || !user) {
     console.error("User not authenticated.");
     return;
@@ -13,7 +13,7 @@ export const syncDexieToSupabase = async () => {
 
     await Promise.all(
       unsyncedWrites.map(async (write) => {
-        const { error } = await supabase.from("writes").upsert([
+        const { error } = await supabase.supabaseClient.from("writes").upsert([
           {
             id: write.id,
             title: write.title,
@@ -46,7 +46,9 @@ export const syncDexieToSupabase = async () => {
 
 export const syncSupabaseToDexie = async () => {
   try {
-    const { data, error } = await supabase.from("writes").select("*");
+    const { data, error } = await supabase.supabaseClient
+      .from("writes")
+      .select("*");
 
     if (error) {
       console.error("Failed to fetch writes from Supabase:", error.message);

@@ -3,14 +3,9 @@
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
+import type { TabOption } from "@/types";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
-
-export type TabOption = {
-  label: string;
-  icon?: React.ReactNode;
-  content: React.ReactNode;
-};
 
 type TabsProps = {
   tabs: TabOption[];
@@ -19,11 +14,7 @@ type TabsProps = {
   onTabChange?: (label: string) => void;
 };
 
-export default function Tabs({
-  tabs,
-  className,
-  scrollAreaClassName,
-}: TabsProps) {
+const AnimatedTabs = ({ tabs, className, scrollAreaClassName }: TabsProps) => {
   const [tab, setTab] = useState(tabs[0]?.label);
 
   const activeTab = tabs.find((t) => t.label === tab);
@@ -79,4 +70,6 @@ export default function Tabs({
       </ScrollArea>
     </div>
   );
-}
+};
+
+export default AnimatedTabs;

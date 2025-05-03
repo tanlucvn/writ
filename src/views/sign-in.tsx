@@ -1,16 +1,16 @@
 "use client";
 
-import * as FadeIn from "@/components/motion/fade";
+import { Container, Item } from "@/components/motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { supabase } from "@/services/supabase";
+import { supabase } from "@/services";
 import { useTabStore } from "@/store/tab-store";
 import { ArrowLeftIcon } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
-export default function SignInPage() {
+const SignInPage = () => {
   const { setTab } = useTabStore();
 
   const [email, setEmail] = useState("");
@@ -23,7 +23,7 @@ export default function SignInPage() {
     e.preventDefault();
     setLoading(true);
 
-    const { error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.supabaseClient.auth.signInWithPassword({
       email,
       password,
     });
@@ -42,7 +42,8 @@ export default function SignInPage() {
       return toast.error("Please enter your email to reset your password.");
     }
 
-    const { error } = await supabase.auth.resetPasswordForEmail(email);
+    const { error } =
+      await supabase.supabaseClient.auth.resetPasswordForEmail(email);
     if (error) {
       toast.error("Failed to send reset email. Please try again.");
     } else {
@@ -52,7 +53,7 @@ export default function SignInPage() {
 
   const signInWithOAuth = async (provider: "google" | "github") => {
     setLoading(true);
-    const { error } = await supabase.auth.signInWithOAuth({
+    const { error } = await supabase.supabaseClient.auth.signInWithOAuth({
       provider,
       options: {
         redirectTo: redirectUrl,
@@ -66,8 +67,8 @@ export default function SignInPage() {
   };
 
   return (
-    <FadeIn.Container className="mx-auto max-w-md px-4 py-20 text-center">
-      <FadeIn.Item>
+    <Container className="mx-auto max-w-md px-4 py-20 text-center">
+      <Item>
         <h1 className="mb-4 font-semibold text-2xl">Sign in to Miniwrit</h1>
         <p className="mb-8 text-muted-foreground text-sm leading-relaxed">
           Welcome back. Please enter your credentials.
@@ -136,7 +137,9 @@ export default function SignInPage() {
             Back
           </Button>
         </div>
-      </FadeIn.Item>
-    </FadeIn.Container>
+      </Item>
+    </Container>
   );
-}
+};
+
+export default SignInPage;

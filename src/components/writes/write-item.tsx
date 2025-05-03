@@ -16,26 +16,22 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
-import {
-  type Write,
-  deleteWrite,
-  getAllWrites,
-  saveWrite,
-} from "@/services/db/writes";
+import { dexie } from "@/services";
 import { useAppStore } from "@/store/app-store";
+import type { Write } from "@/types";
 import { CheckIcon, MoreVertical, PlusIcon } from "lucide-react";
 import { DateTime } from "luxon";
 import { useMemo, useState } from "react";
 
-type HistoryItemProps = {
+type WriteItemProps = {
   write: Write;
   className?: string;
 };
 
-export function HistoryItem({ write, className }: HistoryItemProps) {
+const WriteItem = ({ write, className }: WriteItemProps) => {
   const {
-    currentWrite,
-    setCurrentWrite,
+    currentContent,
+    setCurrentContent,
     writes,
     setWrites,
     refreshWrites,
@@ -51,7 +47,7 @@ export function HistoryItem({ write, className }: HistoryItemProps) {
   }, [allTags, tagsId]);
 
   const handleDeleteWrite = async () => {
-    await deleteWrite(write.id);
+    await dexie.deleteWrite(write.id);
     const updated = writes.filter((item) => item.id !== write.id);
     setWrites(updated);
     refreshWrites();
@@ -67,8 +63,8 @@ export function HistoryItem({ write, className }: HistoryItemProps) {
         title: trimmed,
         updatedAt: DateTime.utc().toISO(),
       };
-      await saveWrite(updatedNote);
-      const allWrites = await getAllWrites();
+      await dexie.saveWrite(updatedNote);
+      const allWrites = await dexie.getAllWrites();
       setWrites(allWrites);
       setIsRenaming(false);
       refreshWrites();
@@ -87,7 +83,7 @@ export function HistoryItem({ write, className }: HistoryItemProps) {
       tagIds: updatedTagsId,
       updatedAt: DateTime.utc().toISO(),
     };
-    await saveWrite(updatedWrite);
+    await dexie.saveWrite(updatedWrite);
     refreshWrites();
   };
 
@@ -95,10 +91,10 @@ export function HistoryItem({ write, className }: HistoryItemProps) {
     <div
       className={cn(
         "relative cursor-pointer rounded-lg border bg-card p-3 pr-9 outline-double outline-2 outline-border outline-offset-2 transition hover:bg-muted/50 hover:outline-dashed",
-        currentWrite?.id === write.id && "bg-muted/50",
+        currentContent?.id === write.id && "bg-muted/50",
         className,
       )}
-      onClick={() => setCurrentWrite(write)}
+      onClick={() => setCurrentContent(write)}
     >
       <div className="flex flex-col gap-2">
         {/* Title */}
@@ -204,4 +200,6 @@ export function HistoryItem({ write, className }: HistoryItemProps) {
       </DropdownMenu>
     </div>
   );
-}
+};
+
+export default WriteItem;

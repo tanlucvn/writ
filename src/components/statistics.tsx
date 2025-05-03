@@ -1,12 +1,5 @@
 import { cn } from "@/lib/utils";
-import {
-  getSyncedWriteCount,
-  getSyncedWriteCountByDay,
-  getTotalWriteCount,
-  getUnsyncedWriteCount,
-  getUnsyncedWriteCountByDay,
-  getWriteCountByDay,
-} from "@/services/db/statistics";
+import { dexie } from "@/services";
 import { useDialogStore } from "@/store/dialog-store";
 import { ChevronLeft, ChevronRight, RotateCwIcon, XIcon } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -35,22 +28,22 @@ const StatsDashboard = () => {
 
   useEffect(() => {
     const fetchStats = async () => {
-      const writesData = await getWriteCountByDay();
+      const writesData = await dexie.getWriteCountByDay();
       setWritesByDate(writesData);
 
-      const syncedWritesData = await getSyncedWriteCountByDay();
+      const syncedWritesData = await dexie.getSyncedWriteCountByDay();
       setSyncedWritesByDate(syncedWritesData);
 
-      const unsyncedWritesData = await getUnsyncedWriteCountByDay();
+      const unsyncedWritesData = await dexie.getUnsyncedWriteCountByDay();
       setUnsyncedWritesByDate(unsyncedWritesData);
 
-      const total = await getTotalWriteCount();
+      const total = await dexie.getTotalWriteCount();
       setTotalWrites(total);
 
-      const synced = await getSyncedWriteCount();
+      const synced = await dexie.getSyncedWriteCount();
       setSyncedWrites(synced);
 
-      const unsynced = await getUnsyncedWriteCount();
+      const unsynced = await dexie.getUnsyncedWriteCount();
       setUnsyncedWrites(unsynced);
     };
     fetchStats();

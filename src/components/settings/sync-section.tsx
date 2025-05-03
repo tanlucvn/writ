@@ -1,4 +1,4 @@
-import { syncDexieToSupabase, syncSupabaseToDexie } from "@/services/sync";
+import { sync } from "@/services";
 import { useAppSettingsStore } from "@/store/app-settings-store";
 import { useAuthStore } from "@/store/auth-store";
 import { MoveRightIcon } from "lucide-react";
@@ -24,7 +24,7 @@ import {
 } from "../ui/select";
 import { Switch } from "../ui/switch";
 
-export default function SyncSection() {
+const SyncSection = () => {
   const [syncing, setSyncing] = useState(false);
   const [syncDialogOpen, setSyncDialogOpen] = useState(false);
   const [currentSyncAction, setCurrentSyncAction] = useState<
@@ -65,10 +65,10 @@ export default function SyncSection() {
 
     try {
       if (currentSyncAction === "dexieToSupabase") {
-        await syncDexieToSupabase();
+        await sync.syncDexieToSupabase();
         toast.success("Successfully synced local data to the cloud.");
       } else if (currentSyncAction === "supabaseToDexie") {
-        await syncSupabaseToDexie();
+        await sync.syncSupabaseToDexie();
         toast.success("Successfully synced cloud data to local.");
       }
     } catch (error) {
@@ -239,4 +239,6 @@ export default function SyncSection() {
       </AlertDialog>
     </div>
   );
-}
+};
+
+export default SyncSection;

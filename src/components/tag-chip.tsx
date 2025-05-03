@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import type { Tag } from "@/services/db/tags";
+import type { Tag } from "@/types";
 import { CircleIcon, XIcon } from "lucide-react";
 
 type TagChipProps = {

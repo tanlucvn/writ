@@ -1,18 +1,7 @@
+import type { Write } from "@/types";
 import { DateTime } from "luxon";
 import { v4 as uuidv4 } from "uuid";
-import { db } from "./index";
-
-export interface Write {
-  id: string;
-  title: string;
-  content: string;
-  createdAt: string;
-  updatedAt: string;
-  fontFamily?: string;
-  fontSize?: number;
-  tagIds?: string[];
-  synced: number;
-}
+import { db } from "../client";
 
 // Create a new write object
 export const createWrite = (fontFamily = "inter", fontSize = 16): Write => ({

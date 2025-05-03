@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export default function TimeDisplay() {
+const TimeDisplay = () => {
   const [time, setTime] = useState<string>("");
 
   useEffect(() => {
@@ -24,4 +24,6 @@ export default function TimeDisplay() {
   }, []);
 
   return <div className="text-xs">{time}</div>;
-}
+};
+
+export default TimeDisplay;

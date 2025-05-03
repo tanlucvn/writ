@@ -1,12 +1,6 @@
 import { sortWrites } from "@/lib/utils";
-import { clearAll } from "@/services/db/dev";
-import { type Tag, getAllTags } from "@/services/db/tags";
-import {
-  type Write,
-  createWrite,
-  getAllWrites,
-  saveWrite,
-} from "@/services/db/writes";
+import { dexie } from "@/services";
+import type { Tag, Write } from "@/types";
 import type { Editor } from "@tiptap/react";
 import { toast } from "sonner";
 import { create } from "zustand";
@@ -20,8 +14,8 @@ interface AppStore {
   tags: Tag[];
   setTags: (tags: Tag[]) => void;
 
-  currentWrite: Write | null;
-  setCurrentWrite: (write: Write) => void;
+  currentContent: Write | null;
+  setCurrentContent: (write: Write) => void;
 
   createNewWrite: () => Promise<void>;
   refreshWrites: () => Promise<void>;
@@ -44,21 +38,21 @@ export const useAppStore = create<AppStore>((set) => ({
   tags: [],
   setTags: (tags) => set({ tags }),
 
-  currentWrite: null,
-  setCurrentWrite: (write) => set({ currentWrite: write }),
+  currentContent: null,
+  setCurrentContent: (write) => set({ currentContent: write }),
 
   createNewWrite: async () => {
-    const { setCurrentWrite, refreshWrites } = useAppStore.getState();
-    const newWrite = createWrite("inter", 16);
-    await saveWrite(newWrite);
+    const { setCurrentContent, refreshWrites } = useAppStore.getState();
+    const newWrite = dexie.createWrite("inter", 16);
+    await dexie.saveWrite(newWrite);
 
     toast.success("New write created successfully!");
 
-    setCurrentWrite(newWrite);
+    setCurrentContent(newWrite);
     refreshWrites();
   },
   refreshWrites: async () => {
-    const allWrites = await getAllWrites();
+    const allWrites = await dexie.getAllWrites();
     const sortOption = useAppSettingsStore.getState().sortOption;
     const sortedWrites = sortWrites(allWrites, sortOption);
     set({ writes: sortedWrites });
@@ -74,8 +68,8 @@ export const useAppStore = create<AppStore>((set) => ({
 
   initDB: async () => {
     try {
-      const allWrites = await getAllWrites();
-      const allTags = await getAllTags();
+      const allWrites = await dexie.getAllWrites();
+      const allTags = await dexie.getAllTags();
 
       const sortOption = useAppSettingsStore.getState().sortOption;
       const sortedWrites = sortWrites(allWrites, sortOption);
@@ -90,14 +84,14 @@ export const useAppStore = create<AppStore>((set) => ({
 
   clearDB: async () => {
     try {
-      await clearAll();
+      await dexie.clearAll();
 
-      const newWrite = createWrite("inter", 16);
-      await saveWrite(newWrite);
+      const newWrite = dexie.createWrite("inter", 16);
+      await dexie.saveWrite(newWrite);
 
       set({
         writes: [newWrite],
-        currentWrite: newWrite,
+        currentContent: newWrite,
         tags: [],
       });
     } catch (error) {

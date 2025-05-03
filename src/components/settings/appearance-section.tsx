@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "../ui/select";
 
-export default function AppearanceSection() {
+const AppearanceSection = () => {
   const { appColor, setAppColor } = useAppSettingsStore();
 
   const selectedColor = COLOR_OPTIONS.find((opt) => opt.value === appColor);
@@ -61,4 +61,6 @@ export default function AppearanceSection() {
       </div>
     </div>
   );
-}
+};
+
+export default AppearanceSection;

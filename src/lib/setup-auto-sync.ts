@@ -1,4 +1,4 @@
-import { syncDexieToSupabase } from "@/services/sync";
+import { sync } from "@/services";
 import { useAppSettingsStore } from "@/store/app-settings-store";
 
 export const setupAutoSync = ({
@@ -16,7 +16,7 @@ export const setupAutoSync = ({
     async () => {
       try {
         onStart?.();
-        await syncDexieToSupabase();
+        await sync.syncDexieToSupabase();
         onSuccess?.();
       } catch (e) {
         onError?.(e);

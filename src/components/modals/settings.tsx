@@ -1,4 +1,13 @@
 "use client";
+import { AnimatedTabs } from "@/components/motion";
+import {
+  AppearanceSection,
+  FeedbackSection,
+  StorageSection,
+  SyncSection,
+  TagsSection,
+  WritingSection,
+} from "@/components/settings";
 import {
   Command,
   CommandEmpty,
@@ -16,6 +25,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useDialogStore } from "@/store/dialog-store";
+import type { TabOption } from "@/types";
 import {
   ArchiveIcon,
   BlendIcon,
@@ -25,13 +35,6 @@ import {
   TagIcon,
 } from "lucide-react";
 import { useRef, useState } from "react";
-import Tabs, { type TabOption } from "../motion/animated-tabs";
-import AppearanceSection from "../settings/appearance-section";
-import FeedbackSection from "../settings/feedback-section";
-import StorageSection from "../settings/storage-section";
-import SyncSection from "../settings/sync-section";
-import TagsSection from "../settings/tags-section";
-import WritingSection from "../settings/writing-section";
 
 const settingsTabs: TabOption[] = [
   {
@@ -68,7 +71,7 @@ const settingsTabs: TabOption[] = [
 
 type SettingTab = (typeof settingsTabs)[number]["label"];
 
-export default function Settings() {
+const Settings = () => {
   const { isSettingsOpen, setSettingsOpen } = useDialogStore();
   const [page, setPage] = useState<SettingTab>("Appearance");
   const isMobile = useIsMobile();
@@ -125,10 +128,12 @@ export default function Settings() {
               </div>
             </Command>
           ) : (
-            <Tabs tabs={settingsTabs} />
+            <AnimatedTabs tabs={settingsTabs} />
           )}
         </div>
       </CredenzaContent>
     </Credenza>
   );
-}
+};
+
+export default Settings;

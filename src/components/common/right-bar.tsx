@@ -6,24 +6,24 @@ import { MoveLeftIcon, MoveRightIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
-export function RightBar() {
-  const { writes, currentWrite, setCurrentWrite } = useAppStore();
+const RightBar = () => {
+  const { writes, currentContent, setCurrentContent } = useAppStore();
 
   const handlePrev = () => {
-    if (!currentWrite || writes.length === 0) return;
-    const index = writes.findIndex((w) => w.id === currentWrite.id);
+    if (!currentContent || writes.length === 0) return;
+    const index = writes.findIndex((w) => w.id === currentContent.id);
     if (index > 0) {
       const prev = writes[index - 1];
-      setCurrentWrite(prev);
+      setCurrentContent(prev);
     }
   };
 
   const handleNext = () => {
-    if (!currentWrite || writes.length === 0) return;
-    const index = writes.findIndex((w) => w.id === currentWrite.id);
+    if (!currentContent || writes.length === 0) return;
+    const index = writes.findIndex((w) => w.id === currentContent.id);
     if (index < writes.length - 1) {
       const next = writes[index + 1];
-      setCurrentWrite(next);
+      setCurrentContent(next);
     }
   };
   return (
@@ -48,8 +48,8 @@ export function RightBar() {
                 className="h-4 text-muted-foreground text-xs outline-double outline-2 outline-border outline-offset-2"
                 onClick={handlePrev}
                 disabled={
-                  !currentWrite ||
-                  writes.findIndex((w) => w.id === currentWrite.id) === 0
+                  !currentContent ||
+                  writes.findIndex((w) => w.id === currentContent.id) === 0
                 }
               >
                 <MoveLeftIcon />
@@ -68,8 +68,8 @@ export function RightBar() {
                 className="h-4 text-muted-foreground text-xs outline-double outline-2 outline-border outline-offset-2"
                 onClick={handleNext}
                 disabled={
-                  !currentWrite ||
-                  writes.findIndex((w) => w.id === currentWrite.id) ===
+                  !currentContent ||
+                  writes.findIndex((w) => w.id === currentContent.id) ===
                     writes.length - 1
                 }
               >
@@ -84,4 +84,6 @@ export function RightBar() {
       </div>
     </aside>
   );
-}
+};
+
+export default RightBar;

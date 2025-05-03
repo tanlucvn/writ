@@ -1,4 +1,4 @@
-import Layout from "@/components/layout/app-layout";
+import { AppLayout } from "@/components/layout";
 import { ThemeProvider } from "@/components/theme";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { OpenGraph } from "@/lib/og";
@@ -65,7 +65,7 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <TooltipProvider>
-            <Layout>{children}</Layout>
+            <AppLayout>{children}</AppLayout>
             <Toaster position="bottom-center" />
             <Analytics />
           </TooltipProvider>

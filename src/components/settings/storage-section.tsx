@@ -14,7 +14,7 @@ import { CircleAlertIcon } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
-export default function StorageSection() {
+const StorageSection = () => {
   const { clearDB } = useAppStore();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
@@ -84,4 +84,6 @@ export default function StorageSection() {
       </AlertDialog>
     </>
   );
-}
+};
+
+export default StorageSection;

@@ -3,17 +3,19 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  MultiSelectTag,
+  WriteItem,
+  WriteSortDropdown,
+} from "@/components/writes";
 import { useAppStore } from "@/store/app-store";
 import { useDialogStore } from "@/store/dialog-store";
 import { Loader2, XIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Drawer } from "vaul";
 import { AnimatedNumberBadge } from "../animated-number-badge";
-import { HistoryItem } from "../writes/item";
-import { MultiSelectTag } from "../writes/multi-select-tag";
-import SortDropdown from "../writes/sort";
 
-export default function WritesHistory() {
+const WritesHistory = () => {
   const { writes, tags, refreshWrites } = useAppStore();
   const { isWritesHistoryOpen, setWritesHistoryOpen } = useDialogStore();
   const [searchQuery, setSearchQuery] = useState("");
@@ -105,7 +107,7 @@ export default function WritesHistory() {
                   ) : (
                     <div className="space-y-3 p-1">
                       {filteredWrites.map((write) => (
-                        <HistoryItem key={write.id} write={write} />
+                        <WriteItem key={write.id} write={write} />
                       ))}
                     </div>
                   )}
@@ -122,7 +124,7 @@ export default function WritesHistory() {
                   <p className="text-xs">Writes</p>
                   <AnimatedNumberBadge value={filteredWrites.length} />
                 </div>
-                <SortDropdown />
+                <WriteSortDropdown />
               </div>
             </div>
           </div>
@@ -132,4 +134,6 @@ export default function WritesHistory() {
       </Drawer.Portal>
     </Drawer.Root>
   );
-}
+};
+
+export default WritesHistory;

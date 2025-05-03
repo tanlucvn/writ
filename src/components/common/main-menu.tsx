@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/popover";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
-import {} from "@/services/db/writes";
 import { useAppSettingsStore } from "@/store/app-settings-store";
 import { useAppStore } from "@/store/app-store";
 import { useAuthStore } from "@/store/auth-store";
@@ -376,4 +375,4 @@ const MainMenu = (): React.ReactElement => {
   );
 };
 
-export { MainMenu };
+export default MainMenu;

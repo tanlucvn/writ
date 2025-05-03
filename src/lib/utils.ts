@@ -1,4 +1,4 @@
-import type { Write } from "@/services/db/writes";
+import type { Write } from "@/types";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 

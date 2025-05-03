@@ -1,16 +1,16 @@
 "use client";
 
-import Editor from "@/components/editor";
+import { Editor } from "@/components/editor";
 import BubbleToolbar from "@/components/editor/bubble-toolbar";
 import EditorToolbar from "@/components/editor/editor-toolbar";
 import Loading from "@/components/loading";
 import { useAppStore } from "@/store/app-store";
 import { AnimatePresence, motion } from "framer-motion";
 
-export default function MainPage() {
-  const { currentWrite, editorMode } = useAppStore();
+const WritesPage = () => {
+  const { currentContent, editorMode } = useAppStore();
 
-  if (!currentWrite) {
+  if (!currentContent) {
     return <Loading />;
   }
 
@@ -20,7 +20,7 @@ export default function MainPage() {
 
       <AnimatePresence mode="wait">
         <motion.div
-          key={currentWrite.id}
+          key={currentContent.id}
           initial={{ filter: "blur(4px)" }}
           animate={{ filter: "blur(0px)" }}
           transition={{
@@ -34,4 +34,6 @@ export default function MainPage() {
       </AnimatePresence>
     </>
   );
-}
+};
+
+export default WritesPage;

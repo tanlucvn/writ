@@ -1,14 +1,7 @@
+import type { Tag } from "@/types";
 import { DateTime } from "luxon";
 import { v4 as uuidv4 } from "uuid";
-import { db } from "./index";
-
-export interface Tag {
-  id: string;
-  name: string;
-  color?: string;
-  createdAt: string;
-  updatedAt: string;
-}
+import { db } from "../client";
 
 // Create a new tag object
 export const createTag = (name: string, color?: string): Tag => ({

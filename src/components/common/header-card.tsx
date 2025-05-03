@@ -1,10 +1,10 @@
 "use client";
 
+import { MainMenu } from "@/components/common";
 import { cn } from "@/lib/utils";
 import { useAppSettingsStore } from "@/store/app-settings-store";
-import { MainMenu } from "./main-menu";
 
-export function HeaderCard() {
+const HeaderCard = () => {
   const { isZenMode } = useAppSettingsStore();
 
   return (
@@ -24,4 +24,6 @@ export function HeaderCard() {
       </div>
     </div>
   );
-}
+};
+
+export default HeaderCard;

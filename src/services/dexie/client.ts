@@ -1,6 +1,5 @@
+import type { Tag, Write } from "@/types";
 import Dexie, { type Table } from "dexie";
-import type { Tag } from "./tags";
-import type { Write } from "./writes";
 
 // Define database instance
 const db = new Dexie("miniwritDB");

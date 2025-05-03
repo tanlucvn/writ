@@ -1,4 +1,4 @@
-import { supabase } from "@/services/supabase";
+import { supabase } from "@/services";
 import type { Session, User } from "@supabase/supabase-js";
 import { create } from "zustand";
 
@@ -12,7 +12,7 @@ type AuthState = {
 
 export const useAuthStore = create<AuthState>((set) => {
   // Setup real-time auth listener
-  supabase.auth.onAuthStateChange((_event, session) => {
+  supabase.supabaseClient.auth.onAuthStateChange((_event, session) => {
     set({
       user: session?.user ?? null,
       session: session ?? null,
@@ -26,7 +26,7 @@ export const useAuthStore = create<AuthState>((set) => {
     isLoading: true,
 
     fetchSession: async () => {
-      const { data } = await supabase.auth.getSession();
+      const { data } = await supabase.supabaseClient.auth.getSession();
       set({
         user: data.session?.user ?? null,
         session: data.session ?? null,
@@ -35,7 +35,7 @@ export const useAuthStore = create<AuthState>((set) => {
     },
 
     logout: async () => {
-      await supabase.auth.signOut();
+      await supabase.supabaseClient.auth.signOut();
       set({ user: null, session: null });
     },
   };

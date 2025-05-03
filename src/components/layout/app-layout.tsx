@@ -1,6 +1,13 @@
 "use client";
 
-import { createWrite, getLatestWrite, saveWrite } from "@/services/db/writes";
+import { HeaderCard, RightBar, Sidebar } from "@/components/common";
+import {
+  HelpDialog,
+  MusicPlayer,
+  Settings,
+  WritesHistory,
+} from "@/components/modals";
+import { dexie } from "@/services";
 import { useAppSettingsStore } from "@/store/app-settings-store";
 import { useAppStore } from "@/store/app-store";
 import { useDialogStore } from "@/store/dialog-store";
@@ -9,19 +16,12 @@ import { useTheme } from "next-themes";
 import { useCallback, useEffect } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { AutoSyncInitializer } from "../auto-sync-initializer";
-import { HeaderCard } from "../common/header-card";
-import { RightBar } from "../common/right-bar";
-import { Sidebar } from "../common/sidebar";
-import HelpDialog from "../modals/help-dialog";
-import MusicPlayer from "../modals/music-player";
-import Settings from "../modals/settings";
-import WritesHistory from "../modals/writes-history";
 import ScollToTop from "../scroll-to-top";
 import StatsDashboard from "../statistics";
 import { SyncIndicator } from "../sync-indicator";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
-  const { createNewWrite, initDB, setCurrentWrite } = useAppStore();
+const AppLayout = ({ children }: { children: React.ReactNode }) => {
+  const { createNewWrite, initDB, setCurrentContent } = useAppStore();
   const { appColor, toggleZenMode, fontFamily, fontSize } =
     useAppSettingsStore();
   const { setIsHelpDialogOpen, setMusicPlayerOpen, setSettingsOpen } =
@@ -33,14 +33,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     try {
       await initDB();
 
-      const recent = await getLatestWrite();
-      const write = recent ?? createWrite(fontFamily, fontSize);
-      if (!recent) await saveWrite(write);
-      setCurrentWrite(write);
+      const recent = await dexie.getLatestWrite();
+      const write = recent ?? dexie.createWrite(fontFamily, fontSize);
+      if (!recent) await dexie.saveWrite(write);
+      setCurrentContent(write);
     } catch (err) {
       console.error("Failed to initialize data:", err);
     }
-  }, [fontFamily, fontSize, initDB, setCurrentWrite]);
+  }, [fontFamily, fontSize, initDB, setCurrentContent]);
 
   useHotkeys("alt+z", toggleZenMode);
   useHotkeys("alt+n", createNewWrite);
@@ -84,4 +84,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <SyncIndicator />
     </>
   );
-}
+};
+
+export default AppLayout;

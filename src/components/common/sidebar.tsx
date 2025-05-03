@@ -1,14 +1,13 @@
 "use client";
 
+import { UserButton } from "@/components/common";
+import { TimeDisplay, WordCount } from "@/components/editor";
 import { cn } from "@/lib/utils";
 import { useAppSettingsStore } from "@/store/app-settings-store";
 import { type Tab, useTabStore } from "@/store/tab-store";
-import TimeDisplay from "../editor/time-display";
-import WordCount from "../editor/word-count";
 import { Button } from "../ui/button";
-import { UserButton } from "./user-button";
 
-export function Sidebar() {
+const Sidebar = () => {
   const { tab, setTab } = useTabStore();
   const { isZenMode } = useAppSettingsStore();
 
@@ -51,4 +50,6 @@ export function Sidebar() {
       </div>
     </nav>
   );
-}
+};
+
+export default Sidebar;

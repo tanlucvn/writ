@@ -4,7 +4,7 @@ import { useAppStore } from "@/store/app-store";
 import { BubbleMenu } from "@tiptap/react";
 import EditorToolbar from "./editor-toolbar";
 
-export default function BubbleToolbar() {
+const BubbleToolbar = () => {
   const { editor } = useAppStore();
 
   if (!editor) return null;
@@ -16,4 +16,6 @@ export default function BubbleToolbar() {
       </BubbleMenu>
     </div>
   );
-}
+};
+
+export default BubbleToolbar;

@@ -3,15 +3,15 @@
 import { useAppStore } from "@/store/app-store";
 import { AnimatePresence, motion } from "framer-motion";
 
-export default function WordCount() {
-  const { editor, currentWrite } = useAppStore();
+const WordCount = () => {
+  const { editor, currentContent } = useAppStore();
 
   if (!editor) return null;
 
   return (
     <AnimatePresence mode="wait">
       <motion.div
-        key={currentWrite?.id}
+        key={currentContent?.id}
         initial={{ filter: "blur(4px)" }}
         animate={{ filter: "blur(0px)" }}
         transition={{
@@ -24,4 +24,6 @@ export default function WordCount() {
       </motion.div>
     </AnimatePresence>
   );
-}
+};
+
+export default WordCount;

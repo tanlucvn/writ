@@ -5,12 +5,12 @@ import TagChip from "@/components/tag-chip";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { getTagColors } from "@/lib/colors";
-import { createTag, deleteTag, getAllTags, saveTag } from "@/services/db/tags";
+import { dexie } from "@/services";
 import { useAppStore } from "@/store/app-store";
 import { DotIcon, PlusIcon } from "lucide-react";
 import { useState } from "react";
 
-export default function TagsSection() {
+const TagsSection = () => {
   const tagColors = getTagColors();
   const [newTag, setNewTag] = useState("");
   const [color, setColor] = useState(tagColors[0]);
@@ -21,18 +21,18 @@ export default function TagsSection() {
     if (!newTag.trim()) return;
     setLoading(true);
 
-    const newTagObj = createTag(newTag.trim(), color);
-    await saveTag(newTagObj);
+    const newTagObj = dexie.createTag(newTag.trim(), color);
+    await dexie.saveTag(newTagObj);
 
     setNewTag("");
-    const updatedTags = await getAllTags();
+    const updatedTags = await dexie.getAllTags();
     setTags(updatedTags);
     setLoading(false);
   };
 
   const handleDelete = async (id: string) => {
-    await deleteTag(id);
-    const updatedTags = await getAllTags();
+    await dexie.deleteTag(id);
+    const updatedTags = await dexie.getAllTags();
     setTags(updatedTags);
   };
 
@@ -77,4 +77,6 @@ export default function TagsSection() {
       </div>
     </section>
   );
-}
+};
+
+export default TagsSection;

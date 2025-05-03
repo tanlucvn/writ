@@ -13,7 +13,7 @@ import { useAppStore } from "@/store/app-store";
 import { MinusIcon, PlusIcon } from "lucide-react";
 import { Separator } from "../ui/separator";
 
-export default function WritingSection() {
+const WritingSection = () => {
   const { editorMode, setEditorMode } = useAppStore();
   const { fontFamily, setFontFamily, fontSize, setFontSize } =
     useAppSettingsStore();
@@ -97,4 +97,6 @@ export default function WritingSection() {
       </div>
     </div>
   );
-}
+};
+
+export default WritingSection;

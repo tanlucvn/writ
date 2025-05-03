@@ -12,7 +12,7 @@ import { sortWrites } from "@/lib/utils";
 import { useAppSettingsStore } from "@/store/app-settings-store";
 import { useAppStore } from "@/store/app-store";
 
-export default function SortDropdown() {
+const WriteSortDropdown = () => {
   const { writes, setWrites } = useAppStore();
   const { sortOption, setSortOption } = useAppSettingsStore();
 
@@ -47,4 +47,6 @@ export default function SortDropdown() {
       </SelectContent>
     </Select>
   );
-}
+};
+
+export default WriteSortDropdown;
