@@ -11,6 +11,7 @@ import {
 import { useAuthStore } from "@/store/auth-store";
 import { useTabStore } from "@/store/tab-store";
 import { useEffect } from "react";
+import DashedContainer from "../ui/dashed-container";
 
 const UserButton = () => {
   const { user, isLoading, fetchSession, logout } = useAuthStore();
@@ -33,7 +34,7 @@ const UserButton = () => {
       <Button
         variant="ghost"
         size="sm"
-        className="h-fit px-0 py-0 text-muted-foreground text-xs hover:bg-transparent"
+        className="h-fit px-0 py-0 text-foreground text-xs hover:bg-transparent"
         onClick={() => setTab("signin")}
       >
         Sign in
@@ -47,13 +48,13 @@ const UserButton = () => {
         <Button
           variant="ghost"
           size="sm"
-          className="h-fit px-0 py-0 text-muted-foreground text-xs outline-none ring-0 hover:bg-transparent focus-visible:ring-0"
+          className="h-fit px-0 py-0 text-foreground text-xs outline-none ring-0 hover:bg-transparent focus-visible:ring-0"
         >
           Accounts
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent side="right" className="w-48 rounded-2xl p-1">
-        <div className="h-full w-full rounded-xl border-2 border-border border-dashed p-1">
+      <DropdownMenuContent side="bottom" className="mt-1 w-48 p-1">
+        <DashedContainer className="p-1">
           <div className="p-1.5 font-mono text-muted-foreground text-xs">
             {user.email}
           </div>
@@ -61,7 +62,7 @@ const UserButton = () => {
           <DropdownMenuItem onClick={logout} className="text-xs">
             Logout
           </DropdownMenuItem>
-        </div>
+        </DashedContainer>
       </DropdownMenuContent>
     </DropdownMenu>
   );

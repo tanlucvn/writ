@@ -4,12 +4,12 @@ import { useDialogStore } from "@/store/dialog-store";
 import { ChevronLeft, ChevronRight, RotateCwIcon, XIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Drawer } from "vaul";
-import { Button } from "./ui/button";
-import { Label } from "./ui/label";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import {} from "./ui/tooltip";
+import { Button } from "../ui/button";
+import DashedContainer from "../ui/dashed-container";
+import { Label } from "../ui/label";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
-const StatsDashboard = () => {
+const Statistics = () => {
   const [writesByDate, setWritesByDate] = useState<Map<string, number>>(
     new Map(),
   );
@@ -130,8 +130,8 @@ const StatsDashboard = () => {
                     <RotateCwIcon />
                   </Button>
                 </div>
-                <div className="rounded-2xl bg-popover p-1">
-                  <div className="flex flex-col space-y-1 rounded-xl border-2 border-dashed p-2">
+                <div className="rounded-md bg-popover p-1">
+                  <DashedContainer className="flex flex-col gap-1 p-2">
                     {/* Month Navigation */}
                     <div className="flex items-center justify-between">
                       <Button
@@ -160,7 +160,7 @@ const StatsDashboard = () => {
 
                     {/* Calendar Days */}
                     <div className="flex flex-col items-center justify-center">
-                      <div className="mt-2 grid w-full max-w-sm grid-cols-7 gap-2 text-center text-[10px] text-muted-foreground">
+                      <div className="mt-2 grid w-full max-w-sm grid-cols-7 gap-2 text-center text-[10px] ">
                         {weekdays.map((day) => (
                           <span key={day}>{day}</span>
                         ))}
@@ -185,18 +185,18 @@ const StatsDashboard = () => {
                               <PopoverTrigger asChild>
                                 <div
                                   className={cn(
-                                    "flex size-8 items-center justify-center rounded-md border text-xs outline-double outline-1 outline-border outline-offset-1",
+                                    "relative flex size-8 items-center justify-center rounded-md border text-xs",
                                     writes > 0
-                                      ? "bg-primary text-primary-foreground outline-primary/50"
-                                      : "bg-muted text-muted-foreground hover:bg-accent hover:text-accent-foreground",
+                                      ? "bg-primary text-primary-foreground"
+                                      : "bg-secondary text-secondary-foreground hover:bg-accent hover:text-accent-foreground",
                                     "cursor-pointer",
                                   )}
                                 >
                                   {dayOfMonth}
                                 </div>
                               </PopoverTrigger>
-                              <PopoverContent className="w-48 rounded-2xl p-1 text-xs">
-                                <div className="h-full w-full space-y-1 rounded-xl border-2 border-border border-dashed p-2">
+                              <PopoverContent className="w-48 p-1 text-xs">
+                                <DashedContainer className="space-y-1 p-2">
                                   <p className="text-[10px] text-muted-foreground">
                                     {formattedDate}
                                   </p>
@@ -224,14 +224,14 @@ const StatsDashboard = () => {
                                       {unsyncedWrites}
                                     </span>
                                   </div>
-                                </div>
+                                </DashedContainer>
                               </PopoverContent>
                             </Popover>
                           );
                         })}
                       </div>
                     </div>
-                  </div>
+                  </DashedContainer>
                 </div>
                 <p className="text-muted-foreground text-xs">
                   Visualize your writing activity by day. Navigate through
@@ -247,4 +247,4 @@ const StatsDashboard = () => {
   );
 };
 
-export default StatsDashboard;
+export default Statistics;

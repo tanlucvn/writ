@@ -1,13 +1,14 @@
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
 import type { Tag } from "@/types";
-import { TagIcon } from "lucide-react";
+import { CheckIcon, TagIcon } from "lucide-react";
 import type { Dispatch, SetStateAction } from "react";
+import TagChip from "../tag-chip";
+import DashedContainer from "../ui/dashed-container";
 
 const MultiSelectTag = ({
   availableTags,
@@ -44,7 +45,7 @@ const MultiSelectTag = ({
       </PopoverTrigger>
 
       <PopoverContent className="w-48 p-1">
-        <div className="h-full w-full rounded-md border-2 border-border border-dashed p-1">
+        <DashedContainer className="p-1">
           <p className="px-1.5 py-1 font-mono text-muted-foreground text-xs">
             Select tags to filter
           </p>
@@ -53,18 +54,20 @@ const MultiSelectTag = ({
             {availableTags.map((tag) => (
               <div
                 key={tag.id}
-                className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 hover:bg-muted/30"
+                className="flex items-center rounded-md px-2 py-1 hover:bg-accent"
                 onClick={() => toggleTag(tag.id)}
               >
-                <Checkbox
-                  checked={selectedTags.has(tag.id)}
-                  onCheckedChange={() => toggleTag(tag.id)}
+                <TagChip
+                  tag={tag}
+                  className="cursor-default select-none gap-2 border-none"
                 />
-                <span className="text-sm">{tag.name}</span>
+                {selectedTags.has(tag.id) && (
+                  <CheckIcon className="ml-auto size-4" />
+                )}
               </div>
             ))}
           </div>
-        </div>
+        </DashedContainer>
       </PopoverContent>
     </Popover>
   );

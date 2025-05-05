@@ -5,6 +5,7 @@ import {
   CredenzaDescription,
   CredenzaTitle,
 } from "../ui/credenza";
+import DashedContainer from "../ui/dashed-container";
 import { Kbd } from "../ui/kbd";
 
 const HelpDialog = () => {
@@ -13,8 +14,8 @@ const HelpDialog = () => {
     <Credenza open={isHelpDialogOpen} onOpenChange={setIsHelpDialogOpen}>
       <CredenzaTitle className="sr-only">Help</CredenzaTitle>
       <CredenzaDescription className="sr-only">Help dialog</CredenzaDescription>
-      <CredenzaContent className="!rounded-2xl p-1">
-        <div className="h-full w-full rounded-xl border-2 border-border border-dashed p-2">
+      <CredenzaContent className="p-1">
+        <DashedContainer className="p-2">
           <div className="mt-6 flex flex-col space-y-4 sm:mt-0">
             <div className="flex flex-col gap-1">
               <p className="font-mono text-muted-foreground text-xs">
@@ -52,7 +53,7 @@ const HelpDialog = () => {
               </li>
             </ul>
           </div>
-        </div>
+        </DashedContainer>
       </CredenzaContent>
     </Credenza>
   );

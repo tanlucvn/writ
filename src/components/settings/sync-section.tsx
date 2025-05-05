@@ -14,6 +14,7 @@ import {
   AlertDialogTitle,
 } from "../ui/alert-dialog";
 import { Button } from "../ui/button";
+import DashedContainer from "../ui/dashed-container";
 import { Label } from "../ui/label";
 import {
   Select,
@@ -109,19 +110,21 @@ const SyncSection = () => {
                 value={syncInterval.toString()}
                 onValueChange={(value) => setSyncInterval(Number(value))}
               >
-                <SelectTrigger className="h-8">
+                <SelectTrigger className="h-8 text-xs">
                   <SelectValue placeholder="Select interval" />
                 </SelectTrigger>
-                <SelectContent className="rounded-2xl">
-                  <div className="h-full w-full rounded-xl border-2 border-border border-dashed p-1">
+                <SelectContent className="mt-1">
+                  <DashedContainer className="p-1">
                     {recommendedOptions.map((minutes) => (
-                      <SelectItem key={minutes} value={minutes.toString()}>
-                        <span className="font-medium text-xs">
-                          Every {minutes} {minutes === 1 ? "minute" : "minutes"}
-                        </span>
+                      <SelectItem
+                        key={minutes}
+                        value={minutes.toString()}
+                        className="text-xs hover:bg-accent"
+                      >
+                        Every {minutes} {minutes === 1 ? "minute" : "minutes"}
                       </SelectItem>
                     ))}
-                  </div>
+                  </DashedContainer>
                 </SelectContent>
               </Select>
               <p className="text-muted-foreground text-xs">
@@ -188,8 +191,8 @@ const SyncSection = () => {
       </div>
 
       <AlertDialog open={syncDialogOpen} onOpenChange={setSyncDialogOpen}>
-        <AlertDialogContent className="!rounded-2xl p-1">
-          <div className="h-full w-full rounded-xl border-2 border-border border-dashed p-2">
+        <AlertDialogContent className="p-1">
+          <DashedContainer className="p-2">
             <AlertDialogTitle className="mb-2 font-mono text-sm">
               Confirm Data Synchronization
             </AlertDialogTitle>
@@ -220,21 +223,21 @@ const SyncSection = () => {
             </AlertDialogDescription>
             <AlertDialogFooter className="mt-4 gap-1">
               <AlertDialogCancel
-                className="h-8 border px-2 text-xs outline-double outline-2 outline-border outline-offset-2"
+                className="h-8 border bg-secondary px-2 text-secondary-foreground text-xs outline-double outline-1 outline-border outline-offset-2 hover:bg-secondary/90"
                 onClick={() => setSyncDialogOpen(false)}
                 disabled={syncing}
               >
                 Cancel
               </AlertDialogCancel>
               <AlertDialogAction
-                className="h-8 border bg-secondary px-2 text-foreground text-xs outline-double outline-2 outline-border outline-offset-2"
+                className="h-8 border bg-primary px-2 text-primary-foreground text-xs outline-double outline-1 outline-primary outline-offset-2 hover:bg-primary/90"
                 onClick={confirmSync}
                 disabled={syncing}
               >
                 Confirm
               </AlertDialogAction>
             </AlertDialogFooter>
-          </div>
+          </DashedContainer>
         </AlertDialogContent>
       </AlertDialog>
     </div>

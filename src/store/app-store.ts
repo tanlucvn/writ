@@ -17,6 +17,9 @@ interface AppStore {
   currentContent: Write | null;
   setCurrentContent: (write: Write) => void;
 
+  handlePrevWrite: () => void;
+  handleNextWrite: () => void;
+
   createNewWrite: () => Promise<void>;
   refreshWrites: () => Promise<void>;
 
@@ -40,6 +43,28 @@ export const useAppStore = create<AppStore>((set) => ({
 
   currentContent: null,
   setCurrentContent: (write) => set({ currentContent: write }),
+
+  handlePrevWrite: () => {
+    const { currentContent, writes, setCurrentContent } =
+      useAppStore.getState();
+    if (!currentContent || writes.length === 0) return;
+    const index = writes.findIndex((w) => w.id === currentContent.id);
+    if (index > 0) {
+      const prev = writes[index - 1];
+      setCurrentContent(prev);
+    }
+  },
+
+  handleNextWrite: () => {
+    const { currentContent, writes, setCurrentContent } =
+      useAppStore.getState();
+    if (!currentContent || writes.length === 0) return;
+    const index = writes.findIndex((w) => w.id === currentContent.id);
+    if (index < writes.length - 1) {
+      const next = writes[index + 1];
+      setCurrentContent(next);
+    }
+  },
 
   createNewWrite: async () => {
     const { setCurrentContent, refreshWrites } = useAppStore.getState();

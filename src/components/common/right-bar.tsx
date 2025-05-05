@@ -2,30 +2,15 @@
 
 import { cn } from "@/lib/utils";
 import { useAppStore } from "@/store/app-store";
-import { MoveLeftIcon, MoveRightIcon } from "lucide-react";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import UserButton from "./user-button";
 
 const RightBar = () => {
-  const { writes, currentContent, setCurrentContent } = useAppStore();
+  const { writes, currentContent, handlePrevWrite, handleNextWrite } =
+    useAppStore();
 
-  const handlePrev = () => {
-    if (!currentContent || writes.length === 0) return;
-    const index = writes.findIndex((w) => w.id === currentContent.id);
-    if (index > 0) {
-      const prev = writes[index - 1];
-      setCurrentContent(prev);
-    }
-  };
-
-  const handleNext = () => {
-    if (!currentContent || writes.length === 0) return;
-    const index = writes.findIndex((w) => w.id === currentContent.id);
-    if (index < writes.length - 1) {
-      const next = writes[index + 1];
-      setCurrentContent(next);
-    }
-  };
   return (
     <aside
       className={cn(
@@ -34,7 +19,7 @@ const RightBar = () => {
     >
       {/* Top content */}
       <div className="flex flex-col items-start space-y-4 text-muted-foreground">
-        {/* <p>RightBar Content</p> */}
+        <UserButton />
       </div>
 
       {/* Bottom content */}
@@ -45,14 +30,14 @@ const RightBar = () => {
               <Button
                 variant="secondary"
                 size="sm"
-                className="h-4 text-muted-foreground text-xs outline-double outline-2 outline-border outline-offset-2"
-                onClick={handlePrev}
+                className="size-6 text-muted-foreground text-xs outline-double outline-2 outline-border outline-offset-2"
+                onClick={handlePrevWrite}
                 disabled={
                   !currentContent ||
                   writes.findIndex((w) => w.id === currentContent.id) === 0
                 }
               >
-                <MoveLeftIcon />
+                <ChevronLeftIcon strokeWidth={3} />
               </Button>
             </TooltipTrigger>
             <TooltipContent className="mb-1">
@@ -65,15 +50,15 @@ const RightBar = () => {
               <Button
                 variant="secondary"
                 size="sm"
-                className="h-4 text-muted-foreground text-xs outline-double outline-2 outline-border outline-offset-2"
-                onClick={handleNext}
+                className="size-6 text-muted-foreground text-xs outline-double outline-2 outline-border outline-offset-2"
+                onClick={handleNextWrite}
                 disabled={
                   !currentContent ||
                   writes.findIndex((w) => w.id === currentContent.id) ===
                     writes.length - 1
                 }
               >
-                <MoveRightIcon />
+                <ChevronRightIcon strokeWidth={3} />
               </Button>
             </TooltipTrigger>
             <TooltipContent className="mb-1">

@@ -11,6 +11,7 @@ import { WRITE_SORT_OPTIONS } from "@/lib/constants";
 import { sortWrites } from "@/lib/utils";
 import { useAppSettingsStore } from "@/store/app-settings-store";
 import { useAppStore } from "@/store/app-store";
+import DashedContainer from "../ui/dashed-container";
 
 const WriteSortDropdown = () => {
   const { writes, setWrites } = useAppStore();
@@ -29,7 +30,7 @@ const WriteSortDropdown = () => {
       </SelectTrigger>
 
       <SelectContent>
-        <div className="h-full w-full rounded-md border-2 border-border border-dashed p-1">
+        <DashedContainer className="p-1">
           <p className="px-1.5 py-1 font-mono text-muted-foreground text-xs">
             Sort by
           </p>
@@ -43,7 +44,7 @@ const WriteSortDropdown = () => {
               {option.label}
             </SelectItem>
           ))}
-        </div>
+        </DashedContainer>
       </SelectContent>
     </Select>
   );

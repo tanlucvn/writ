@@ -1,6 +1,4 @@
 "use client";
-
-import { UserButton } from "@/components/common";
 import { TimeDisplay, WordCount } from "@/components/editor";
 import { cn } from "@/lib/utils";
 import { useAppSettingsStore } from "@/store/app-settings-store";
@@ -20,9 +18,8 @@ const Sidebar = () => {
   return (
     <nav
       className={cn(
-        "-translate-x-[470px] fixed top-[42px] bottom-[40px] left-1/2 flex w-[120px] transform flex-col justify-between p-4",
-        isZenMode &&
-          "pointer-events-none opacity-0 transition-all delay-75 duration-150",
+        "-translate-x-[470px] fixed top-[42px] bottom-[40px] left-1/2 flex w-[120px] flex-col justify-between p-4",
+        isZenMode && "pointer-events-none opacity-0",
       )}
     >
       <div className="flex flex-col items-start space-y-2 text-xs">
@@ -43,8 +40,6 @@ const Sidebar = () => {
       </div>
 
       <div className="flex select-none flex-col items-start space-y-2 text-muted-foreground text-xs">
-        <UserButton />
-
         <TimeDisplay />
         {tab === "writes" && <WordCount />}
       </div>

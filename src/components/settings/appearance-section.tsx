@@ -2,6 +2,7 @@ import { ThemeSwitcher } from "@/components/theme";
 import { Label } from "@/components/ui/label";
 import { COLOR_OPTIONS } from "@/lib/constants";
 import { type AppColor, useAppSettingsStore } from "@/store/app-settings-store";
+import DashedContainer from "../ui/dashed-container";
 import {
   Select,
   SelectContent,
@@ -30,18 +31,18 @@ const AppearanceSection = () => {
             <SelectTrigger id="color-select" className="h-8 w-[180px] text-xs">
               <SelectValue placeholder="Select a color" />
             </SelectTrigger>
-            <SelectContent className="rounded-2xl">
-              <div className="h-full w-full rounded-xl border-2 border-border border-dashed p-1">
+            <SelectContent className="mt-1">
+              <DashedContainer className="p-1">
                 {COLOR_OPTIONS.map((option) => (
                   <SelectItem
                     key={option.value}
                     value={option.value}
-                    className="rounded-lg"
+                    className="text-xs hover:bg-accent"
                   >
-                    <span className="font-medium text-xs">{option.label}</span>
+                    {option.label}
                   </SelectItem>
                 ))}
-              </div>
+              </DashedContainer>
             </SelectContent>
           </Select>
         </div>

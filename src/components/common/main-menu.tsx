@@ -19,8 +19,8 @@ import {
   BadgeInfoIcon,
   ChartPieIcon,
   CircleHelpIcon,
-  FocusIcon,
   GithubIcon,
+  LeafIcon,
   LibraryBigIcon,
   MusicIcon,
   PenIcon,
@@ -35,6 +35,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import Logo from "../logo";
 import { ThemeSwitcher } from "../theme";
+import DashedContainer from "../ui/dashed-container";
 
 type NavMenuLinkProps = {
   children: React.ReactNode;
@@ -45,6 +46,11 @@ type NavMenuLinkProps = {
   className?: string;
 };
 
+interface TabProps {
+  onClose?: () => void;
+  onAction?: () => void;
+}
+
 export const NavMenuLink = ({
   children,
   href,
@@ -54,9 +60,9 @@ export const NavMenuLink = ({
 }: NavMenuLinkProps) => (
   <Link href={href} target={target}>
     <Button
-      variant="ghost"
+      variant="outline"
       className={cn(
-        "flex w-full items-center justify-start rounded-lg border px-2 py-0 text-muted-foreground text-xs outline-double outline-1 outline-border outline-offset-1 hover:bg-secondary",
+        "flex w-full items-center justify-start px-2 py-0 text-muted-foreground text-xs",
         className,
       )}
     >
@@ -80,9 +86,9 @@ export const NavMenuItem = ({
   onClick,
 }: NavMenuItemProps) => (
   <Button
-    variant="ghost"
+    variant="outline"
     className={cn(
-      "flex items-center justify-start rounded-lg border px-2 py-0 text-muted-foreground text-xs outline-double outline-1 outline-border outline-offset-1 hover:bg-secondary",
+      "flex w-full items-center justify-start px-2 py-0 text-muted-foreground text-xs",
       className,
     )}
     onClick={onClick}
@@ -95,20 +101,20 @@ export const NavMenuItem = ({
 type NavMenuSectionProps = {
   title: string;
   children: React.ReactNode;
-  onBack?: () => void;
+  onClose?: () => void;
 };
 
-const NavMenuSection = ({ title, children, onBack }: NavMenuSectionProps) => (
+const NavMenuSection = ({ title, children, onClose }: NavMenuSectionProps) => (
   <div className="flex flex-col gap-2">
     <div className="flex items-center justify-between">
       <p className="px-1.5 py-1 font-mono text-muted-foreground text-xs">
         {title}
       </p>
-      {onBack && (
+      {onClose && (
         <Button
           variant="ghost"
           size="icon"
-          onClick={onBack}
+          onClick={onClose}
           className="size-8 text-muted-foreground hover:bg-transparent hover:text-foreground"
         >
           <XIcon />
@@ -120,16 +126,20 @@ const NavMenuSection = ({ title, children, onBack }: NavMenuSectionProps) => (
   </div>
 );
 
-const WritesTab = ({ onBack }: { onBack: () => void }) => {
+const WritesTab = ({ onClose, onAction }: TabProps) => {
   const { createNewWrite } = useAppStore();
   const { setWritesHistoryOpen } = useDialogStore();
 
   return (
-    <NavMenuSection title="Writes" onBack={onBack}>
+    <NavMenuSection title="Writes" onClose={onClose}>
       <Button
         variant="outline"
-        className="rounded-lg text-xs outline-double outline-1 outline-border outline-offset-1 hover:bg-secondary"
-        onClick={createNewWrite}
+        className="text-xs"
+        onClick={() => {
+          onClose?.();
+          onAction?.();
+          createNewWrite();
+        }}
       >
         <PlusIcon />
         Create New
@@ -137,8 +147,12 @@ const WritesTab = ({ onBack }: { onBack: () => void }) => {
 
       <Button
         variant="outline"
-        className="rounded-lg text-xs outline-double outline-1 outline-border outline-offset-1 hover:bg-secondary"
-        onClick={() => setWritesHistoryOpen(true)}
+        className="text-xs"
+        onClick={() => {
+          onClose?.();
+          onAction?.();
+          setWritesHistoryOpen(true);
+        }}
       >
         <LibraryBigIcon />
         View History
@@ -147,43 +161,33 @@ const WritesTab = ({ onBack }: { onBack: () => void }) => {
   );
 };
 
-const SessionsTab = ({ onBack }: { onBack: () => void }) => (
-  <NavMenuSection title="Write Sessions" onBack={onBack}>
-    <Button
-      variant="outline"
-      className="rounded-lg text-xs outline-double outline-1 outline-border outline-offset-1 hover:bg-secondary"
-    >
+const SessionsTab = ({ onClose }: { onClose: () => void }) => (
+  <NavMenuSection title="Write Sessions" onClose={onClose}>
+    <Button variant="outline" className="text-xs">
       <PlusIcon />
       Create New
     </Button>
 
-    <Button
-      variant="outline"
-      className="rounded-lg text-xs outline-double outline-1 outline-border outline-offset-1 hover:bg-secondary"
-    >
+    <Button variant="outline" className="text-xs">
       <LibraryBigIcon />
       View History
     </Button>
   </NavMenuSection>
 );
 
-const AccountsTab = ({ onBack }: { onBack: () => void }) => {
+const AccountsTab = ({ onClose }: { onClose: () => void }) => {
   const { logout } = useAuthStore();
 
   const handleLogout = async () => {
     await logout();
 
     toast.success("Logged out successfully!");
-    onBack();
+    onClose();
   };
 
   return (
-    <NavMenuSection title="Accounts" onBack={onBack}>
-      <Button
-        variant="outline"
-        className="rounded-lg text-xs outline-double outline-1 outline-border outline-offset-1 hover:bg-secondary"
-        onClick={handleLogout}
-      >
+    <NavMenuSection title="Accounts" onClose={onClose}>
+      <Button variant="outline" className="text-xs" onClick={handleLogout}>
         <ArrowUpRightIcon />
         Log out
       </Button>
@@ -192,7 +196,7 @@ const AccountsTab = ({ onBack }: { onBack: () => void }) => {
 };
 
 const MainMenu = (): React.ReactElement => {
-  const { toggleZenMode } = useAppSettingsStore();
+  const { toggleZenMode, isZenMode } = useAppSettingsStore();
   const {
     setSettingsOpen,
     setMusicPlayerOpen,
@@ -202,6 +206,7 @@ const MainMenu = (): React.ReactElement => {
   const { setTab } = useTabStore();
   const { user } = useAuthStore();
   const [activeTab, setActiveTab] = useState<string>("home");
+  const [isOpen, setIsOpen] = useState(false);
   const isMobile = useIsMobile();
 
   const handleTabChange = (tab: string) => {
@@ -209,7 +214,7 @@ const MainMenu = (): React.ReactElement => {
   };
 
   return (
-    <Popover>
+    <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
         <Button
           className="size-8 outline-2 outline-border outline-offset-2"
@@ -220,8 +225,13 @@ const MainMenu = (): React.ReactElement => {
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent className="z-[1] mt-1 w-[300px] rounded-2xl bg-background p-1">
-        <div className="h-full w-full rounded-xl border-2 border-border border-dashed p-2">
+      <PopoverContent
+        className={cn(
+          "z-[1] w-[300px] bg-background p-1",
+          isZenMode ? "mb-1" : "mt-1",
+        )}
+      >
+        <DashedContainer className="p-2">
           <motion.div
             key={activeTab}
             initial={{ opacity: 0 }}
@@ -230,13 +240,16 @@ const MainMenu = (): React.ReactElement => {
             transition={{ duration: 0.5 }}
           >
             {activeTab === "writes" && (
-              <WritesTab onBack={() => handleTabChange("home")} />
+              <WritesTab
+                onClose={() => handleTabChange("home")}
+                onAction={() => setIsOpen(false)}
+              />
             )}
             {activeTab === "sessions" && (
-              <SessionsTab onBack={() => handleTabChange("home")} />
+              <SessionsTab onClose={() => handleTabChange("home")} />
             )}
             {activeTab === "accounts" && (
-              <AccountsTab onBack={() => handleTabChange("home")} />
+              <AccountsTab onClose={() => handleTabChange("home")} />
             )}
             {activeTab === "home" && (
               <div className="flex flex-col space-y-4">
@@ -267,10 +280,10 @@ const MainMenu = (): React.ReactElement => {
                     </NavMenuItem>
 
                     <NavMenuItem
-                      icon={<FocusIcon size={15} />}
+                      icon={<LeafIcon size={15} />}
                       onClick={toggleZenMode}
                     >
-                      Focus Mode
+                      Zen Mode
                     </NavMenuItem>
 
                     <NavMenuItem
@@ -369,7 +382,7 @@ const MainMenu = (): React.ReactElement => {
             </p>
             <ThemeSwitcher />
           </div>
-        </div>
+        </DashedContainer>
       </PopoverContent>
     </Popover>
   );

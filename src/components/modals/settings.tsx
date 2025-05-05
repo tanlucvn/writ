@@ -35,6 +35,7 @@ import {
   TagIcon,
 } from "lucide-react";
 import { useRef, useState } from "react";
+import DashedContainer from "../ui/dashed-container";
 
 const settingsTabs: TabOption[] = [
   {
@@ -84,8 +85,8 @@ const Settings = () => {
       <CredenzaDescription className="sr-only">
         Change your app settings.
       </CredenzaDescription>
-      <CredenzaContent className="!rounded-2xl w-full max-w-xl p-1 max-md:max-w-none">
-        <div className="h-full w-full rounded-xl border-2 border-border border-dashed p-1">
+      <CredenzaContent className="w-full max-w-xl p-1 transition-all duration-0 max-md:max-w-none">
+        <DashedContainer className="p-2">
           {!isMobile ? (
             <Command
               loop
@@ -130,7 +131,7 @@ const Settings = () => {
           ) : (
             <AnimatedTabs tabs={settingsTabs} />
           )}
-        </div>
+        </DashedContainer>
       </CredenzaContent>
     </Credenza>
   );

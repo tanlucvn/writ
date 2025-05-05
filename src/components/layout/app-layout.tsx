@@ -5,8 +5,10 @@ import {
   HelpDialog,
   MusicPlayer,
   Settings,
+  Statistics,
   WritesHistory,
 } from "@/components/modals";
+import { cn } from "@/lib/utils";
 import { dexie } from "@/services";
 import { useAppSettingsStore } from "@/store/app-settings-store";
 import { useAppStore } from "@/store/app-store";
@@ -16,13 +18,19 @@ import { useTheme } from "next-themes";
 import { useCallback, useEffect } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { AutoSyncInitializer } from "../auto-sync-initializer";
+import FloatingMainMenu from "../common/floating-main-menu";
 import ScollToTop from "../scroll-to-top";
-import StatsDashboard from "../statistics";
 import { SyncIndicator } from "../sync-indicator";
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
-  const { createNewWrite, initDB, setCurrentContent } = useAppStore();
-  const { appColor, toggleZenMode, fontFamily, fontSize } =
+  const {
+    createNewWrite,
+    initDB,
+    setCurrentContent,
+    handlePrevWrite,
+    handleNextWrite,
+  } = useAppStore();
+  const { appColor, toggleZenMode, fontFamily, fontSize, isZenMode } =
     useAppSettingsStore();
   const { setIsHelpDialogOpen, setMusicPlayerOpen, setSettingsOpen } =
     useDialogStore();
@@ -47,6 +55,8 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
   useHotkeys("alt+h", () => setIsHelpDialogOpen(true));
   useHotkeys("alt+m", () => setMusicPlayerOpen(true));
   useHotkeys("alt+s", () => setSettingsOpen(true));
+  useHotkeys("alt+left", handlePrevWrite);
+  useHotkeys("alt+right", handleNextWrite);
 
   useEffect(() => {
     initializeData();
@@ -59,11 +69,16 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <Sidebar />
-      {tab === "writes" && <RightBar />}
+      {tab === "writes" && !isZenMode && <RightBar />}
 
       <main className="flex w-screen items-center justify-center">
-        <div className="flex min-h-dvh w-full flex-col items-center border-r border-l px-2 py-10 sm:w-[620px]">
-          <HeaderCard />
+        <div
+          className={cn(
+            "flex min-h-dvh w-full flex-col items-center border-r border-l px-2 sm:w-[620px]",
+            isZenMode ? "py-4" : "py-10",
+          )}
+        >
+          {isZenMode ? <FloatingMainMenu /> : <HeaderCard />}
           {children}
         </div>
       </main>
@@ -77,7 +92,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
       <WritesHistory />
       <MusicPlayer />
       <HelpDialog />
-      <StatsDashboard />
+      <Statistics />
 
       {/* Auto Sync */}
       <AutoSyncInitializer />

@@ -1,14 +1,14 @@
-import { cn } from "@/lib/utils";
+import type React from "react";
+import Logo from "./logo";
 
-export default function Loading({ className }: { className?: string }) {
+const Loading: React.FC = () => {
   return (
-    <div
-      className={cn(
-        "fixed inset-0 z-50 flex h-screen w-screen items-center justify-center bg-background",
-        className,
-      )}
-    >
-      <span className="size-4 animate-ping rounded-full bg-foreground" />
+    <div className="fixed inset-0 z-50 flex h-full w-full items-center justify-center bg-background">
+      <div className="animate-spin-slow">
+        <Logo width={35} height={35} />
+      </div>
     </div>
   );
-}
+};
+
+export default Loading;

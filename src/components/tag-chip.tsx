@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import type { Tag } from "@/types";
-import { CircleIcon, XIcon } from "lucide-react";
+import { TagIcon, XIcon } from "lucide-react";
 
 type TagChipProps = {
   tag: Tag;
@@ -21,14 +21,14 @@ export default function TagChip({
     <div
       onClick={() => onClick?.(tag)}
       className={cn(
-        "relative flex cursor-pointer select-none items-center gap-1 rounded-full border border-border px-2 py-0.5 text-foreground text-xs outline-double outline-1 outline-border outline-offset-2",
+        "relative flex cursor-pointer select-none items-center gap-1 rounded-full border border-border px-2 py-0.5 text-foreground text-xs",
         deletable && "group hover:border-destructive",
         className,
       )}
     >
-      <CircleIcon
+      <TagIcon
         fill={tag.color ? tag.color : "#ffffff"}
-        className="size-3 group-hover:hidden"
+        className="size-3 stroke-foreground group-hover:hidden"
       />
 
       {deletable && (

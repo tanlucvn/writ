@@ -20,6 +20,7 @@ import {
   QuoteIcon,
   UnderlineIcon,
 } from "lucide-react";
+import DashedContainer from "../ui/dashed-container";
 import { Kbd } from "../ui/kbd";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
@@ -194,18 +195,18 @@ const EditorToolbar = () => {
         <SelectTrigger className="h-8 w-full rounded-none border-none text-xs ring-0 hover:bg-muted hover:text-foreground focus:bg-muted focus:ring-0 sm:w-[180px]">
           <SelectValue placeholder="Headings" />
         </SelectTrigger>
-        <SelectContent className="mt-1 rounded-2xl">
-          <div className="h-full w-full rounded-xl border-2 border-border border-dashed p-1">
+        <SelectContent className="mt-1">
+          <DashedContainer className="p-1">
             {EDITOR_HEADINGS.map((heading) => (
               <SelectItem
                 key={heading.value}
                 value={heading.value}
-                className="rounded-lg text-xs"
+                className="text-xs"
               >
                 {heading.label}
               </SelectItem>
             ))}
-          </div>
+          </DashedContainer>
         </SelectContent>
       </Select>
 

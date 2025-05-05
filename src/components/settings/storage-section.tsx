@@ -10,9 +10,10 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { useAppStore } from "@/store/app-store";
-import { CircleAlertIcon } from "lucide-react";
+import { CheckIcon, CircleAlertIcon, XIcon } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import DashedContainer from "../ui/dashed-container";
 
 const StorageSection = () => {
   const { clearDB } = useAppStore();
@@ -56,8 +57,8 @@ const StorageSection = () => {
       </section>
 
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
-        <AlertDialogContent className="!rounded-2xl p-1">
-          <div className="h-full w-full rounded-xl border-2 border-border border-dashed p-2">
+        <AlertDialogContent className="p-1">
+          <DashedContainer className="p-2">
             <AlertDialogHeader>
               <AlertDialogTitle className="mb-2 font-mono text-sm">
                 Delete everything?
@@ -69,17 +70,19 @@ const StorageSection = () => {
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter className="mt-4 gap-1">
-              <AlertDialogCancel className="h-8 border px-2 text-xs outline-double outline-2 outline-border outline-offset-2">
+              <AlertDialogCancel className="h-8 border bg-secondary px-2 text-secondary-foreground text-xs outline-double outline-1 outline-border outline-offset-2 hover:bg-secondary/90">
+                <XIcon />
                 Cancel
               </AlertDialogCancel>
               <AlertDialogAction
-                className="h-8 border bg-secondary px-2 text-foreground text-xs outline-double outline-2 outline-border outline-offset-2 hover:bg-secondary"
+                className="h-8 border bg-primary px-2 text-primary-foreground text-xs outline-double outline-1 outline-primary outline-offset-2 hover:bg-primary/90"
                 onClick={handleConfirmDelete}
               >
-                Yes, delete all
+                <CheckIcon />
+                Confirm
               </AlertDialogAction>
             </AlertDialogFooter>
-          </div>
+          </DashedContainer>
         </AlertDialogContent>
       </AlertDialog>
     </>

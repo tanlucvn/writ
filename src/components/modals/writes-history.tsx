@@ -14,6 +14,8 @@ import { Loader2, XIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Drawer } from "vaul";
 import { AnimatedNumberBadge } from "../animated-number-badge";
+import DashedContainer from "../ui/dashed-container";
+import { Separator } from "../ui/separator";
 
 const WritesHistory = () => {
   const { writes, tags, refreshWrites } = useAppStore();
@@ -49,87 +51,95 @@ const WritesHistory = () => {
     >
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 z-20 bg-black/40" />
-        <Drawer.Content className="fixed right-0 bottom-0 z-40 h-full w-[450px] max-w-xs overflow-hidden rounded-tl-xl rounded-bl-xl border bg-background p-1 shadow-xl outline-none sm:max-w-md md:max-w-lg">
-          <div className="flex h-full w-full flex-col rounded-tl-xl rounded-bl-xl border-2 border-border border-dashed">
-            <div className="flex h-full w-full flex-1 flex-col overflow-hidden">
-              <div className="flex flex-col gap-4 px-4 pt-4">
-                <div className="flex flex-col gap-1">
-                  <p className="font-mono text-muted-foreground text-xs">
-                    View all the previous writes and drafts.
-                  </p>
-                  <Drawer.Title className="font-medium text-base text-foreground">
-                    Write History
-                  </Drawer.Title>
+        <Drawer.Content className="fixed right-0 bottom-0 z-40 h-full w-full overflow-hidden rounded-none border bg-background p-1 shadow-xl outline-none sm:w-[450px] sm:max-w-md sm:rounded-tl-xl sm:rounded-bl-xl md:max-w-lg">
+          <DashedContainer className="flex flex-col gap-2 rounded-tl-xl rounded-bl-xl">
+            {/* Header */}
+            <div className="relative flex flex-col gap-2 px-4 pt-4">
+              <div className="flex flex-col gap-1">
+                <p className="font-mono text-muted-foreground text-xs">
+                  View all the previous writes and drafts.
+                </p>
+                <Drawer.Title className="font-medium text-base text-foreground">
+                  Write History
+                </Drawer.Title>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="absolute right-4 size-8"
+                  onClick={() => setWritesHistoryOpen(false)}
+                >
+                  <XIcon />
+                </Button>
+              </div>
+
+              <Input
+                placeholder="Search writes..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="text-sm"
+                data-vaul-no-drag
+              />
+
+              {tags.length > 0 && (
+                <div className="flex items-center justify-between gap-2">
+                  <MultiSelectTag
+                    availableTags={tags}
+                    selectedTags={selectedTags}
+                    setSelectedTags={setSelectedTags}
+                  />
+                  {selectedTags.size > 0 && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="flex items-center gap-1 text-xs"
+                      onClick={clearTags}
+                    >
+                      <XIcon className="size-4" />
+                      Clear
+                    </Button>
+                  )}
                 </div>
+              )}
 
-                <Input
-                  placeholder="Search writes..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="text-sm"
-                />
+              <Separator />
+            </div>
 
-                {tags.length > 0 && (
-                  <div className="flex items-center justify-between gap-2">
-                    <MultiSelectTag
-                      availableTags={tags}
-                      selectedTags={selectedTags}
-                      setSelectedTags={setSelectedTags}
-                    />
-                    {selectedTags.size > 0 && (
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="flex items-center gap-1 text-xs"
-                        onClick={clearTags}
-                      >
-                        <XIcon className="size-4" />
-                        Clear
-                      </Button>
-                    )}
+            {/* Scrollable Content */}
+            <ScrollArea id="block-scrollarea" className="flex-1">
+              <div className="px-4 py-2">
+                {isRefreshing ? (
+                  <div className="flex h-48 items-center justify-center text-muted-foreground">
+                    <Loader2 className="size-5 animate-spin" />
+                  </div>
+                ) : filteredWrites.length === 0 ? (
+                  <div className="py-12 text-center text-sm">
+                    <p>No writes found.</p>
+                    <p className="mt-1 text-muted-foreground text-xs">
+                      Start writing something awesome!
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    {filteredWrites.map((write) => (
+                      <WriteItem key={write.id} write={write} />
+                    ))}
                   </div>
                 )}
               </div>
+            </ScrollArea>
 
-              <div className="h-full flex-1 overflow-hidden">
-                <ScrollArea className="h-full p-4">
-                  {isRefreshing ? (
-                    <div className="flex h-48 items-center justify-center text-muted-foreground">
-                      <Loader2 className="size-5 animate-spin" />
-                    </div>
-                  ) : filteredWrites.length === 0 ? (
-                    <div className="py-12 text-center text-sm">
-                      <p>No writes found.</p>
-                      <p className="mt-1 text-muted-foreground text-xs">
-                        Start writing something awesome!
-                      </p>
-                    </div>
-                  ) : (
-                    <div className="space-y-3 p-1">
-                      {filteredWrites.map((write) => (
-                        <WriteItem key={write.id} write={write} />
-                      ))}
-                    </div>
-                  )}
-                </ScrollArea>
-              </div>
-            </div>
-
-            <div className="border-t-2 border-dashed">
-              <div
-                className="flex items-center justify-between px-4 py-2 text-xs"
-                data-vaul-no-drag
-              >
-                <div className="flex select-none items-center gap-2 text-foreground">
+            {/* Footer */}
+            <div className="border-t px-4 py-1.5 text-xs" data-vaul-no-drag>
+              <div className="flex items-center justify-between text-foreground">
+                <div className="flex select-none items-center gap-2">
                   <p className="text-xs">Writes</p>
                   <AnimatedNumberBadge value={filteredWrites.length} />
                 </div>
                 <WriteSortDropdown />
               </div>
             </div>
-          </div>
+          </DashedContainer>
         </Drawer.Content>
-
         <Drawer.Overlay />
       </Drawer.Portal>
     </Drawer.Root>

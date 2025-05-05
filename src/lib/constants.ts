@@ -63,19 +63,4 @@ export const COLOR_OPTIONS: { label: string; value: AppColor; desc: string }[] =
       value: "olive",
       desc: "A gentle olive green palette for a nature-inspired, calming feel.",
     },
-    {
-      label: "Ash",
-      value: "ash",
-      desc: "Cool gray tones evoking minimalism, stability, and modernity.",
-    },
-    {
-      label: "Fog",
-      value: "fog",
-      desc: "Soft, misty grays designed to reduce glare and support focus.",
-    },
-    {
-      label: "Mono",
-      value: "mono",
-      desc: "Pure black and white for strong contrast and a bold, editorial style.",
-    },
   ];
