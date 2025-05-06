@@ -4,8 +4,6 @@ export interface Write {
   content: string;
   createdAt: string;
   updatedAt: string;
-  fontFamily?: string;
-  fontSize?: number;
   tagIds?: string[];
   synced: number;
 }

@@ -66,7 +66,7 @@ export const useAppStore = create<AppStore>((set) => ({
 
   createNewWrite: async () => {
     const { setCurrentContent, refreshWrites } = useAppStore.getState();
-    const newWrite = dexie.createWrite("inter", 16);
+    const newWrite = dexie.createWrite();
     await dexie.saveWrite(newWrite);
 
     toast.success("New write created successfully!");
@@ -107,7 +107,7 @@ export const useAppStore = create<AppStore>((set) => ({
     try {
       await dexie.clearAll();
 
-      const newWrite = dexie.createWrite("inter", 16);
+      const newWrite = dexie.createWrite();
       await dexie.saveWrite(newWrite);
 
       set({

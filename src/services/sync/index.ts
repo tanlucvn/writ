@@ -18,8 +18,6 @@ export const syncDexieToSupabase = async () => {
             id: write.id,
             title: write.title,
             content: write.content,
-            font_family: write.fontFamily,
-            font_size: write.fontSize,
             tag_ids: write.tagIds ?? [],
             created_at: write.createdAt,
             updated_at: write.updatedAt,
@@ -66,8 +64,6 @@ export const syncSupabaseToDexie = async () => {
             content: write.content,
             createdAt: write.created_at,
             updatedAt: write.updated_at,
-            fontFamily: write.font_family ?? undefined,
-            fontSize: write.font_size ?? undefined,
             tagIds: write.tag_ids ?? [],
             synced: 1,
           };

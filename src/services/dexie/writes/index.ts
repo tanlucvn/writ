@@ -4,14 +4,12 @@ import { v4 as uuidv4 } from "uuid";
 import { db } from "../client";
 
 // Create a new write object
-export const createWrite = (fontFamily = "inter", fontSize = 16): Write => ({
+export const createWrite = (): Write => ({
   id: uuidv4(),
   title: "Untitled",
   content: "",
   createdAt: DateTime.utc().toISO(),
   updatedAt: DateTime.utc().toISO(),
-  fontFamily,
-  fontSize,
   tagIds: [],
   synced: 0,
 });

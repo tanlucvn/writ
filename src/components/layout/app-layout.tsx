@@ -3,7 +3,6 @@
 import { HeaderCard, RightBar, Sidebar } from "@/components/common";
 import {
   HelpDialog,
-  MusicPlayer,
   Settings,
   Statistics,
   WritesHistory,
@@ -15,6 +14,7 @@ import { useAppStore } from "@/store/app-store";
 import { useDialogStore } from "@/store/dialog-store";
 import { useTabStore } from "@/store/tab-store";
 import { useTheme } from "next-themes";
+import dynamic from "next/dynamic";
 import { useCallback, useEffect } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { AutoSyncInitializer } from "../auto-sync-initializer";
@@ -22,6 +22,9 @@ import FloatingMainMenu from "../common/floating-main-menu";
 import ScrollToTop from "../scroll-to-top";
 import { SyncIndicator } from "../sync-indicator";
 import DashedContainer from "../ui/dashed-container";
+const MusicPlayer = dynamic(
+  () => import("../../components/modals/music-player"),
+);
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const {
@@ -31,8 +34,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
     handlePrevWrite,
     handleNextWrite,
   } = useAppStore();
-  const { appColor, toggleZenMode, fontFamily, fontSize, isZenMode } =
-    useAppSettingsStore();
+  const { appColor, toggleZenMode, isZenMode } = useAppSettingsStore();
   const { setIsHelpDialogOpen, setMusicPlayerOpen, setSettingsOpen } =
     useDialogStore();
   const { tab } = useTabStore();
@@ -43,13 +45,13 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
       await initDB();
 
       const recent = await dexie.getLatestWrite();
-      const write = recent ?? dexie.createWrite(fontFamily, fontSize);
+      const write = recent ?? dexie.createWrite();
       if (!recent) await dexie.saveWrite(write);
       setCurrentContent(write);
     } catch (err) {
       console.error("Failed to initialize data:", err);
     }
-  }, [fontFamily, fontSize, initDB, setCurrentContent]);
+  }, [initDB, setCurrentContent]);
 
   useHotkeys("alt+z", toggleZenMode);
   useHotkeys("alt+n", createNewWrite);

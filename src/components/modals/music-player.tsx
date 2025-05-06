@@ -19,14 +19,17 @@ import {
   SkipForwardIcon,
   XIcon,
 } from "lucide-react";
+import dynamic from "next/dynamic";
 import { Suspense, useEffect, useState } from "react";
-import ReactPlayer from "react-player";
 import { Drawer } from "vaul";
 import { Checkbox } from "../ui/checkbox";
 import DashedContainer from "../ui/dashed-container";
 import { Input } from "../ui/input";
 import { ScrollArea } from "../ui/scroll-area";
 import { Separator } from "../ui/separator";
+const LazyReactPlayer = dynamic(() => import("react-player"), {
+  ssr: false,
+});
 
 const MusicPlayer = () => {
   const {
@@ -224,11 +227,11 @@ const MusicPlayer = () => {
         <Drawer.Overlay />
       </Drawer.Portal>
 
-      {isMounted && (
-        <Suspense fallback={<div>Loading...</div>}>
-          <ReactPlayer
+      {isMounted && isPlaying && selectedStation && (
+        <Suspense fallback={<div>Loading player...</div>}>
+          <LazyReactPlayer
             url={selectedStation}
-            playing={isPlaying}
+            playing
             volume={volume}
             loop
             width="0"
