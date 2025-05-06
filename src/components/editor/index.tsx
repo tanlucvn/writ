@@ -18,7 +18,7 @@ const Editor = () => {
 
   const editor = useEditor({
     extensions: [...ExtensionList],
-    content: currentContent?.content || "",
+    content: currentContent?.content ?? "",
     onUpdate: ({ editor }) => {
       if (!currentContent) return;
 
@@ -75,7 +75,7 @@ const Editor = () => {
     }
   }, [currentContent, editor]);
 
-  if (!currentContent) {
+  if (!editor) {
     return <Loading />;
   }
 

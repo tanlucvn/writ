@@ -3,7 +3,7 @@ import { useAppStore } from "@/store/app-store";
 import { Check, X } from "lucide-react";
 import { useEffect } from "react";
 
-export function SyncIndicator() {
+const SyncIndicator = () => {
   const { syncStatus, setSyncStatus } = useAppStore();
 
   useEffect(() => {
@@ -38,4 +38,6 @@ export function SyncIndicator() {
       )}
     </div>
   );
-}
+};
+
+export default SyncIndicator;

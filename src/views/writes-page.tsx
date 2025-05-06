@@ -1,26 +1,24 @@
 "use client";
-
-import Editor from "@/components/editor";
 import { Toolbar } from "@/components/editor/toolbar";
 import Loading from "@/components/loading";
-import { Container, Item } from "@/components/motion";
-import { useAppStore } from "@/store/app-store";
+import dynamic from "next/dynamic";
+
+const Editor = dynamic(() => import("@/components/editor"), {
+  ssr: false,
+  loading: () => <Loading />,
+});
 
 const WritesPage = () => {
-  const { currentContent } = useAppStore();
-
-  if (!currentContent) {
-    return <Loading />;
-  }
-
   return (
-    <Container key={currentContent.id}>
+    <>
+      {/* <Container key={currentContent.id}> */}
       <Toolbar />
 
-      <Item>
-        <Editor />
-      </Item>
-    </Container>
+      {/* <Item> */}
+      <Editor />
+      {/* </Item> */}
+      {/* </Container> */}
+    </>
   );
 };
 

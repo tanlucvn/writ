@@ -6,7 +6,7 @@ import { useAppStore } from "@/store/app-store";
 import { useAuthStore } from "@/store/auth-store";
 import { useEffect, useRef } from "react";
 
-export function AutoSyncInitializer() {
+const AutoSyncInitializer = () => {
   const { user } = useAuthStore();
   const { setSyncStatus } = useAppStore();
   const { isAutoSync } = useAppSettingsStore();
@@ -31,4 +31,6 @@ export function AutoSyncInitializer() {
   }, [user, isAutoSync, setSyncStatus]);
 
   return null;
-}
+};
+
+export default AutoSyncInitializer;
