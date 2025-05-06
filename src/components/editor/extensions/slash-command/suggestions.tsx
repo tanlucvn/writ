@@ -5,6 +5,7 @@ import {
   Heading2Icon,
   Heading3Icon,
   ListIcon,
+  PilcrowIcon,
   QuoteIcon,
   ShapesIcon,
   SquareCheckIcon,
@@ -29,6 +30,17 @@ export const getSuggestionItems = ({ query }: { query: string }) => {
       searchTerms: ["gpt", "ai"],
       icon: <WandIcon />,
     }, */
+    {
+      id: "paragraph",
+      title: "Paragraph",
+      category: "Base",
+      description: "Start a new paragraph",
+      searchTerms: ["text", "paragraph", "normal"],
+      icon: <PilcrowIcon size={15} />,
+      command: ({ editor, range }: any) => {
+        editor.chain().focus().deleteRange(range).setNode("paragraph").run();
+      },
+    },
     {
       id: "heading1",
       title: "Heading 1",
