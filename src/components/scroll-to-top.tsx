@@ -46,11 +46,11 @@ export default function ScrollToTop({
             variant="secondary"
             onClick={handleClick}
             className={cn(
-              "size-8 border outline-2 outline-border outline-offset-2",
+              "size-6 border outline-2 outline-border outline-offset-2",
               className,
             )}
           >
-            <ArrowUpIcon className="h-5 w-5" />
+            <ArrowUpIcon className="size-3.5" />
           </Button>
         </motion.div>
       )}

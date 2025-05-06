@@ -2,7 +2,7 @@ import type { Tag, Write } from "@/types";
 import Dexie, { type Table } from "dexie";
 
 // Define database instance
-const db = new Dexie("miniwritDB");
+const db = new Dexie("writDB");
 
 // Define schema and tables
 db.version(1).stores({

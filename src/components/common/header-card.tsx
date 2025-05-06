@@ -17,7 +17,7 @@ const HeaderCard = () => {
           isZenMode && "hidden opacity-0 transition-all delay-75 duration-150",
         )}
       >
-        <h1 className="font-bold font-outfit text-sm">miniwrit</h1>
+        <h1 className="font-bold text-sm">miniwrit</h1>
         <p className="text-muted-foreground text-xs">
           A clean, minimal app to write thoughts.
         </p>

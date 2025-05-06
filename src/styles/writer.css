@@ -1,25 +1,30 @@
-/* ProseMirror core */
-.ProseMirror {
-  @apply text-base font-normal leading-relaxed text-foreground outline-none;
-  padding: 0 !important;
-}
-
-.ProseMirror.ProseMirror-focused {
-  @apply outline-none;
-}
-
-/* Placeholder when empty */
-.ProseMirror p.is-editor-empty:first-child::before {
+/* Placeholder style */
+.tiptap .is-editor-empty:first-child::before,
+.tiptap .is-empty::before {
   content: attr(data-placeholder);
-  float: left;
   color: hsl(var(--muted-foreground));
+  opacity: 0.5;
   pointer-events: none;
+  float: left;
   height: 0;
+}
+
+.tiptap ul.is-empty.is-editor-empty::before,
+.tiptap ul.is-empty::before,
+.tiptap li.is-empty.is-editor-empty::before,
+.tiptap li.is-empty::before,
+.tiptap pre.is-empty::before,
+.tiptap blockquote.is-empty::before {
+  content: "";
 }
 
 /* List */
 .ProseMirror ul {
-  @apply list-disc pl-6;
+  @apply list-disc pl-6 space-y-1 marker:text-muted-foreground;
+}
+
+.ProseMirror ul li::marker {
+  @apply text-sm;
 }
 
 .ProseMirror ol {
@@ -28,7 +33,7 @@
 
 /* Code block */
 .ProseMirror pre {
-  @apply bg-muted text-foreground px-4 py-3 mb-6 font-mono;
+  @apply bg-muted text-foreground px-4 py-3 font-mono;
 }
 
 .ProseMirror pre code {
@@ -41,34 +46,38 @@
 
 /* Blockquote */
 .ProseMirror blockquote {
-  @apply border-l-2 border-primary bg-accent/30 px-4 my-1;
-}
-
-/* Link */
-.ProseMirror a {
-  @apply text-primary underline;
-}
-
-/* Heading */
-.ProseMirror h2 {
-  @apply text-2xl font-bold mt-6 mb-3;
-}
-
-.ProseMirror h3 {
-  @apply text-xl font-semibold mt-4 mb-2;
-}
-
-/* Paragraph */
-.ProseMirror p {
-  @apply my-1;
-}
-
-/* Horizontal line */
-.ProseMirror hr {
-  @apply my-8 border-t;
+  @apply border-l-2 border-primary bg-accent/30 px-4;
 }
 
 /* Highlight */
 .ProseMirror mark {
   @apply bg-muted text-foreground;
+}
+
+/* ==================
+  Task List 
+================== */
+/* Task List Container */
+.ProseMirror ul[data-type="taskList"] {
+  @apply list-none p-0 m-0;
+}
+
+/* Task Item Container */
+.ProseMirror ul[data-type="taskList"] li {
+  @apply flex flex-grow !my-0 [&_p]:m-0 items-center space-x-2 p-0;
+}
+
+/* Checkbox */
+.ProseMirror ul[data-type="taskList"] li > label {
+  @apply flex items-center gap-2 cursor-pointer select-none;
+}
+
+/* Hide default checkbox appearance */
+.ProseMirror ul[data-type="taskList"] li input[type="checkbox"] {
+  @apply size-4 rounded border-muted bg-background text-primary;
+}
+
+/* Checked item text style */
+.ProseMirror ul[data-type="taskList"] li[data-checked="true"] > div {
+  @apply text-muted-foreground;
 }

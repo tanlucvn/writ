@@ -25,8 +25,6 @@ interface AppStore {
 
   editor: Editor | null;
   setEditor: (editor: Editor | null) => void;
-  editorMode: "floating" | "bubble";
-  setEditorMode: (mode: "floating" | "bubble") => void;
 
   syncStatus: SyncStatus;
   setSyncStatus: (status: SyncStatus) => void;
@@ -85,8 +83,6 @@ export const useAppStore = create<AppStore>((set) => ({
 
   editor: null,
   setEditor: (editor) => set({ editor }),
-  editorMode: "floating",
-  setEditorMode: (mode) => set({ editorMode: mode }),
 
   syncStatus: "idle",
   setSyncStatus: (syncStatus) => set({ syncStatus }),

@@ -14,7 +14,7 @@ const RightBar = () => {
   return (
     <aside
       className={cn(
-        "fixed top-[42px] right-1/2 bottom-[40px] flex w-[120px] translate-x-[470px] flex-col justify-between text-xs",
+        "fixed top-[42px] right-1/2 bottom-[40px] z-20 flex w-[120px] translate-x-[470px] flex-col justify-between text-xs",
       )}
     >
       {/* Top content */}

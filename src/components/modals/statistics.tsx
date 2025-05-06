@@ -7,6 +7,8 @@ import { Drawer } from "vaul";
 import { Button } from "../ui/button";
 import DashedContainer from "../ui/dashed-container";
 import { Label } from "../ui/label";
+// import DashedContainer from "../ui/dashed-container";
+// import { Label } from "../ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
 const Statistics = () => {
@@ -118,125 +120,141 @@ const Statistics = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col space-y-2">
+              <div className="space-y-2">
+                {/* Header */}
                 <div className="flex items-center justify-between">
-                  <Label>Monthly Writing Tracker</Label>
+                  <Label className="font-semibold">Writing Calendar</Label>
                   <Button
-                    variant="outline"
+                    variant="ghost"
                     size="icon"
-                    className="size-8"
                     onClick={() => setCurrentDate(new Date())}
+                    className="size-8"
                   >
-                    <RotateCwIcon />
+                    <RotateCwIcon className="size-4" />
                   </Button>
                 </div>
-                <div className="rounded-md bg-popover p-1">
-                  <DashedContainer className="flex flex-col gap-1 p-2">
-                    {/* Month Navigation */}
-                    <div className="flex items-center justify-between">
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={handlePrevMonth}
-                        className="size-8 rounded p-1 text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-                      >
-                        <ChevronLeft size={16} />
-                      </Button>
-                      <span className="font-medium text-foreground text-xs">
-                        {currentDate.toLocaleString("default", {
-                          month: "long",
-                          year: "numeric",
-                        })}
-                      </span>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={handleNextMonth}
-                        className="size-8 rounded p-1 text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-                      >
-                        <ChevronRight size={16} />
-                      </Button>
-                    </div>
 
-                    {/* Calendar Days */}
-                    <div className="flex flex-col items-center justify-center">
-                      <div className="mt-2 grid w-full max-w-sm grid-cols-7 gap-2 text-center text-[10px] ">
-                        {weekdays.map((day) => (
-                          <span key={day}>{day}</span>
-                        ))}
+                <div className="mx-auto max-w-[320px] space-y-2 md:max-w-none">
+                  {/* Month Navigation */}
+                  <div className="flex items-center justify-between font-medium text-sm">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={handlePrevMonth}
+                      className="size-8"
+                    >
+                      <ChevronLeft className="size-4" />
+                    </Button>
+                    <span className="text-foreground">
+                      {currentDate.toLocaleString("default", {
+                        month: "long",
+                        year: "numeric",
+                      })}
+                    </span>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={handleNextMonth}
+                      className="size-8"
+                    >
+                      <ChevronRight className="size-4" />
+                    </Button>
+                  </div>
+
+                  {/* Weekday Labels */}
+                  <div className="grid grid-cols-7 text-center text-muted-foreground text-xs">
+                    {weekdays.map((day) => (
+                      <div key={day} className="py-1">
+                        {day}
                       </div>
-                      <div className="grid w-full max-w-sm grid-cols-7 place-items-center gap-2">
-                        {Array.from({ length: daysInMonth }, (_, index) => {
-                          const date = new Date(
-                            Date.UTC(year, month, index + 1),
-                          );
-                          const formattedDate = date.toISOString().slice(0, 10); // Formatted yyyy-mm-dd
-                          const dayOfMonth = (index + 1)
-                            .toString()
-                            .padStart(2, "0");
-                          const writes = writesByDate.get(formattedDate) || 0;
-                          const syncedWrites =
-                            syncedWritesByDate.get(formattedDate) || 0;
-                          const unsyncedWrites =
-                            unsyncedWritesByDate.get(formattedDate) || 0;
+                    ))}
+                  </div>
 
-                          return (
-                            <Popover key={formattedDate}>
-                              <PopoverTrigger asChild>
-                                <div
-                                  className={cn(
-                                    "relative flex size-8 items-center justify-center rounded-md border text-xs",
-                                    writes > 0
-                                      ? "bg-primary text-primary-foreground"
-                                      : "bg-secondary text-secondary-foreground hover:bg-accent hover:text-accent-foreground",
-                                    "cursor-pointer",
-                                  )}
-                                >
-                                  {dayOfMonth}
+                  {/* Calendar Grid */}
+                  <div className="grid grid-cols-7 gap-1 sm:gap-2">
+                    {(() => {
+                      const firstDay = new Date(Date.UTC(year, month, 1));
+                      const firstWeekday = firstDay.getUTCDay();
+                      const cells = [];
+
+                      for (let i = 0; i < firstWeekday; i++) {
+                        cells.push(
+                          <div key={`empty-${i}`} className="aspect-square" />,
+                        );
+                      }
+
+                      for (let i = 0; i < daysInMonth; i++) {
+                        const date = new Date(Date.UTC(year, month, i + 1));
+                        const formattedDate = date.toISOString().slice(0, 10);
+                        const writes = writesByDate.get(formattedDate) || 0;
+
+                        let bg = "bg-muted";
+                        if (writes >= 20) bg = "bg-primary";
+                        else if (writes >= 10) bg = "bg-primary/70";
+                        else if (writes >= 5) bg = "bg-primary/50";
+                        else if (writes >= 1) bg = "bg-primary/30";
+
+                        cells.push(
+                          <Popover key={formattedDate}>
+                            <PopoverTrigger asChild>
+                              <div
+                                className={cn(
+                                  "flex aspect-square w-full max-w-[42px] cursor-pointer items-center justify-center rounded-md border text-[11px] sm:max-w-[48px] sm:text-xs",
+                                  bg,
+                                )}
+                              >
+                                {i + 1}
+                              </div>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-44 p-1 text-xs">
+                              <DashedContainer className="select-none p-2">
+                                <p className="mb-1 text-[10px] text-muted-foreground">
+                                  {formattedDate}
+                                </p>
+                                <div className="flex justify-between">
+                                  <span className="font-mono text-muted-foreground">
+                                    Total
+                                  </span>
+                                  <span>{writes}</span>
                                 </div>
-                              </PopoverTrigger>
-                              <PopoverContent className="w-48 p-1 text-xs">
-                                <DashedContainer className="space-y-1 p-2">
-                                  <p className="text-[10px] text-muted-foreground">
-                                    {formattedDate}
-                                  </p>
-                                  <div className="flex justify-between text-foreground">
-                                    <span className="font-mono text-muted-foreground">
-                                      Total:
-                                    </span>
-                                    <span className="font-medium">
-                                      {writes}
-                                    </span>
-                                  </div>
-                                  <div className="flex justify-between text-foreground">
-                                    <span className="font-mono text-muted-foreground">
-                                      Synced:
-                                    </span>
-                                    <span className="font-medium">
-                                      {syncedWrites}
-                                    </span>
-                                  </div>
-                                  <div className="flex justify-between text-foreground">
-                                    <span className="font-mono text-muted-foreground">
-                                      Unsynced:
-                                    </span>
-                                    <span className="font-medium">
-                                      {unsyncedWrites}
-                                    </span>
-                                  </div>
-                                </DashedContainer>
-                              </PopoverContent>
-                            </Popover>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  </DashedContainer>
+                                <div className="flex justify-between">
+                                  <span className="font-mono text-muted-foreground">
+                                    Synced
+                                  </span>
+                                  <span>
+                                    {syncedWritesByDate.get(formattedDate) || 0}
+                                  </span>
+                                </div>
+                                <div className="flex justify-between">
+                                  <span className="font-mono text-muted-foreground">
+                                    Unsynced
+                                  </span>
+                                  <span>
+                                    {unsyncedWritesByDate.get(formattedDate) ||
+                                      0}
+                                  </span>
+                                </div>
+                              </DashedContainer>
+                            </PopoverContent>
+                          </Popover>,
+                        );
+                      }
+
+                      return cells;
+                    })()}
+                  </div>
                 </div>
-                <p className="text-muted-foreground text-xs">
-                  Visualize your writing activity by day. Navigate through
-                  months to see your progress over time.
-                </p>
+
+                {/* Legend */}
+                <div className="flex items-center justify-center gap-2 text-muted-foreground text-xs">
+                  <span>Less</span>
+                  <div className="h-3 w-3 rounded-sm bg-muted" />
+                  <div className="h-3 w-3 rounded-sm bg-primary/30" />
+                  <div className="h-3 w-3 rounded-sm bg-primary/50" />
+                  <div className="h-3 w-3 rounded-sm bg-primary/70" />
+                  <div className="h-3 w-3 rounded-sm bg-primary" />
+                  <span>More</span>
+                </div>
               </div>
             </div>
           </div>

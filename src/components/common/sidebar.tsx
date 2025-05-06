@@ -1,8 +1,10 @@
 "use client";
-import { TimeDisplay, WordCount } from "@/components/editor";
+
 import { cn } from "@/lib/utils";
 import { useAppSettingsStore } from "@/store/app-settings-store";
 import { type Tab, useTabStore } from "@/store/tab-store";
+import TimeDisplay from "../editor/time-display";
+import WordCount from "../editor/word-count";
 import { Button } from "../ui/button";
 
 const Sidebar = () => {
@@ -18,7 +20,7 @@ const Sidebar = () => {
   return (
     <nav
       className={cn(
-        "-translate-x-[470px] fixed top-[42px] bottom-[40px] left-1/2 flex w-[120px] flex-col justify-between p-4",
+        "-translate-x-[470px] fixed top-[42px] bottom-[40px] left-1/2 z-20 flex w-[120px] flex-col justify-between p-4",
         isZenMode && "pointer-events-none opacity-0",
       )}
     >

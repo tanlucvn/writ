@@ -1,7 +1,6 @@
 "use client";
 
 import { useAppStore } from "@/store/app-store";
-import {} from "framer-motion";
 
 const WordCount = () => {
   const { editor } = useAppStore();

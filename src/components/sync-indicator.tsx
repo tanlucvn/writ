@@ -21,7 +21,7 @@ export function SyncIndicator() {
   return (
     <div
       className={cn(
-        "fixed right-4 bottom-4 rounded-full border border-border bg-secondary px-2 py-1 text-muted-foreground text-xs",
+        "rounded-full border border-border bg-secondary px-2 py-1 text-muted-foreground text-xs",
         "outline-double outline-2 outline-border outline-offset-2",
       )}
     >

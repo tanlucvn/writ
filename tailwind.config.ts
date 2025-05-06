@@ -1,6 +1,7 @@
 import tailwindcssTypography from "@tailwindcss/typography";
 import type { Config } from "tailwindcss";
 import tailwindcssAnimate from "tailwindcss-animate";
+import colors from "tailwindcss/colors";
 import { fontFamily } from "tailwindcss/defaultTheme";
 
 export default {
@@ -9,6 +10,12 @@ export default {
     "./src/views/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  safelist: [
+    {
+      pattern:
+        /(text|bg)-(red|blue|green|yellow|stone|orange|amber|lime|emerald|teal|cyan|sky|violet|purple|fuchsia|pink|rose|indigo)-(100|200|300|400|500|600|700|800|900)/,
+    },
   ],
   theme: {
     container: {
@@ -20,6 +27,7 @@ export default {
     },
     extend: {
       colors: {
+        ...colors,
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -64,7 +72,6 @@ export default {
         spacegrotesk: ["var(--font-spacegrotesk)", ...fontFamily.sans],
         dmsans: ["var(--font-dmsans)", ...fontFamily.sans],
         mono: ["var(--font-jetbrains-mono)", ...fontFamily.sans],
-        outfit: ["var(--font-outfit)", ...fontFamily.sans],
       },
       keyframes: {
         "accordion-down": {

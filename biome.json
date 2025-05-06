@@ -46,7 +46,8 @@
     "rules": {
       "recommended": true,
       "complexity": {
-        "useSimplifiedLogicExpression": "warn"
+        "useSimplifiedLogicExpression": "warn",
+        "useOptionalChain": "off"
       },
       "correctness": {
         "noUnusedImports": "error",
@@ -54,6 +55,7 @@
         "noUnusedVariables": "error"
       },
       "suspicious": {
+        "noExplicitAny": "off",
         "noArrayIndexKey": "off",
         "noDebugger": "error",
         "noConsole": {
