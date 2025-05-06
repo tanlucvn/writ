@@ -40,7 +40,7 @@ export const Toolbar = () => {
         <div
           className={cn(
             "flex h-9 items-center gap-0 p-0.5",
-            "w-full rounded-lg border bg-card shadow-md",
+            "w-full rounded-tl-md rounded-tr-md border bg-background shadow-md",
           )}
         >
           <ToolbarFormat />
@@ -58,8 +58,8 @@ export const Toolbar = () => {
           className={cn(
             "flex h-9 items-center gap-0 p-0.5 transition-all ease-out md:h-8 md:p-0",
             "outline-1 outline-border outline-offset-2 md:outline-double",
-            "w-full rounded-tl-md rounded-tr-md border border-t bg-card",
-            "md:w-auto md:rounded-lg md:border",
+            "w-full border border-t bg-background",
+            "w-auto rounded-lg border",
           )}
         >
           <ToolbarFormat />
