@@ -1,22 +1,11 @@
-/* Placeholder style */
-.tiptap .is-editor-empty:first-child::before,
-.tiptap .is-empty::before {
+/* .tiptap .is-empty::before {
   content: attr(data-placeholder);
   color: hsl(var(--muted-foreground));
   opacity: 0.5;
   pointer-events: none;
   float: left;
   height: 0;
-}
-
-.tiptap ul.is-empty.is-editor-empty::before,
-.tiptap ul.is-empty::before,
-.tiptap li.is-empty.is-editor-empty::before,
-.tiptap li.is-empty::before,
-.tiptap pre.is-empty::before,
-.tiptap blockquote.is-empty::before {
-  content: "";
-}
+} */
 
 /* List */
 .ProseMirror ul {

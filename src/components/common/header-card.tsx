@@ -8,7 +8,7 @@ const HeaderCard = () => {
   const { isZenMode } = useAppSettingsStore();
 
   return (
-    <div className="flex w-full flex-col items-center justify-center space-y-4 border-b pb-10">
+    <div className="flex w-full flex-col items-center justify-center space-y-4 border-b py-6">
       <MainMenu />
 
       <div

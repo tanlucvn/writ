@@ -1,71 +1,20 @@
 "use client";
 
 import { ToolbarColor } from "@/components/editor/toolbar/toolbar-color";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { cn } from "@/lib/utils";
-import { useAppStore } from "@/store/app-store";
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { Separator } from "@/components/ui/separator";
 import { ToolbarFormat } from "./toolbar-format";
+import { ToolbarUndoRedo } from "./toolbar-undo-redo";
 
 export const Toolbar = () => {
-  const { editor } = useAppStore();
-  const [isToolbarVisible, setIsToolbarVisible] = useState(false);
-  const isMobile = useIsMobile();
-
-  useEffect(() => {
-    if (!editor) return;
-
-    const handleUpdate = () => {
-      const { from, to } = editor.state.selection;
-      const isTextSelected = from !== to;
-      setIsToolbarVisible(isTextSelected);
-    };
-
-    editor.on("selectionUpdate", handleUpdate);
-    editor.on("transaction", handleUpdate);
-
-    return () => {
-      editor.off("selectionUpdate", handleUpdate);
-      editor.off("transaction", handleUpdate);
-    };
-  }, [editor]);
-
-  if (!editor) return null;
-
   return (
-    <div className="fixed right-0 bottom-0 left-0 z-10 mx-auto flex flex-col items-center md:bottom-8">
-      {isMobile ? (
-        // Mobile
-        <div
-          className={cn(
-            "flex h-9 items-center gap-0 p-0.5",
-            "w-full rounded-tl-md rounded-tr-md border bg-background shadow-md",
-          )}
-        >
-          <ToolbarFormat />
-          <ToolbarColor />
-        </div>
-      ) : (
-        // Desktop
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{
-            opacity: isToolbarVisible ? 1 : 0,
-            y: isToolbarVisible ? 0 : 30,
-          }}
-          transition={{ duration: 0.2 }}
-          className={cn(
-            "flex h-9 items-center gap-0 p-0.5 transition-all ease-out md:h-8 md:p-0",
-            "outline-1 outline-border outline-offset-2 md:outline-double",
-            "w-full border border-t bg-background",
-            "w-auto rounded-lg border",
-          )}
-        >
-          <ToolbarFormat />
-          <ToolbarColor />
-        </motion.div>
-      )}
+    <div className="sticky top-0 flex w-full items-center gap-1 border-b px-2 py-1.5">
+      <ToolbarUndoRedo />
+
+      <Separator orientation="vertical" className="h-4" />
+      <ToolbarFormat />
+
+      <Separator orientation="vertical" className="h-4" />
+      <ToolbarColor />
     </div>
   );
 };

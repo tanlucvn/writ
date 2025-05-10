@@ -1,7 +1,6 @@
 import tailwindcssTypography from "@tailwindcss/typography";
 import type { Config } from "tailwindcss";
 import tailwindcssAnimate from "tailwindcss-animate";
-import colors from "tailwindcss/colors";
 import { fontFamily } from "tailwindcss/defaultTheme";
 
 export default {
@@ -11,12 +10,7 @@ export default {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  safelist: [
-    {
-      pattern:
-        /(text|bg)-(red|blue|green|yellow|stone|orange|amber|lime|emerald|teal|cyan|sky|violet|purple|fuchsia|pink|rose|indigo)-(100|200|300|400|500|600|700|800|900)/,
-    },
-  ],
+
   theme: {
     container: {
       center: true,
@@ -27,7 +21,21 @@ export default {
     },
     extend: {
       colors: {
-        ...colors,
+        lavender: "#D1C4E9",
+        peach: "#FFDDC1",
+        mint: "#C8E6C9",
+        silver: "#A3A3A3",
+        tiffany: "#80CBC4",
+        cambridge: "#93CBAE",
+        blue: "#80DEEA",
+        mindaro: "#E6EE9B",
+        mikado: "#FFCF32",
+        sunset: "#FFCC80",
+        melon: "#FAB099",
+        tickle: "#F48FB1",
+        wisteria: "#CF93D9",
+        slate: "#9672EA",
+
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -90,5 +98,35 @@ export default {
       },
     },
   },
+  safelist: [
+    "bg-lavender",
+    "text-lavender",
+    "bg-peach",
+    "text-peach",
+    "bg-mint",
+    "text-mint",
+    "bg-silver",
+    "text-silver",
+    "bg-tiffany",
+    "text-tiffany",
+    "bg-cambridge",
+    "text-cambridge",
+    "bg-blue",
+    "text-blue",
+    "bg-mindaro",
+    "text-mindaro",
+    "bg-mikado",
+    "text-mikado",
+    "bg-sunset",
+    "text-sunset",
+    "bg-melon",
+    "text-melon",
+    "bg-tickle",
+    "text-tickle",
+    "bg-wisteria",
+    "text-wisteria",
+    "bg-slate",
+    "text-slate",
+  ],
   plugins: [tailwindcssAnimate, tailwindcssTypography],
 } satisfies Config;
