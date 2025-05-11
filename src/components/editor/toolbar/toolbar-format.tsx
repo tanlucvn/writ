@@ -165,7 +165,7 @@ export const ToolbarFormat = () => {
           onPressedChange={btn.action}
           aria-label={btn.label}
           className={cn(
-            "border text-muted-foreground hover:text-foreground",
+            "border",
             btn.active && "bg-background text-foreground shadow-inner",
           )}
         >

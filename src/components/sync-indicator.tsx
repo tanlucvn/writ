@@ -1,6 +1,5 @@
-import { cn } from "@/lib/utils";
 import { useAppStore } from "@/store/app-store";
-import { Check, X } from "lucide-react";
+import { CheckIcon, XIcon } from "lucide-react";
 import { useEffect } from "react";
 
 const SyncIndicator = () => {
@@ -19,24 +18,21 @@ const SyncIndicator = () => {
   if (syncStatus === "idle") return null;
 
   return (
-    <div
-      className={cn(
-        "rounded-full border border-border bg-secondary px-2 py-1 text-muted-foreground text-xs",
-        "outline-double outline-2 outline-border outline-offset-2",
+    <>
+      {syncStatus === "success" && (
+        <span className="flex items-center gap-1">
+          <CheckIcon className="h-3 w-3" /> Saved
+        </span>
       )}
-    >
-      {syncStatus === "success" ? (
+      {syncStatus === "error" && (
         <span className="flex items-center gap-1">
-          <Check className="h-3 w-3" /> Saved
+          <XIcon className="h-3 w-3" /> Save failed
         </span>
-      ) : syncStatus === "error" ? (
-        <span className="flex items-center gap-1">
-          <X className="h-3 w-3" /> Save failed
-        </span>
-      ) : (
+      )}
+      {syncStatus === "syncing" && (
         <span className="text-muted-foreground">Saving...</span>
       )}
-    </div>
+    </>
   );
 };
 

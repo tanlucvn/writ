@@ -4,7 +4,6 @@ import {
   AppearanceSection,
   FeedbackSection,
   StorageSection,
-  SyncSection,
   TagsSection,
   WritingSection,
 } from "@/components/settings";
@@ -26,6 +25,7 @@ import {
   TagIcon,
 } from "lucide-react";
 import {} from "react";
+import SyncSection from "../settings/sync-section";
 import DashedContainer from "../ui/dashed-container";
 
 const settingsTabs: TabOption[] = [

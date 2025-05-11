@@ -10,11 +10,12 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import { useAppSettingsStore } from "@/store/app-settings-store";
 import { useAppStore } from "@/store/app-store";
-import { useAuthStore } from "@/store/auth-store";
 import { useDialogStore } from "@/store/dialog-store";
 import { useTabStore } from "@/store/tab-store";
+import { SignOutButton, useUser } from "@clerk/nextjs";
 import { motion } from "framer-motion";
 import {
+  ArrowDownRightIcon,
   ArrowUpRightIcon,
   BadgeInfoIcon,
   ChartPieIcon,
@@ -25,6 +26,7 @@ import {
   MusicIcon,
   PenIcon,
   PlusIcon,
+  ScrollTextIcon,
   SettingsIcon,
   ShieldIcon,
   UserIcon,
@@ -176,21 +178,23 @@ const SessionsTab = ({ onClose }: { onClose: () => void }) => (
 );
 
 const AccountsTab = ({ onClose }: { onClose: () => void }) => {
-  const { logout } = useAuthStore();
-
   const handleLogout = async () => {
-    await logout();
-
     toast.success("Logged out successfully!");
     onClose();
   };
 
   return (
     <NavMenuSection title="Accounts" onClose={onClose}>
-      <Button variant="outline" className="text-xs" onClick={handleLogout}>
-        <ArrowUpRightIcon />
-        Log out
-      </Button>
+      <SignOutButton>
+        <Button
+          variant="outline"
+          className="text-destructive text-xs"
+          onClick={handleLogout}
+        >
+          <ArrowDownRightIcon />
+          Log out
+        </Button>
+      </SignOutButton>
     </NavMenuSection>
   );
 };
@@ -202,9 +206,10 @@ const MainMenu = (): React.ReactElement => {
     setMusicPlayerOpen,
     setIsHelpDialogOpen,
     setStatisticsOpen,
+    setIsWriteSummaryOpen,
   } = useDialogStore();
   const { setTab } = useTabStore();
-  const { user } = useAuthStore();
+  const { user } = useUser();
   const [activeTab, setActiveTab] = useState<string>("home");
   const [isOpen, setIsOpen] = useState(false);
   const isMobile = useIsMobile();
@@ -306,6 +311,13 @@ const MainMenu = (): React.ReactElement => {
                     >
                       Statistics
                     </NavMenuItem>
+
+                    <NavMenuItem
+                      icon={<ScrollTextIcon size={15} />}
+                      onClick={() => setIsWriteSummaryOpen(true)}
+                    >
+                      Write Summary
+                    </NavMenuItem>
                   </div>
                 </div>
 
@@ -316,7 +328,7 @@ const MainMenu = (): React.ReactElement => {
                     </p>
                     <div className="grid w-full grid-cols-2 gap-x-2 gap-y-2">
                       <NavMenuItem
-                        icon={<UserIcon size={15} />}
+                        icon={<ArrowUpRightIcon size={15} />}
                         onClick={() => setTab("signin")}
                       >
                         Sign in

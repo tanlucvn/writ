@@ -15,6 +15,9 @@ interface DialogStore {
 
   isStatisticsOpen: boolean;
   setStatisticsOpen: (open: boolean) => void;
+
+  isWriteSummaryOpen: boolean;
+  setIsWriteSummaryOpen: (open: boolean) => void;
 }
 
 export const useDialogStore = create<DialogStore>((set) => ({
@@ -32,4 +35,7 @@ export const useDialogStore = create<DialogStore>((set) => ({
 
   isStatisticsOpen: false,
   setStatisticsOpen: (open) => set({ isStatisticsOpen: open }),
+
+  isWriteSummaryOpen: false,
+  setIsWriteSummaryOpen: (open) => set({ isWriteSummaryOpen: open }),
 }));

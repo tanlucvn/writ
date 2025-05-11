@@ -5,6 +5,7 @@ import { OpenGraph } from "@/lib/og";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import "@/styles/writer.css";
+import { ClerkProvider } from "@clerk/nextjs";
 import { Analytics } from "@vercel/analytics/react";
 import type { Metadata, Viewport } from "next";
 import {
@@ -57,13 +58,15 @@ export default function RootLayout({
           "h-screen w-screen overflow-x-hidden p-0",
         )}
       >
-        <ThemeProvider>
-          <TooltipProvider>
-            <AppLayout>{children}</AppLayout>
-            <Toaster position="bottom-center" />
-            <Analytics />
-          </TooltipProvider>
-        </ThemeProvider>
+        <ClerkProvider>
+          <ThemeProvider>
+            <TooltipProvider>
+              <AppLayout>{children}</AppLayout>
+              <Toaster position="bottom-center" />
+              <Analytics />
+            </TooltipProvider>
+          </ThemeProvider>
+        </ClerkProvider>
       </body>
     </html>
   );

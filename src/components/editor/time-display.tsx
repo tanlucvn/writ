@@ -23,7 +23,7 @@ const TimeDisplay = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  return <div className="text-xs">{time}</div>;
+  return <div className="select-none text-xs">{time}</div>;
 };
 
 export default TimeDisplay;

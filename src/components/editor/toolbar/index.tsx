@@ -7,7 +7,7 @@ import { ToolbarUndoRedo } from "./toolbar-undo-redo";
 
 export const Toolbar = () => {
   return (
-    <div className="sticky top-0 flex w-full items-center gap-1 border-b px-2 py-1.5">
+    <div className="sticky top-0 z-[1] flex w-full items-center gap-1 border-b bg-background px-2 py-1.5">
       <ToolbarUndoRedo />
 
       <Separator orientation="vertical" className="h-4" />

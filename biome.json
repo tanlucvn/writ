@@ -46,7 +46,7 @@
     "rules": {
       "recommended": true,
       "complexity": {
-        "useSimplifiedLogicExpression": "warn",
+        "useSimplifiedLogicExpression": "off",
         "useOptionalChain": "off"
       },
       "correctness": {
@@ -58,12 +58,7 @@
         "noExplicitAny": "off",
         "noArrayIndexKey": "off",
         "noDebugger": "error",
-        "noConsole": {
-          "level": "warn",
-          "options": {
-            "allow": ["warn", "error"]
-          }
-        }
+        "noConsole": "off"
       },
       "a11y": {
         "noSvgWithoutTitle": "off",
@@ -78,6 +73,9 @@
             "functions": ["clsx", "cva", "tw", "cn"]
           }
         }
+      },
+      "style": {
+        "noNonNullAssertion": "off"
       }
     }
   },

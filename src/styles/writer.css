@@ -1,11 +1,16 @@
-/* .tiptap .is-empty::before {
+.ProseMirror p.is-editor-empty:first-child::before {
   content: attr(data-placeholder);
   color: hsl(var(--muted-foreground));
   opacity: 0.5;
-  pointer-events: none;
   float: left;
+  pointer-events: none;
   height: 0;
-} */
+}
+
+.tiptap .is-empty {
+  min-height: 1.5em; /* Bạn có thể điều chỉnh chiều cao của editor */
+  display: block;
+}
 
 /* List */
 .ProseMirror ul {

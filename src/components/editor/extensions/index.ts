@@ -14,7 +14,9 @@ import SlashCommand from "@/components/editor/extensions/slash-command";
 import iframe from "./iframe";
 
 const extensions = [
-  StarterKit,
+  StarterKit.configure({
+    heading: false,
+  }),
   Heading.configure({ levels: [1, 2, 3] }),
   TextStyle,
   ColorClass,

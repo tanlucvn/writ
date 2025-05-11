@@ -93,11 +93,8 @@ export const ToolbarColor = () => {
         </Toggle>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent
-        align="start"
-        className="max-h-[240px] overflow-y-auto p-1"
-      >
-        <DashedContainer className="p-2">
+      <DropdownMenuContent align="start" className="h-full w-40 p-1">
+        <DashedContainer className="max-h-[240px] overflow-y-auto p-2">
           <p className="px-1.5 py-1 font-mono text-muted-foreground text-xs">
             Text
           </p>

@@ -3,8 +3,8 @@
 import { HeaderCard, RightBar, Sidebar } from "@/components/common";
 import { AppInitializer, AutoSyncInitializer } from "@/components/init";
 import { useAppSettingsStore } from "@/store/app-settings-store";
-import { useTabStore } from "@/store/tab-store";
 import FloatingMainMenu from "../common/floating-main-menu";
+import Footer from "../common/footer";
 import {
   HelpDialog,
   MusicPlayer,
@@ -12,27 +12,31 @@ import {
   Statistics,
   WritesHistory,
 } from "../modals";
+import NoteSummary from "../modals/write-summary";
 import ScrollToTop from "../scroll-to-top";
-import SyncIndicator from "../sync-indicator";
 import DashedContainer from "../ui/dashed-container";
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const { isZenMode } = useAppSettingsStore();
-  const { tab } = useTabStore();
 
   return (
     <>
-      <Sidebar />
-      {tab === "writes" && !isZenMode && <RightBar />}
+      {/* Layout */}
+      <div className="mx-auto flex w-full max-w-5xl gap-4">
+        <Sidebar />
 
-      <main className="flex w-screen items-center justify-center">
-        <div className="h-full w-full items-center border-r border-l p-1 sm:w-[620px]">
-          <DashedContainer className="flex min-h-dvh flex-col px-2">
+        <main className="flex size-full min-h-screen max-w-[620px] flex-col border-x p-1">
+          <DashedContainer className="relative flex min-h-screen flex-1 flex-col px-2 pb-6">
             {isZenMode ? <FloatingMainMenu /> : <HeaderCard />}
             {children}
+            <Footer />
           </DashedContainer>
-        </div>
-      </main>
+        </main>
+
+        <aside className="hidden shrink-0 sm:w-[200px] lg:block">
+          <RightBar />
+        </aside>
+      </div>
 
       {/* Init */}
       <AutoSyncInitializer />
@@ -44,10 +48,10 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
       <MusicPlayer />
       <HelpDialog />
       <Statistics />
+      <NoteSummary />
 
       {/* Others */}
       <div className="fixed right-4 bottom-12 flex items-center justify-center gap-4 md:bottom-4">
-        <SyncIndicator />
         <ScrollToTop />
       </div>
     </>

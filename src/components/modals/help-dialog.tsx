@@ -15,7 +15,7 @@ const HelpDialog = () => {
       <CredenzaTitle className="sr-only">Help</CredenzaTitle>
       <CredenzaDescription className="sr-only">Help dialog</CredenzaDescription>
       <CredenzaContent className="p-1">
-        <DashedContainer className="p-2">
+        <DashedContainer className="p-6">
           <div className="mt-6 flex flex-col space-y-4 sm:mt-0">
             <div className="flex flex-col gap-1">
               <p className="font-mono text-muted-foreground text-xs">

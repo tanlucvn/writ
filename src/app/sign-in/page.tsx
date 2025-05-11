@@ -5,26 +5,20 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { useTabStore } from "@/store/tab-store";
-import { useSignIn, useUser } from "@clerk/nextjs";
+import { useSignIn } from "@clerk/nextjs";
 import { ArrowLeftIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 
 const SignInPage = () => {
   const { setTab } = useTabStore();
 
-  const { signIn } = useSignIn();
-  const { isSignedIn } = useUser();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (isSignedIn) {
-      setTab("writes");
-    }
-  }, [isSignedIn, setTab]);
+  // const redirectUrl = process.env.NEXT_PUBLIC_URL || window.location.origin;
+  const { signIn } = useSignIn();
 
   const signInWithEmail = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,10 +29,12 @@ const SignInPage = () => {
 
     setLoading(true);
     try {
+      // Đăng nhập với email và password thông qua Clerk
       await signIn.create({
         identifier: email,
         password,
       });
+      // Nếu thành công, chuyển hướng người dùng
       window.location.href = "/";
     } catch (error) {
       console.error(error);
@@ -76,13 +72,14 @@ const SignInPage = () => {
     setLoading(true);
 
     const redirectUrl = process.env.NEXT_PUBLIC_URL || window.location.origin;
-    const redirectUrlComplete = `${redirectUrl}/`;
+    const redirectUrlComplete = `${redirectUrl}/callback`; // Đảm bảo có route callback
 
     try {
+      // Đăng nhập với OAuth thông qua redirect
       await signIn.authenticateWithRedirect({
-        redirectUrl,
-        redirectUrlComplete,
-        strategy: `oauth_${provider}`,
+        redirectUrl, // URL hoàn thành quy trình OAuth (route callback)
+        redirectUrlComplete, // URL hoàn thành OAuth, nơi bạn muốn chuyển hướng sau khi đăng nhập thành công
+        strategy: `oauth_${provider}`, // 'oauth_google' hoặc 'oauth_github'
       });
     } catch (error) {
       console.error(error);

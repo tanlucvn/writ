@@ -3,22 +3,24 @@
 import { setupAutoSync } from "@/lib/setup-auto-sync";
 import { useAppSettingsStore } from "@/store/app-settings-store";
 import { useAppStore } from "@/store/app-store";
-import { useAuthStore } from "@/store/auth-store";
+import { useUser } from "@clerk/nextjs";
 import { useEffect, useRef } from "react";
 
 const AutoSyncInitializer = () => {
-  const { user } = useAuthStore();
+  const { user } = useUser();
   const { setSyncStatus } = useAppStore();
   const { isAutoSync } = useAppSettingsStore();
   const hasInitialized = useRef(false);
 
   useEffect(() => {
-    if (!user) return;
+    if (!user?.id) return;
     if (!isAutoSync) return;
     if (hasInitialized.current) return;
 
     hasInitialized.current = true;
+
     const cleanup = setupAutoSync({
+      userId: user.id,
       onStart: () => setSyncStatus("syncing"),
       onSuccess: () => setSyncStatus("success"),
       onError: () => setSyncStatus("error"),
@@ -28,7 +30,7 @@ const AutoSyncInitializer = () => {
       cleanup();
       hasInitialized.current = false;
     };
-  }, [user, isAutoSync, setSyncStatus]);
+  }, [user?.id, isAutoSync, setSyncStatus]);
 
   return null;
 };
