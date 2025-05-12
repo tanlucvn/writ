@@ -37,7 +37,7 @@
   "dependencies": {
     "@biomejs/biome": "^1.9.4",
     "@clerk/nextjs": "^6.19.2",
-    "@libsql/client": "^0.15.4",
+    "@libsql/client": "^0.15.5",
     "@next/env": "^15.3.2",
     "@number-flow/react": "^0.5.9",
     "@radix-ui/react-alert-dialog": "^1.1.11",
