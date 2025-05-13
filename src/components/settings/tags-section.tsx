@@ -13,7 +13,7 @@ import { useState } from "react";
 const TagsSection = () => {
   const tagColors = getTagColors();
   const [newTag, setNewTag] = useState("");
-  const [color, setColor] = useState(tagColors[0]);
+  const [color, setColor] = useState(tagColors[0] ?? "#ffffff");
   const [loading, setLoading] = useState(false);
   const { tags, setTags } = useAppStore();
 

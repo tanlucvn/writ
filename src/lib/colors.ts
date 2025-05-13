@@ -40,6 +40,6 @@ export function getTagColors() {
   ];
 
   return customColors
-    .map((colorName) => themeColors[colorName] as string | undefined)
-    .filter(Boolean);
+    .map((colorName) => themeColors[colorName])
+    .filter(Boolean) as string[];
 }
