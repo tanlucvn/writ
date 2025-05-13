@@ -5,12 +5,13 @@ import { useAppSettingsStore } from "@/store/app-settings-store";
 import { useAppStore } from "@/store/app-store";
 import { useDialogStore } from "@/store/dialog-store";
 import { useTheme } from "next-themes";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 
 const AppInitializer = () => {
   const {
     createNewWrite,
+    refreshWrites,
     initDB,
     setCurrentContent,
     handlePrevWrite,
@@ -21,17 +22,27 @@ const AppInitializer = () => {
     useDialogStore();
   const { theme } = useTheme();
 
+  const hasInitialized = useRef(false);
+
   const initializeData = useCallback(async () => {
+    if (hasInitialized.current) return;
+    hasInitialized.current = true;
+
     try {
       await initDB();
       const recent = await dexie.getLatestWrite();
       const write = recent ?? dexie.createWrite();
-      if (!recent) await dexie.saveWrite(write);
+
+      if (!recent) {
+        await dexie.saveWrite(write);
+        await refreshWrites();
+      }
+
       setCurrentContent(write);
     } catch (err) {
       console.error("Failed to initialize data:", err);
     }
-  }, [initDB, setCurrentContent]);
+  }, [initDB, setCurrentContent, refreshWrites]);
 
   useEffect(() => {
     initializeData();
