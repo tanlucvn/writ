@@ -20,7 +20,7 @@ type ThemeColors = {
 
 export function getTagColors() {
   const twConfig = resolveConfig(tailwindConfig);
-  const themeColors = twConfig.theme?.colors as ThemeColors;
+  const themeColors = twConfig.theme?.colors ?? {};
 
   const customColors: (keyof ThemeColors)[] = [
     "lavender",
@@ -40,6 +40,6 @@ export function getTagColors() {
   ];
 
   return customColors
-    .map((colorName) => themeColors[colorName])
+    .map((colorName) => themeColors[colorName] as string | undefined)
     .filter(Boolean);
 }
