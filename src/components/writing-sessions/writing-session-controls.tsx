@@ -3,7 +3,6 @@ import { useWritingSessionsStore } from "@/store/writing-sessions-store";
 import { PauseIcon, PlayIcon, TimerOffIcon } from "lucide-react";
 import { useEffect } from "react";
 import { Button } from "../ui/button";
-import DashedContainer from "../ui/dashed-container";
 import WritingSessionProgressBar from "./writing-session-progress-bar";
 import WritingSessionTimer from "./writing-session-timer";
 
@@ -40,42 +39,42 @@ const WritingSessionControls = () => {
   console.log("remainingTime", remainingTime);
 
   return (
-    <div className="mx-auto w-full rounded-md border p-1">
-      <DashedContainer className="flex flex-col items-center gap-4 p-4">
-        <div className="flex w-full flex-col items-center space-y-2">
-          {/* Remaining Time */}
-          {currentSession && <WritingSessionTimer timer={remainingTime} />}
+    <div className="mx-auto w-full">
+      <div className="flex w-full items-center justify-between gap-1">
+        {currentSession && <WritingSessionTimer timer={remainingTime} />}
 
-          {/* Progress Bar */}
-          {currentSession && currentSession?.duration && (
-            <WritingSessionProgressBar remainingTime={remainingTime} />
-          )}
-        </div>
+        {currentSession && currentSession?.duration && (
+          <WritingSessionProgressBar remainingTime={remainingTime} />
+        )}
 
         {/* Action Buttons */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
           {isRunning ? (
             <Button
               onClick={pauseSession}
-              variant="secondary"
-              className="size-8"
+              variant="ghost"
+              className="size-6 hover:bg-transparent"
             >
               <PauseIcon />
             </Button>
           ) : (
-            <Button onClick={resumeSession} className="size-8">
+            <Button
+              variant="ghost"
+              onClick={resumeSession}
+              className="size-6 text-foreground hover:bg-transparent"
+            >
               <PlayIcon />
             </Button>
           )}
           <Button
             onClick={handleStop}
-            variant="secondary"
-            className="size-8 text-destructive"
+            variant="ghost"
+            className="size-6 text-destructive hover:bg-transparent hover:text-destructive"
           >
             <TimerOffIcon />
           </Button>
         </div>
-      </DashedContainer>
+      </div>
     </div>
   );
 };
