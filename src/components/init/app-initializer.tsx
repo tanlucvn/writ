@@ -4,6 +4,7 @@ import { dexie } from "@/services";
 import { useAppSettingsStore } from "@/store/app-settings-store";
 import { useAppStore } from "@/store/app-store";
 import { useDialogStore } from "@/store/dialog-store";
+import { useWritingSessionsStore } from "@/store/writing-sessions-store";
 import { useTheme } from "next-themes";
 import { useCallback, useEffect, useRef } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
@@ -13,10 +14,11 @@ const AppInitializer = () => {
     createNewWrite,
     refreshWrites,
     initDB,
-    setCurrentContent,
+    setCurrentWrite,
     handlePrevWrite,
     handleNextWrite,
   } = useAppStore();
+  const { initSessionsDB } = useWritingSessionsStore();
   const { appColor, toggleZenMode } = useAppSettingsStore();
   const { setIsHelpDialogOpen, setMusicPlayerOpen, setSettingsOpen } =
     useDialogStore();
@@ -30,6 +32,7 @@ const AppInitializer = () => {
 
     try {
       await initDB();
+      await initSessionsDB();
       const recent = await dexie.getLatestWrite();
       const write = recent ?? dexie.createWrite();
 
@@ -38,11 +41,11 @@ const AppInitializer = () => {
         await refreshWrites();
       }
 
-      setCurrentContent(write);
+      setCurrentWrite(write);
     } catch (err) {
       console.error("Failed to initialize data:", err);
     }
-  }, [initDB, setCurrentContent, refreshWrites]);
+  }, [initDB, initSessionsDB, setCurrentWrite, refreshWrites]);
 
   useEffect(() => {
     initializeData();

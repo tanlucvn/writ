@@ -10,8 +10,8 @@ import {
   CredenzaDescription,
   CredenzaHeader,
   CredenzaTitle,
-} from "../ui/credenza";
-import DashedContainer from "../ui/dashed-container";
+} from "../../ui/credenza";
+import DashedContainer from "../../ui/dashed-container";
 
 const cleanText = (html: string) => {
   return html
@@ -30,9 +30,9 @@ const SummaryItem = ({
   </div>
 );
 
-const WriteSummary = () => {
+const WritesSummary = () => {
   const { isWriteSummaryOpen, setIsWriteSummaryOpen } = useDialogStore();
-  const { currentContent } = useAppStore();
+  const { currentWrite } = useAppStore();
 
   const [summary, setSummary] = useState({
     letters: 0,
@@ -43,9 +43,9 @@ const WriteSummary = () => {
   });
 
   useEffect(() => {
-    if (!currentContent?.id) return;
+    if (!currentWrite?.id) return;
 
-    const raw = currentContent.content || "";
+    const raw = currentWrite.content || "";
     const text = cleanText(raw);
 
     const letters = text.length;
@@ -61,7 +61,7 @@ const WriteSummary = () => {
       sentences: sentences.length,
       readingTime,
     });
-  }, [currentContent]);
+  }, [currentWrite]);
 
   return (
     <Credenza open={isWriteSummaryOpen} onOpenChange={setIsWriteSummaryOpen}>
@@ -91,4 +91,4 @@ const WriteSummary = () => {
   );
 };
 
-export default WriteSummary;
+export default WritesSummary;

@@ -7,8 +7,8 @@ import {
 import type { Tag } from "@/types";
 import { CheckIcon, TagIcon } from "lucide-react";
 import type { Dispatch, SetStateAction } from "react";
-import TagChip from "../tag-chip";
-import DashedContainer from "../ui/dashed-container";
+import TagChip from "../../../tag-chip";
+import DashedContainer from "../../../ui/dashed-container";
 
 const MultiSelectTag = ({
   availableTags,

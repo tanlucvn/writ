@@ -2,17 +2,20 @@
 
 import { HeaderCard, RightBar, Sidebar } from "@/components/common";
 import { AppInitializer, AutoSyncInitializer } from "@/components/init";
-import { useAppSettingsStore } from "@/store/app-settings-store";
-import FloatingMainMenu from "../common/floating-main-menu";
-import Footer from "../common/footer";
 import {
   HelpDialog,
   MusicPlayer,
   Settings,
   Statistics,
   WritesHistory,
-} from "../modals";
-import NoteSummary from "../modals/write-summary";
+  WritesSummary,
+  WritingSessionsCreator,
+  WritingSessionsHistory,
+  WritingSessionsSummary,
+} from "@/components/modals";
+import { useAppSettingsStore } from "@/store/app-settings-store";
+import FloatingMainMenu from "../common/floating-main-menu";
+import Footer from "../common/footer";
 import DashedContainer from "../ui/dashed-container";
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
@@ -47,7 +50,10 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
       <MusicPlayer />
       <HelpDialog />
       <Statistics />
-      <NoteSummary />
+      <WritesSummary />
+      <WritingSessionsCreator />
+      <WritingSessionsHistory />
+      <WritingSessionsSummary />
     </>
   );
 };

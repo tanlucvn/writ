@@ -1,6 +1,6 @@
 "use client";
 
-import { setupAutoSync } from "@/lib/setup-auto-sync";
+import { setupAutoSync } from "@/hooks/setup-auto-sync";
 import { useAppSettingsStore } from "@/store/app-settings-store";
 import { useAppStore } from "@/store/app-store";
 import { useUser } from "@clerk/nextjs";

@@ -7,11 +7,6 @@
   height: 0;
 }
 
-.tiptap .is-empty {
-  min-height: 1.5em; /* Bạn có thể điều chỉnh chiều cao của editor */
-  display: block;
-}
-
 /* List */
 .ProseMirror ul {
   @apply list-disc pl-6 space-y-1 marker:text-muted-foreground;

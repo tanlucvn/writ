@@ -26,3 +26,10 @@ export const sortWrites = (writes: Write[], option: string): Write[] => {
     }
   });
 };
+
+export const cleanText = (html: string) => {
+  return html
+    .replace(/<\/?[^>]+(>|$)/g, "") // Remove HTML tags
+    .replace(/\s+/g, " ") // Normalize whitespace
+    .trim();
+};

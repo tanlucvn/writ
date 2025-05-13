@@ -11,9 +11,9 @@ import { WRITE_SORT_OPTIONS } from "@/lib/constants";
 import { sortWrites } from "@/lib/utils";
 import { useAppSettingsStore } from "@/store/app-settings-store";
 import { useAppStore } from "@/store/app-store";
-import DashedContainer from "../ui/dashed-container";
+import DashedContainer from "../../../ui/dashed-container";
 
-const WriteSortDropdown = () => {
+const WritesSortDropdown = () => {
   const { writes, setWrites } = useAppStore();
   const { sortOption, setSortOption } = useAppSettingsStore();
 
@@ -50,4 +50,4 @@ const WriteSortDropdown = () => {
   );
 };
 
-export default WriteSortDropdown;
+export default WritesSortDropdown;

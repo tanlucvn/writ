@@ -28,7 +28,7 @@ import {
 } from "lucide-react";
 import { DateTime } from "luxon";
 import { useEffect, useMemo, useState } from "react";
-import DashedContainer from "../ui/dashed-container";
+import DashedContainer from "../../../ui/dashed-container";
 
 type WriteItemProps = {
   write: Write;
@@ -37,8 +37,8 @@ type WriteItemProps = {
 
 const WriteItem = ({ write, className }: WriteItemProps) => {
   const {
-    currentContent,
-    setCurrentContent,
+    currentWrite,
+    setCurrentWrite,
     writes,
     setWrites,
     refreshWrites,
@@ -93,19 +93,19 @@ const WriteItem = ({ write, className }: WriteItemProps) => {
   };
 
   useEffect(() => {
-    if (isRenaming && currentContent?.id !== write.id) {
+    if (isRenaming && currentWrite?.id !== write.id) {
       setIsRenaming(false);
     }
-  }, [currentContent?.id, write.id, isRenaming]);
+  }, [currentWrite?.id, write.id, isRenaming]);
 
   return (
     <div
       className={cn(
         "relative cursor-pointer rounded-lg border bg-card p-3 pr-12 outline-double outline-2 outline-transparent outline-offset-2 transition-all duration-300 hover:bg-secondary",
-        currentContent?.id === write.id && "bg-secondary outline-border",
+        currentWrite?.id === write.id && "bg-secondary outline-border",
         className,
       )}
-      onClick={() => setCurrentContent(write)}
+      onClick={() => setCurrentWrite(write)}
     >
       <div className="flex flex-col gap-2">
         {/* Title / Rename */}

@@ -5,31 +5,31 @@ import { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 
 export default function EditorTitle() {
-  const { currentContent, setCurrentContent, refreshWrites } = useAppStore();
-  const [title, setTitle] = useState(currentContent?.title || "");
+  const { currentWrite, setCurrentWrite, refreshWrites } = useAppStore();
+  const [title, setTitle] = useState(currentWrite?.title || "");
 
   useEffect(() => {
-    setTitle(currentContent?.title || "");
-  }, [currentContent?.title]);
+    setTitle(currentWrite?.title || "");
+  }, [currentWrite?.title]);
 
   useEffect(() => {
     const timeout = setTimeout(async () => {
-      if (!currentContent) return;
-      if (title === currentContent.title) return;
+      if (!currentWrite) return;
+      if (title === currentWrite.title) return;
 
       const updated = {
-        ...currentContent,
+        ...currentWrite,
         title: title,
         updatedAt: DateTime.utc().toISO(),
       };
       await dexie.saveWrite(updated);
 
-      setCurrentContent(updated);
+      setCurrentWrite(updated);
       refreshWrites();
     }, 500);
 
     return () => clearTimeout(timeout);
-  }, [title, currentContent, refreshWrites, setCurrentContent]);
+  }, [title, currentWrite, refreshWrites, setCurrentWrite]);
   return (
     <Input
       className="border-none p-0 font-semibold text-2xl shadow-none outline-none focus-visible:ring-0 md:text-xl"

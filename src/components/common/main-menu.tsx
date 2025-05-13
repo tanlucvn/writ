@@ -163,19 +163,31 @@ const WritesTab = ({ onClose, onAction }: TabProps) => {
   );
 };
 
-const SessionsTab = ({ onClose }: { onClose: () => void }) => (
-  <NavMenuSection title="Write Sessions" onClose={onClose}>
-    <Button variant="outline" className="text-xs">
-      <PlusIcon />
-      Create New
-    </Button>
+const WritingSessionsTab = ({ onClose }: { onClose: () => void }) => {
+  const { setIsNewWritingSessionDialogOpen, setWritingSessionHistoryOpen } =
+    useDialogStore();
+  return (
+    <NavMenuSection title="Writing Sessions" onClose={onClose}>
+      <Button
+        variant="outline"
+        className="text-xs"
+        onClick={() => setIsNewWritingSessionDialogOpen(true)}
+      >
+        <PlusIcon />
+        Create New
+      </Button>
 
-    <Button variant="outline" className="text-xs">
-      <LibraryBigIcon />
-      View History
-    </Button>
-  </NavMenuSection>
-);
+      <Button
+        variant="outline"
+        className="text-xs"
+        onClick={() => setWritingSessionHistoryOpen(true)}
+      >
+        <LibraryBigIcon />
+        View History
+      </Button>
+    </NavMenuSection>
+  );
+};
 
 const AccountsTab = ({ onClose }: { onClose: () => void }) => {
   const handleLogout = async () => {
@@ -251,7 +263,7 @@ const MainMenu = (): React.ReactElement => {
               />
             )}
             {activeTab === "sessions" && (
-              <SessionsTab onClose={() => handleTabChange("home")} />
+              <WritingSessionsTab onClose={() => handleTabChange("home")} />
             )}
             {activeTab === "accounts" && (
               <AccountsTab onClose={() => handleTabChange("home")} />

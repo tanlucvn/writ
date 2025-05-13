@@ -1,21 +1,21 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   MultiSelectTag,
   WriteItem,
-  WriteSortDropdown,
-} from "@/components/writes";
+  WritesSortDropdown,
+} from "@/components/modals/writes";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { useAppStore } from "@/store/app-store";
 import { useDialogStore } from "@/store/dialog-store";
 import { Loader2, XIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Drawer } from "vaul";
-import { AnimatedNumberBadge } from "../animated-number-badge";
-import DashedContainer from "../ui/dashed-container";
-import { Separator } from "../ui/separator";
+import { AnimatedNumberBadge } from "../../animated-number-badge";
+import DashedContainer from "../../ui/dashed-container";
+import { Separator } from "../../ui/separator";
 
 const WritesHistory = () => {
   const { writes, tags, refreshWrites } = useAppStore();
@@ -135,7 +135,7 @@ const WritesHistory = () => {
                   <p className="text-xs">Writes</p>
                   <AnimatedNumberBadge value={filteredWrites.length} />
                 </div>
-                <WriteSortDropdown />
+                <WritesSortDropdown />
               </div>
             </div>
           </DashedContainer>

@@ -12,25 +12,25 @@ import Loading from "../loading";
 import EditorTitle from "./editor-title";
 
 const Editor = () => {
-  const { currentContent, setCurrentContent, refreshWrites, setEditor } =
+  const { currentWrite, setCurrentWrite, refreshWrites, setEditor } =
     useAppStore();
   const { fontFamily, fontSize } = useAppSettingsStore();
 
   const editor = useEditor({
     extensions: [...ExtensionList],
-    content: currentContent?.content ?? "",
+    content: currentWrite?.content ?? "",
     onUpdate: ({ editor }) => {
-      if (!currentContent) return;
+      if (!currentWrite) return;
 
       const content = editor.getHTML();
 
       const updated = {
-        ...currentContent,
+        ...currentWrite,
         content,
         updatedAt: DateTime.utc().toISO(),
       };
 
-      setCurrentContent(updated);
+      setCurrentWrite(updated);
       dexie.saveWrite(updated);
       refreshWrites();
     },
@@ -68,12 +68,12 @@ const Editor = () => {
   }, [editor, setEditor]);
 
   useEffect(() => {
-    if (editor && currentContent) {
-      if (editor.getHTML() !== (currentContent.content || "")) {
-        editor.commands.setContent(currentContent.content || "", false);
+    if (editor && currentWrite) {
+      if (editor.getHTML() !== (currentWrite.content || "")) {
+        editor.commands.setContent(currentWrite.content || "", false);
       }
     }
-  }, [currentContent, editor]);
+  }, [currentWrite, editor]);
 
   if (!editor) {
     return <Loading />;

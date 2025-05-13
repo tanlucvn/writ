@@ -18,6 +18,15 @@ interface DialogStore {
 
   isWriteSummaryOpen: boolean;
   setIsWriteSummaryOpen: (open: boolean) => void;
+
+  isNewWritingSessionDialogOpen: boolean;
+  setIsNewWritingSessionDialogOpen: (open: boolean) => void;
+
+  isWritingSessionHistoryOpen: boolean;
+  setWritingSessionHistoryOpen: (open: boolean) => void;
+
+  isWritingSessionSummaryOpen: boolean;
+  setIsWritingSessionSummaryOpen: (open: boolean) => void;
 }
 
 export const useDialogStore = create<DialogStore>((set) => ({
@@ -38,4 +47,16 @@ export const useDialogStore = create<DialogStore>((set) => ({
 
   isWriteSummaryOpen: false,
   setIsWriteSummaryOpen: (open) => set({ isWriteSummaryOpen: open }),
+
+  isNewWritingSessionDialogOpen: false,
+  setIsNewWritingSessionDialogOpen: (open) =>
+    set({ isNewWritingSessionDialogOpen: open }),
+
+  isWritingSessionHistoryOpen: false,
+  setWritingSessionHistoryOpen: (open) =>
+    set({ isWritingSessionHistoryOpen: open }),
+
+  isWritingSessionSummaryOpen: false,
+  setIsWritingSessionSummaryOpen: (open) =>
+    set({ isWritingSessionSummaryOpen: open }),
 }));

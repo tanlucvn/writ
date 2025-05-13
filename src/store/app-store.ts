@@ -14,8 +14,8 @@ interface AppStore {
   tags: Tag[];
   setTags: (tags: Tag[]) => void;
 
-  currentContent: Write | null;
-  setCurrentContent: (write: Write) => void;
+  currentWrite: Write | null;
+  setCurrentWrite: (write: Write) => void;
 
   handlePrevWrite: () => void;
   handleNextWrite: () => void;
@@ -39,39 +39,37 @@ export const useAppStore = create<AppStore>((set) => ({
   tags: [],
   setTags: (tags) => set({ tags }),
 
-  currentContent: null,
-  setCurrentContent: (write) => set({ currentContent: write }),
+  currentWrite: null,
+  setCurrentWrite: (write) => set({ currentWrite: write }),
 
   handlePrevWrite: () => {
-    const { currentContent, writes, setCurrentContent } =
-      useAppStore.getState();
-    if (!currentContent || writes.length === 0) return;
-    const index = writes.findIndex((w) => w.id === currentContent.id);
+    const { currentWrite, writes, setCurrentWrite } = useAppStore.getState();
+    if (!currentWrite || writes.length === 0) return;
+    const index = writes.findIndex((w) => w.id === currentWrite.id);
     if (index > 0) {
       const prev = writes[index - 1];
-      setCurrentContent(prev);
+      setCurrentWrite(prev);
     }
   },
 
   handleNextWrite: () => {
-    const { currentContent, writes, setCurrentContent } =
-      useAppStore.getState();
-    if (!currentContent || writes.length === 0) return;
-    const index = writes.findIndex((w) => w.id === currentContent.id);
+    const { currentWrite, writes, setCurrentWrite } = useAppStore.getState();
+    if (!currentWrite || writes.length === 0) return;
+    const index = writes.findIndex((w) => w.id === currentWrite.id);
     if (index < writes.length - 1) {
       const next = writes[index + 1];
-      setCurrentContent(next);
+      setCurrentWrite(next);
     }
   },
 
   createNewWrite: async () => {
-    const { setCurrentContent, refreshWrites } = useAppStore.getState();
+    const { setCurrentWrite, refreshWrites } = useAppStore.getState();
     const newWrite = dexie.createWrite();
     await dexie.saveWrite(newWrite);
 
     toast.success("New write created successfully!");
 
-    setCurrentContent(newWrite);
+    setCurrentWrite(newWrite);
     refreshWrites();
   },
   refreshWrites: async () => {
@@ -112,7 +110,7 @@ export const useAppStore = create<AppStore>((set) => ({
 
       set({
         writes: [newWrite],
-        currentContent: newWrite,
+        currentWrite: newWrite,
         tags: [],
       });
     } catch (error) {
