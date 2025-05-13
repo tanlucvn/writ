@@ -59,7 +59,6 @@ const SignInPage = () => {
     }
 
     try {
-      // Gửi yêu cầu reset mật khẩu qua Clerk
       await signIn.requestPasswordReset({ email });
       toast.success("Password reset email sent.");
     } catch (error) {

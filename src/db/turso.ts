@@ -1,9 +1,7 @@
-import * as schema from "@/db/schema"; // Giả sử bạn đã có schema định nghĩa ở nơi khác
-// db/turso.ts
+import * as schema from "@/db/schema";
 import { createClient as createLibsqlClient } from "@libsql/client";
-import { drizzle } from "drizzle-orm/libsql"; // Sử dụng drizzle ORM cho SQLite
+import { drizzle } from "drizzle-orm/libsql";
 
-// Hàm tạo kết nối với cơ sở dữ liệu
 const getDatabaseUrl = () => {
   return process.env.TURSO_DATABASE_URL!;
 };
@@ -24,7 +22,6 @@ export const getDatabaseClient = async () => {
   return drizzle(client, { schema });
 };
 
-// Hàm lấy dữ liệu từ cơ sở dữ liệu
 export const fetchWrites = async () => {
   const db = await getDatabaseClient();
   if (!db) {
@@ -33,7 +30,6 @@ export const fetchWrites = async () => {
   }
 
   try {
-    // Lấy dữ liệu từ bảng 'writes'
     const result = await db.select().from(schema.writes);
     console.log(result);
     return result;

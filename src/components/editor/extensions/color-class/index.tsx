@@ -1,6 +1,5 @@
 import { Mark, mergeAttributes } from "@tiptap/core";
 
-// Mở rộng lệnh cho TypeScript biết
 declare module "@tiptap/core" {
   interface Commands<ReturnType = any> {
     colorClass: {

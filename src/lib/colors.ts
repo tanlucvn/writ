@@ -1,11 +1,10 @@
 import resolveConfig from "tailwindcss/resolveConfig";
 import tailwindConfig from "../../tailwind.config";
 
-// Định nghĩa một kiểu cho các màu cụ thể mà bạn sử dụng
 type ThemeColors = {
-  black: string;
-  midnight: string;
-  night: string;
+  lavender: string;
+  peach: string;
+  mint: string;
   silver: string;
   tiffany: string;
   cambridge: string;
@@ -24,9 +23,9 @@ export function getTagColors() {
   const themeColors = twConfig.theme?.colors as ThemeColors;
 
   const customColors: (keyof ThemeColors)[] = [
-    "black",
-    "midnight",
-    "night",
+    "lavender",
+    "peach",
+    "mint",
     "silver",
     "tiffany",
     "cambridge",
