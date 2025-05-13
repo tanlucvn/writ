@@ -25,7 +25,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="absolute right-0 bottom-2 left-0 flex w-full items-center justify-between bg-background px-2 py-1.5 text-center text-muted-foreground text-xs">
+    <footer className="-translate-x-1/2 absolute bottom-[6px] left-1/2 flex w-[95%] transform items-center justify-between border-t bg-background px-2 py-1.5 text-center text-muted-foreground text-xs">
       <span
         className="flex cursor-pointer select-none items-center justify-center gap-1"
         onClick={handleChangeTip}

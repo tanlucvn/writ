@@ -13,7 +13,6 @@ import {
   WritesHistory,
 } from "../modals";
 import NoteSummary from "../modals/write-summary";
-import ScrollToTop from "../scroll-to-top";
 import DashedContainer from "../ui/dashed-container";
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
@@ -22,15 +21,15 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       {/* Layout */}
-      <div className="mx-auto flex w-full max-w-5xl gap-4">
+      <div className="mx-auto flex h-screen w-full max-w-5xl gap-4 overflow-y-hidden">
         <Sidebar />
 
-        <main className="flex size-full min-h-screen max-w-[620px] flex-col border-x p-1">
-          <DashedContainer className="relative flex min-h-screen flex-1 flex-col px-2 pb-6">
+        <main className="relative flex size-full max-w-[620px] flex-col border-x p-1">
+          <DashedContainer className="scrollable-content min-h-full overflow-y-auto px-2">
             {isZenMode ? <FloatingMainMenu /> : <HeaderCard />}
             {children}
-            <Footer />
           </DashedContainer>
+          <Footer />
         </main>
 
         <aside className="hidden shrink-0 sm:w-[200px] lg:block">
@@ -49,11 +48,6 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
       <HelpDialog />
       <Statistics />
       <NoteSummary />
-
-      {/* Others */}
-      <div className="fixed right-4 bottom-12 flex items-center justify-center gap-4 md:bottom-4">
-        <ScrollToTop />
-      </div>
     </>
   );
 };

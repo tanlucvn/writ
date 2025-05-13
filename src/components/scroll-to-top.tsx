@@ -1,10 +1,10 @@
 "use client";
 
-import { Button } from "@/components/ui/button"; // chỉnh path nếu cần
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpIcon } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type ScrollToTopProps = {
   className?: string;
@@ -16,20 +16,27 @@ export default function ScrollToTop({
   showTrigger = 300,
 }: ScrollToTopProps) {
   const [visible, setVisible] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    const container = document.querySelector(".scrollable-content");
+    if (!container) return;
+
+    scrollContainerRef.current = container as HTMLDivElement;
+
     const handleScroll = () => {
-      setVisible(window.scrollY > showTrigger);
+      setVisible(scrollContainerRef.current!.scrollTop > showTrigger);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    container.addEventListener("scroll", handleScroll);
+
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      container.removeEventListener("scroll", handleScroll);
     };
   }, [showTrigger]);
 
   const handleClick = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    scrollContainerRef.current?.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (

@@ -8,9 +8,9 @@ import {
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { useAppSettingsStore } from "@/store/app-settings-store";
-import { useTabStore } from "@/store/tab-store";
+import { type Tab, useTabStore } from "@/store/tab-store";
 import { CircleIcon, Info, Lock, Pen } from "lucide-react";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { Separator } from "../ui/separator";
 import UserButton from "./user-button";
 
@@ -23,26 +23,26 @@ const tabs = [
 const Sidebar = () => {
   const { tab, setTab } = useTabStore();
   const { isZenMode } = useAppSettingsStore();
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const { isCollapsedSidebar, toggleCollapsedSidebar } = useAppSettingsStore();
 
   const renderButton = useCallback(
-    (key: string, label: string, icon: React.ReactNode, active: boolean) => (
+    (tab: Tab, label: string, icon: React.ReactNode, active: boolean) => (
       <Button
         variant={active ? "secondary" : "ghost"}
         size="sm"
         className={cn(
           "flex w-full items-center justify-start space-x-2 text-muted-foreground text-xs hover:bg-transparent",
-          isCollapsed && "ml-auto size-8 justify-center",
+          isCollapsedSidebar && "ml-auto size-8 justify-center",
           active &&
             "text-foreground outline-double outline-1 outline-border outline-offset-2 hover:bg-secondary",
         )}
-        onClick={() => setTab(key as any)}
+        onClick={() => setTab(tab)}
       >
         {icon}
-        {!isCollapsed && label}
+        {!isCollapsedSidebar && label}
       </Button>
     ),
-    [isCollapsed, setTab],
+    [isCollapsedSidebar, setTab],
   );
 
   return (
@@ -56,15 +56,15 @@ const Sidebar = () => {
         <div
           className={cn(
             "flex flex-col gap-2",
-            isCollapsed ? "items-center px-1" : "px-2",
+            isCollapsedSidebar ? "items-center px-1" : "px-2",
           )}
         >
-          <UserButton isCollapsed={isCollapsed} />
+          <UserButton />
 
-          <Separator className={isCollapsed ? "ml-auto w-8" : ""} />
+          <Separator className={isCollapsedSidebar ? "ml-auto w-8" : ""} />
 
           {tabs.map(({ key, label, icon }) =>
-            isCollapsed ? (
+            isCollapsedSidebar ? (
               <Tooltip key={key}>
                 <TooltipTrigger asChild>
                   {renderButton(key, label, icon, tab === key)}
@@ -80,7 +80,7 @@ const Sidebar = () => {
         <div
           className={cn(
             "flex flex-col gap-2",
-            isCollapsed ? "items-center px-1" : "px-2",
+            isCollapsedSidebar ? "items-center px-1" : "px-2",
           )}
         >
           <Tooltip>
@@ -89,10 +89,10 @@ const Sidebar = () => {
                 variant="secondary"
                 size="sm"
                 className="ml-auto flex size-8 items-center justify-center space-x-2 bg-transparent text-muted-foreground text-xs hover:bg-transparent"
-                onClick={() => setIsCollapsed((prev) => !prev)}
+                onClick={() => toggleCollapsedSidebar()}
               >
                 <CircleIcon
-                  className={cn("size-4", isCollapsed && "fill-current")}
+                  className={cn("size-4", isCollapsedSidebar && "fill-current")}
                 />
               </Button>
             </TooltipTrigger>
