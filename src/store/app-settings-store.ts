@@ -1,5 +1,5 @@
-import { loadFromLocalStorage, saveToLocalStorage } from "@/lib/local-storage";
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 export type AppColor = "default" | "beige" | "olive" | "ash" | "fog" | "mono";
 
@@ -22,66 +22,44 @@ interface AppSettingsStore {
   isAutoSync: boolean;
   toggleAutoSync: () => void;
 
+  isCollapsedSidebar: boolean;
+  toggleCollapsedSidebar: () => void;
+
   sortOption: string;
   setSortOption: (option: string) => void;
 }
 
-export const useAppSettingsStore = create<AppSettingsStore>((set) => {
-  const savedFontSize = loadFromLocalStorage("fontSize", 16);
-  const savedFontFamily = loadFromLocalStorage("fontFamily", "inter");
-  const savedZenMode = loadFromLocalStorage("isZenMode", false);
-  const savedAppColor = loadFromLocalStorage("appColor", "default");
-  const savedSyncInterval = loadFromLocalStorage("syncInterval", 5); // Default 5 minutes
-  const savedIsAutoSync = loadFromLocalStorage("isAutoSync", false);
-  const savedSortOption = loadFromLocalStorage("sortOption", "updated-desc");
+export const useAppSettingsStore = create<AppSettingsStore>()(
+  persist(
+    (set, get) => ({
+      fontSize: 16,
+      setFontSize: (size) =>
+        set({ fontSize: Math.min(Math.max(size, 12), 32) }),
 
-  return {
-    fontSize: savedFontSize,
-    setFontSize: (size) => {
-      set({ fontSize: Math.min(Math.max(size, 12), 32) });
-      saveToLocalStorage("fontSize", size);
-    },
+      fontFamily: "inter",
+      setFontFamily: (family) => set({ fontFamily: family }),
 
-    fontFamily: savedFontFamily,
-    setFontFamily: (family) => {
-      set({ fontFamily: family });
-      saveToLocalStorage("fontFamily", family);
-    },
+      isZenMode: false,
+      toggleZenMode: () => set({ isZenMode: !get().isZenMode }),
 
-    isZenMode: savedZenMode,
-    toggleZenMode: () => {
-      set((state) => {
-        const newZenMode = !state.isZenMode;
-        saveToLocalStorage("isZenMode", newZenMode);
-        return { isZenMode: newZenMode };
-      });
-    },
+      appColor: "default",
+      setAppColor: (color) => set({ appColor: color }),
 
-    appColor: savedAppColor,
-    setAppColor: (color) => {
-      set({ appColor: color });
-      saveToLocalStorage("appColor", color);
-    },
+      syncInterval: 5,
+      setSyncInterval: (interval) => set({ syncInterval: interval }),
 
-    syncInterval: savedSyncInterval,
-    setSyncInterval: (interval) => {
-      set({ syncInterval: interval });
-      saveToLocalStorage("syncInterval", interval);
-    },
+      isAutoSync: false,
+      toggleAutoSync: () => set({ isAutoSync: !get().isAutoSync }),
 
-    isAutoSync: savedIsAutoSync,
-    toggleAutoSync: () => {
-      set((state) => {
-        const newAutoSync = !state.isAutoSync;
-        saveToLocalStorage("isAutoSync", newAutoSync);
-        return { isAutoSync: newAutoSync };
-      });
-    },
+      isCollapsedSidebar: false,
+      toggleCollapsedSidebar: () =>
+        set({ isCollapsedSidebar: !get().isCollapsedSidebar }),
 
-    sortOption: savedSortOption,
-    setSortOption: (option) => {
-      set({ sortOption: option });
-      saveToLocalStorage("sortOption", option);
+      sortOption: "updated-desc",
+      setSortOption: (option) => set({ sortOption: option }),
+    }),
+    {
+      name: "app-settings-store",
     },
-  };
-});
+  ),
+);
