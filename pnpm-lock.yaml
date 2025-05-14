@@ -161,6 +161,9 @@ dependencies:
   md5:
     specifier: ^2.3.0
     version: 2.3.0
+  miniwrit:
+    specifier: 'link:'
+    version: 'link:'
   next:
     specifier: 15.1.7
     version: 15.1.7(react-dom@19.1.0)(react@19.1.0)
