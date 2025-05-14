@@ -27,6 +27,9 @@ interface AppSettingsStore {
 
   sortOption: string;
   setSortOption: (option: string) => void;
+
+  lastOpenedWriteId: string | null;
+  setLastOpenedWriteId: (id: string | null) => void;
 }
 
 export const useAppSettingsStore = create<AppSettingsStore>()(
@@ -57,6 +60,9 @@ export const useAppSettingsStore = create<AppSettingsStore>()(
 
       sortOption: "updated-desc",
       setSortOption: (option) => set({ sortOption: option }),
+
+      lastOpenedWriteId: null,
+      setLastOpenedWriteId: (id) => set({ lastOpenedWriteId: id }),
     }),
     {
       name: "app-settings-store",

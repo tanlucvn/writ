@@ -73,11 +73,35 @@ export const useWritesStore = create<WritesStore>((set) => ({
     try {
       const allWrites = await dexie.getAllWrites();
       const allTags = await dexie.getAllTags();
-
       const sortOption = useAppSettingsStore.getState().sortOption;
       const sortedWrites = sortWrites(allWrites, sortOption);
 
       set({ writes: sortedWrites, tags: allTags });
+
+      const { setCurrentWrite } = useWritesStore.getState();
+      const { lastOpenedWriteId, setLastOpenedWriteId } =
+        useAppSettingsStore.getState();
+
+      let write: Write | undefined;
+
+      // 1. Last open
+      if (lastOpenedWriteId) {
+        write = await dexie.getWrite(lastOpenedWriteId);
+      }
+
+      // 2. If no last opened. Get the most recent one
+      if (!write && lastOpenedWriteId !== null) {
+        write = await dexie.getLatestWrite();
+      }
+
+      // 3. If no write exists, create a new one
+      if (!write) {
+        write = dexie.createWrite();
+        await dexie.saveWrite(write);
+      }
+
+      setCurrentWrite(write);
+      setLastOpenedWriteId(write.id);
     } catch (error) {
       console.error("Error initializing DB:", error);
     }

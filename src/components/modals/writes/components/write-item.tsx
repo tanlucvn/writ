@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { dexie } from "@/services";
+import { useAppSettingsStore } from "@/store/app-settings-store";
 import { useWritesStore } from "@/store/writes-store";
 import type { Write } from "@/types";
 import {
@@ -44,7 +45,7 @@ const WriteItem = ({ write, className }: WriteItemProps) => {
     refreshWrites,
     tags: allTags,
   } = useWritesStore();
-
+  const { setLastOpenedWriteId } = useAppSettingsStore();
   const [isRenaming, setIsRenaming] = useState(false);
   const [newTitle, setNewTitle] = useState(write.title || "");
   const [tagsId, setTagsId] = useState(write.tagIds || []);
@@ -52,6 +53,11 @@ const WriteItem = ({ write, className }: WriteItemProps) => {
   const selectedTags = useMemo(() => {
     return allTags.filter((tag) => tagsId.includes(tag.id));
   }, [allTags, tagsId]);
+
+  const handleSelectWrite = () => {
+    setCurrentWrite(write);
+    setLastOpenedWriteId(write.id);
+  };
 
   const handleDeleteWrite = async () => {
     await dexie.deleteWrite(write.id);
@@ -105,7 +111,7 @@ const WriteItem = ({ write, className }: WriteItemProps) => {
         currentWrite?.id === write.id && "bg-secondary outline-border",
         className,
       )}
-      onClick={() => setCurrentWrite(write)}
+      onClick={handleSelectWrite}
     >
       <div className="flex flex-col gap-2">
         {/* Title / Rename */}
