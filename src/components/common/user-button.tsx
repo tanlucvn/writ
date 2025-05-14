@@ -10,17 +10,17 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { useAppSettingsStore } from "@/store/app-settings-store";
-import { useTabStore } from "@/store/tab-store";
+import { useAppStore } from "@/store/app-store";
 import { SignOutButton, useUser } from "@clerk/nextjs";
 import { ArrowDownRightIcon, ArrowUpRightIcon, LoaderIcon } from "lucide-react";
 import DashedContainer from "../ui/dashed-container";
 
 const UserButton = () => {
   const { isSignedIn, user, isLoaded } = useUser();
-  const { tab, setTab } = useTabStore();
+  const { appTab, setAppTab } = useAppStore();
   const { isCollapsedSidebar } = useAppSettingsStore();
 
-  const active = tab === "signin";
+  const active = appTab === "signin";
 
   if (!isLoaded) {
     return (
@@ -49,7 +49,7 @@ const UserButton = () => {
           active &&
             "text-foreground outline-double outline-1 outline-border outline-offset-2 hover:bg-secondary",
         )}
-        onClick={() => setTab("signin")}
+        onClick={() => setAppTab("signin")}
       >
         <ArrowUpRightIcon />
         {!isCollapsedSidebar && "Sign in"}

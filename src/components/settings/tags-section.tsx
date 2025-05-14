@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { getTagColors } from "@/lib/colors";
 import { dexie } from "@/services";
-import { useAppStore } from "@/store/app-store";
+import { useWritesStore } from "@/store/writes-store";
 import { DotIcon, PlusIcon } from "lucide-react";
 import { useState } from "react";
 
@@ -15,7 +15,7 @@ const TagsSection = () => {
   const [newTag, setNewTag] = useState("");
   const [color, setColor] = useState(tagColors[0]);
   const [loading, setLoading] = useState(false);
-  const { tags, setTags } = useAppStore();
+  const { tags, setTags } = useWritesStore();
 
   const handleAddTag = async () => {
     if (!newTag.trim()) return;

@@ -4,6 +4,9 @@ import type { WritingSessions } from "@/types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { useAppStore } from "./app-store";
+import { useWritesStore } from "./writes-store";
+
+let intervalId: ReturnType<typeof setInterval> | null = null;
 
 interface WritingSessionsState {
   sessions: WritingSessions[];
@@ -11,9 +14,7 @@ interface WritingSessionsState {
   refreshSessions: () => Promise<void>;
 
   currentSession: WritingSessions | null;
-
   isRunning: boolean;
-
   remainingTime: number;
   setRemainingTime: (time: number) => void;
 
@@ -21,7 +22,6 @@ interface WritingSessionsState {
   pauseSession: () => void;
   stopSession: () => void;
   resumeSession: () => void;
-
   tick: () => void;
 
   initSessionsDB: () => Promise<void>;
@@ -38,20 +38,15 @@ export const useWritingSessionsStore = create<WritingSessionsState>()(
       },
 
       currentSession: null,
-
       isRunning: false,
-
       remainingTime: 0,
-      setRemainingTime: (time: number) => {
-        set({ remainingTime: time });
-      },
+      setRemainingTime: (time) => set({ remainingTime: time }),
 
       startSession: (duration) => {
-        const { currentWrite } = useAppStore.getState();
+        const { currentWrite } = useWritesStore.getState();
         if (!currentWrite) return;
 
         const startingWordCount = countWords(currentWrite.content);
-
         const newSession: WritingSessions = {
           id: `session-${Date.now()}`,
           writeId: currentWrite.id,
@@ -65,13 +60,31 @@ export const useWritingSessionsStore = create<WritingSessionsState>()(
           isRunning: true,
           remainingTime: duration * 60,
         });
+
+        if (intervalId) clearInterval(intervalId);
+        intervalId = setInterval(() => {
+          get().tick();
+        }, 1000);
       },
+
       pauseSession: () => {
-        const session = get().currentSession;
-        if (session) {
-          set({ isRunning: false });
+        if (intervalId) {
+          clearInterval(intervalId);
+          intervalId = null;
         }
+        set({ isRunning: false });
       },
+
+      resumeSession: () => {
+        if (!get().currentSession || get().remainingTime <= 0) return;
+
+        set({ isRunning: true });
+        if (intervalId) clearInterval(intervalId);
+        intervalId = setInterval(() => {
+          get().tick();
+        }, 1000);
+      },
+
       stopSession: async () => {
         const session = get().currentSession;
         if (!session) return;
@@ -81,7 +94,6 @@ export const useWritingSessionsStore = create<WritingSessionsState>()(
 
         const endingText = editor.getText();
         const endingWordCount = countWords(endingText);
-
         const updatedSession: WritingSessions = {
           ...session,
           endingWordCount,
@@ -89,24 +101,26 @@ export const useWritingSessionsStore = create<WritingSessionsState>()(
 
         await dexie.saveWritingSession(updatedSession);
 
+        if (intervalId) {
+          clearInterval(intervalId);
+          intervalId = null;
+        }
+
         set({
           currentSession: updatedSession,
           isRunning: false,
           remainingTime: 0,
         });
       },
-      resumeSession: () => {
-        const session = get().currentSession;
-        if (session && get().remainingTime > 0) {
-          set({ isRunning: true });
-        }
-      },
 
       tick: () => {
         if (!get().isRunning) return;
-        set((state) => ({
-          remainingTime: Math.max(0, state.remainingTime - 1),
-        }));
+        const currentTime = get().remainingTime;
+        if (currentTime <= 1) {
+          get().stopSession(); // stop when time reaches 0
+        } else {
+          set({ remainingTime: currentTime - 1 });
+        }
       },
 
       initSessionsDB: async () => {
@@ -114,12 +128,10 @@ export const useWritingSessionsStore = create<WritingSessionsState>()(
           const allSessions = await dexie.getAllWritingSessions();
           set({ sessions: allSessions });
         } catch (error) {
-          console.error("Error initializing session history:", error);
+          console.error("Error initializing sessions:", error);
         }
       },
     }),
-    {
-      name: "writing-session-store",
-    },
+    { name: "writing-session-store" },
   ),
 );

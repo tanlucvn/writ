@@ -1,120 +1,34 @@
-import { sortWrites } from "@/lib/utils";
-import { dexie } from "@/services";
-import type { Tag, Write } from "@/types";
 import type { Editor } from "@tiptap/react";
-import { toast } from "sonner";
 import { create } from "zustand";
-import { useAppSettingsStore } from "./app-settings-store";
 
 export type SyncStatus = "idle" | "syncing" | "success" | "error";
+export type AppTab = "writes" | "about" | "privacy" | "signin";
+export type AppMenu = "none" | "menu" | "writes" | "search";
 
 interface AppStore {
-  writes: Write[];
-  setWrites: (writes: Write[]) => void;
-  tags: Tag[];
-  setTags: (tags: Tag[]) => void;
+  appTab: AppTab;
+  setAppTab: (appTab: AppTab) => void;
 
-  currentWrite: Write | null;
-  setCurrentWrite: (write: Write) => void;
-
-  handlePrevWrite: () => void;
-  handleNextWrite: () => void;
-
-  createNewWrite: () => Promise<void>;
-  refreshWrites: () => Promise<void>;
+  currentMenu: AppMenu;
+  setCurrentMenu: (menu: AppMenu) => void;
 
   editor: Editor | null;
   setEditor: (editor: Editor | null) => void;
 
   syncStatus: SyncStatus;
   setSyncStatus: (status: SyncStatus) => void;
-
-  initDB: () => Promise<void>;
-  clearDB: () => Promise<void>;
 }
 
 export const useAppStore = create<AppStore>((set) => ({
-  writes: [],
-  setWrites: (writes) => set({ writes }),
-  tags: [],
-  setTags: (tags) => set({ tags }),
+  appTab: "writes",
+  setAppTab: (appTab) => set({ appTab }),
 
-  currentWrite: null,
-  setCurrentWrite: (write) => set({ currentWrite: write }),
-
-  handlePrevWrite: () => {
-    const { currentWrite, writes, setCurrentWrite } = useAppStore.getState();
-    if (!currentWrite || writes.length === 0) return;
-    const index = writes.findIndex((w) => w.id === currentWrite.id);
-    if (index > 0) {
-      const prev = writes[index - 1];
-      setCurrentWrite(prev);
-    }
-  },
-
-  handleNextWrite: () => {
-    const { currentWrite, writes, setCurrentWrite } = useAppStore.getState();
-    if (!currentWrite || writes.length === 0) return;
-    const index = writes.findIndex((w) => w.id === currentWrite.id);
-    if (index < writes.length - 1) {
-      const next = writes[index + 1];
-      setCurrentWrite(next);
-    }
-  },
-
-  createNewWrite: async () => {
-    const { setCurrentWrite, refreshWrites } = useAppStore.getState();
-    const newWrite = dexie.createWrite();
-    await dexie.saveWrite(newWrite);
-
-    toast.success("New write created successfully!");
-
-    setCurrentWrite(newWrite);
-    refreshWrites();
-  },
-  refreshWrites: async () => {
-    const allWrites = await dexie.getAllWrites();
-    const sortOption = useAppSettingsStore.getState().sortOption;
-    const sortedWrites = sortWrites(allWrites, sortOption);
-    set({ writes: sortedWrites });
-  },
+  currentMenu: "menu",
+  setCurrentMenu: (menu) => set({ currentMenu: menu }),
 
   editor: null,
   setEditor: (editor) => set({ editor }),
 
   syncStatus: "idle",
   setSyncStatus: (syncStatus) => set({ syncStatus }),
-
-  initDB: async () => {
-    try {
-      const allWrites = await dexie.getAllWrites();
-      const allTags = await dexie.getAllTags();
-
-      const sortOption = useAppSettingsStore.getState().sortOption;
-      const sortedWrites = sortWrites(allWrites, sortOption);
-
-      const { setWrites, setTags } = useAppStore.getState();
-      setWrites(sortedWrites);
-      setTags(allTags);
-    } catch (error) {
-      console.error("Error initializing the database:", error);
-    }
-  },
-
-  clearDB: async () => {
-    try {
-      await dexie.clearAll();
-
-      const newWrite = dexie.createWrite();
-      await dexie.saveWrite(newWrite);
-
-      set({
-        writes: [newWrite],
-        currentWrite: newWrite,
-        tags: [],
-      });
-    } catch (error) {
-      console.error("Failed to clear DB:", error);
-    }
-  },
 }));

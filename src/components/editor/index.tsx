@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { dexie } from "@/services";
 import { useAppSettingsStore } from "@/store/app-settings-store";
 import { useAppStore } from "@/store/app-store";
+import { useWritesStore } from "@/store/writes-store";
 import { EditorContent, useEditor } from "@tiptap/react";
 import { DateTime } from "luxon";
 import { useEffect } from "react";
@@ -12,8 +13,8 @@ import Loading from "../loading";
 import EditorTitle from "./editor-title";
 
 const Editor = () => {
-  const { currentWrite, setCurrentWrite, refreshWrites, setEditor } =
-    useAppStore();
+  const { setEditor } = useAppStore();
+  const { currentWrite, setCurrentWrite, refreshWrites } = useWritesStore();
   const { fontFamily, fontSize } = useAppSettingsStore();
 
   const editor = useEditor({

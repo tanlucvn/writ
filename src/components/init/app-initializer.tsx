@@ -2,8 +2,8 @@
 
 import { dexie } from "@/services";
 import { useAppSettingsStore } from "@/store/app-settings-store";
-import { useAppStore } from "@/store/app-store";
 import { useDialogStore } from "@/store/dialog-store";
+import { useWritesStore } from "@/store/writes-store";
 import { useWritingSessionsStore } from "@/store/writing-sessions-store";
 import { useTheme } from "next-themes";
 import { useCallback, useEffect, useRef } from "react";
@@ -17,7 +17,7 @@ const AppInitializer = () => {
     setCurrentWrite,
     handlePrevWrite,
     handleNextWrite,
-  } = useAppStore();
+  } = useWritesStore();
   const { initSessionsDB } = useWritingSessionsStore();
   const { appColor, toggleZenMode } = useAppSettingsStore();
   const { setIsHelpDialogOpen, setMusicPlayerOpen, setSettingsOpen } =

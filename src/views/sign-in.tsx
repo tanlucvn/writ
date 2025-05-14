@@ -4,14 +4,14 @@ import { Container, Item } from "@/components/motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { useTabStore } from "@/store/tab-store";
+import { useAppStore } from "@/store/app-store";
 import { useSignIn, useUser } from "@clerk/nextjs";
 import { ArrowLeftIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 const SignInPage = () => {
-  const { setTab } = useTabStore();
+  const { setAppTab } = useAppStore();
 
   const { signIn } = useSignIn();
   const { isSignedIn } = useUser();
@@ -22,9 +22,9 @@ const SignInPage = () => {
 
   useEffect(() => {
     if (isSignedIn) {
-      setTab("writes");
+      setAppTab("writes");
     }
-  }, [isSignedIn, setTab]);
+  }, [isSignedIn, setAppTab]);
 
   const signInWithEmail = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -155,7 +155,7 @@ const SignInPage = () => {
           <Button
             variant="secondary"
             size="sm"
-            onClick={() => setTab("writes")}
+            onClick={() => setAppTab("writes")}
             className="mt-8 h-6 text-xs outline-double outline-2 outline-border outline-offset-2"
           >
             <ArrowLeftIcon className="mr-1 h-4 w-4" />

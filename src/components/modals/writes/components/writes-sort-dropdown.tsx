@@ -1,5 +1,6 @@
 "use client";
 
+import DashedContainer from "@/components/ui/dashed-container";
 import {
   Select,
   SelectContent,
@@ -10,11 +11,10 @@ import {
 import { WRITE_SORT_OPTIONS } from "@/lib/constants";
 import { sortWrites } from "@/lib/utils";
 import { useAppSettingsStore } from "@/store/app-settings-store";
-import { useAppStore } from "@/store/app-store";
-import DashedContainer from "../../../ui/dashed-container";
+import { useWritesStore } from "@/store/writes-store";
 
 const WritesSortDropdown = () => {
-  const { writes, setWrites } = useAppStore();
+  const { writes, setWrites } = useWritesStore();
   const { sortOption, setSortOption } = useAppSettingsStore();
 
   const handleSort = (option: string) => {

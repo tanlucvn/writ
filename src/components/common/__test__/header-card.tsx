@@ -1,6 +1,6 @@
 "use client";
 
-import { MainMenu } from "@/components/common";
+import MainMenuV1 from "@/components/common/__test__/main-menu-v1";
 import { cn } from "@/lib/utils";
 import { useAppSettingsStore } from "@/store/app-settings-store";
 
@@ -9,11 +9,11 @@ const HeaderCard = () => {
 
   return (
     <div className="flex w-full flex-col items-center justify-center space-y-4 border-b py-6">
-      <MainMenu />
+      <MainMenuV1 />
 
       <div
         className={cn(
-          "flex flex-col items-center justify-center space-y-1",
+          "flex select-none flex-col items-center justify-center space-y-1",
           isZenMode && "hidden opacity-0 transition-all delay-75 duration-150",
         )}
       >

@@ -8,8 +8,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useAppStore } from "@/store/app-store";
 import { useDialogStore } from "@/store/dialog-store";
+import { useWritesStore } from "@/store/writes-store";
 import { Loader2, XIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Drawer } from "vaul";
@@ -18,7 +18,7 @@ import DashedContainer from "../../ui/dashed-container";
 import { Separator } from "../../ui/separator";
 
 const WritesHistory = () => {
-  const { writes, tags, refreshWrites } = useAppStore();
+  const { writes, tags, refreshWrites } = useWritesStore();
   const { isWritesHistoryOpen, setWritesHistoryOpen } = useDialogStore();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTags, setSelectedTags] = useState<Set<string>>(new Set());

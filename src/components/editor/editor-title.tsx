@@ -1,11 +1,11 @@
 import { dexie } from "@/services";
-import { useAppStore } from "@/store/app-store";
+import { useWritesStore } from "@/store/writes-store";
 import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 
 export default function EditorTitle() {
-  const { currentWrite, setCurrentWrite, refreshWrites } = useAppStore();
+  const { currentWrite, setCurrentWrite, refreshWrites } = useWritesStore();
   const [title, setTitle] = useState(currentWrite?.title || "");
 
   useEffect(() => {

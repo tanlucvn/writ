@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { dexie } from "@/services";
-import { useAppStore } from "@/store/app-store";
+import { useWritesStore } from "@/store/writes-store";
 import type { Write } from "@/types";
 import {
   CheckIcon,
@@ -43,7 +43,7 @@ const WriteItem = ({ write, className }: WriteItemProps) => {
     setWrites,
     refreshWrites,
     tags: allTags,
-  } = useAppStore();
+  } = useWritesStore();
 
   const [isRenaming, setIsRenaming] = useState(false);
   const [newTitle, setNewTitle] = useState(write.title || "");

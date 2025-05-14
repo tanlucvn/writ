@@ -1,8 +1,8 @@
 "use client";
 
 import {} from "@/components/ui/drawer";
-import { useAppStore } from "@/store/app-store";
 import { useDialogStore } from "@/store/dialog-store";
+import { useWritesStore } from "@/store/writes-store";
 import { useEffect, useState } from "react";
 import {
   Credenza,
@@ -32,7 +32,7 @@ const SummaryItem = ({
 
 const WritesSummary = () => {
   const { isWriteSummaryOpen, setIsWriteSummaryOpen } = useDialogStore();
-  const { currentWrite } = useAppStore();
+  const { currentWrite } = useWritesStore();
 
   const [summary, setSummary] = useState({
     letters: 0,

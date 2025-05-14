@@ -1,10 +1,11 @@
 import { Container, Item } from "@/components/motion";
 import { Button } from "@/components/ui/button";
-import { useTabStore } from "@/store/tab-store";
+import { useAppStore } from "@/store/app-store";
 import { ArrowLeftIcon } from "lucide-react";
 
 const AboutPage = () => {
-  const { setTab } = useTabStore();
+  const { setAppTab } = useAppStore();
+
   return (
     <Container className="mx-auto max-w-md px-4 py-20 text-center">
       <Item>
@@ -25,7 +26,7 @@ const AboutPage = () => {
         <Button
           variant="secondary"
           size="sm"
-          onClick={() => setTab("writes")}
+          onClick={() => setAppTab("writes")}
           className="mt-8 h-6 text-xs outline-double outline-2 outline-border outline-offset-2"
         >
           <ArrowLeftIcon className="mr-1 h-4 w-4" />

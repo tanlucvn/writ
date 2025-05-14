@@ -1,17 +1,17 @@
 "use client";
 
-import { useTabStore } from "@/store/tab-store";
+import { useAppStore } from "@/store/app-store";
 import { AboutPage, PrivacyPage, SignInPage, WritesPage } from "@/views";
 
 export default function Home() {
-  const { tab } = useTabStore();
+  const { appTab } = useAppStore();
 
   return (
     <>
-      {tab === "writes" && <WritesPage />}
-      {tab === "about" && <AboutPage />}
-      {tab === "privacy" && <PrivacyPage />}
-      {tab === "signin" && <SignInPage />}
+      {appTab === "writes" && <WritesPage />}
+      {appTab === "about" && <AboutPage />}
+      {appTab === "privacy" && <PrivacyPage />}
+      {appTab === "signin" && <SignInPage />}
     </>
   );
 }

@@ -8,6 +8,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
+import { dexie } from "@/services";
+import { useWritingSessionsStore } from "@/store/writing-sessions-store";
 import type { WritingSessions } from "@/types";
 import { MoreVertical, TrashIcon } from "lucide-react";
 
@@ -22,6 +24,15 @@ const WritingSessionItem = ({
   className,
   title,
 }: WritingSessionItemProps) => {
+  const { sessions, setSessions, refreshSessions } = useWritingSessionsStore();
+
+  const handleDeleteSession = async () => {
+    await dexie.deleteWritingSession(session.id);
+    const updated = sessions.filter((item) => item.id !== session.id);
+    setSessions(updated);
+    refreshSessions();
+  };
+
   return (
     <div
       className={cn(
@@ -60,7 +71,10 @@ const WritingSessionItem = ({
           </DropdownMenuTrigger>
           <DropdownMenuContent
             className="!mr-4 p-1"
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation();
+              handleDeleteSession();
+            }}
           >
             <DropdownMenuItem className="hover:!text-destructive text-destructive text-xs">
               <TrashIcon className="!size-3.5" />

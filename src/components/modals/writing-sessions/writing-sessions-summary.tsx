@@ -13,8 +13,8 @@ import {
   countSentences,
   countWords,
 } from "@/lib/word-count";
-import { useAppStore } from "@/store/app-store";
 import { useDialogStore } from "@/store/dialog-store";
+import { useWritesStore } from "@/store/writes-store";
 import { useWritingSessionsStore } from "@/store/writing-sessions-store";
 import { useEffect, useState } from "react";
 
@@ -29,7 +29,7 @@ const SummaryItem = ({
 );
 
 const WritingSessionsSummary = () => {
-  const { currentWrite } = useAppStore();
+  const { currentWrite } = useWritesStore();
   const { currentSession } = useWritingSessionsStore();
   const { isWritingSessionSummaryOpen, setIsWritingSessionSummaryOpen } =
     useDialogStore();

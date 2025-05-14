@@ -3,9 +3,9 @@
 import { useWritingSessionsStore } from "@/store/writing-sessions-store";
 import { Lightbulb } from "lucide-react";
 import { useEffect, useState } from "react";
-import TimeDisplay from "../editor/time-display";
-import SyncIndicator from "../sync-indicator";
-import WritingSessionControls from "../writing-sessions/writing-session-controls";
+import TimeDisplay from "../../editor/time-display";
+import SyncIndicator from "../../sync-indicator";
+import WritingSessionControls from "../../writing-sessions/writing-session-controls";
 
 const tips = [
   "Press Alt+S to open settings menu.",
@@ -28,7 +28,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="-translate-x-1/2 absolute bottom-[5.5px] left-1/2 flex h-8 w-[95%] transform items-center justify-between border-t bg-background py-1.5 text-center text-muted-foreground text-xs">
+    <footer className="flex h-10 w-full transform items-center justify-between border-t bg-background py-1.5 text-center text-muted-foreground text-xs">
       {remainingTime ? (
         <WritingSessionControls />
       ) : (

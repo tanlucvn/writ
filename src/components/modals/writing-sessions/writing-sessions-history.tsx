@@ -13,8 +13,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import { useAppStore } from "@/store/app-store";
 import { useDialogStore } from "@/store/dialog-store";
+import { useWritesStore } from "@/store/writes-store";
 import { useWritingSessionsStore } from "@/store/writing-sessions-store";
 import { XIcon } from "lucide-react";
 import { useState } from "react";
@@ -30,7 +30,7 @@ const WritingSessionsHistory = () => {
     "all",
   );
 
-  const { writes } = useAppStore();
+  const { writes } = useWritesStore();
 
   const filteredSessions = sessions.filter((session) => {
     const searchLower = searchQuery.toLowerCase();
@@ -124,7 +124,12 @@ const WritingSessionsHistory = () => {
               <div className="px-4 py-2">
                 <div className="space-y-3">
                   {filteredSessions.length === 0 ? (
-                    <p>No sessions found.</p>
+                    <div className="py-12 text-center text-sm">
+                      <p>No sessions found.</p>
+                      <p className="mt-1 text-muted-foreground text-xs">
+                        Start new sessions something awesome!
+                      </p>
+                    </div>
                   ) : (
                     filteredSessions.map((session) => (
                       <WritingSessionItem

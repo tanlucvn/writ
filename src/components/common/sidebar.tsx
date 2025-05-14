@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { useAppSettingsStore } from "@/store/app-settings-store";
-import { type Tab, useTabStore } from "@/store/tab-store";
+import { type AppTab, useAppStore } from "@/store/app-store";
 import { CircleIcon, Info, Lock, Pen } from "lucide-react";
 import { useCallback } from "react";
 import { Separator } from "../ui/separator";
@@ -21,12 +21,12 @@ const tabs = [
 ] as const;
 
 const Sidebar = () => {
-  const { tab, setTab } = useTabStore();
+  const { appTab, setAppTab } = useAppStore();
   const { isZenMode } = useAppSettingsStore();
   const { isCollapsedSidebar, toggleCollapsedSidebar } = useAppSettingsStore();
 
   const renderButton = useCallback(
-    (tab: Tab, label: string, icon: React.ReactNode, active: boolean) => (
+    (tab: AppTab, label: string, icon: React.ReactNode, active: boolean) => (
       <Button
         variant={active ? "secondary" : "ghost"}
         size="sm"
@@ -36,20 +36,20 @@ const Sidebar = () => {
           active &&
             "text-foreground outline-double outline-1 outline-border outline-offset-2 hover:bg-secondary",
         )}
-        onClick={() => setTab(tab)}
+        onClick={() => setAppTab(tab)}
       >
         {icon}
         {!isCollapsedSidebar && label}
       </Button>
     ),
-    [isCollapsedSidebar, setTab],
+    [isCollapsedSidebar, setAppTab],
   );
 
   return (
     <aside className="sticky top-0 hidden h-screen w-full max-w-[200px] shrink-0 sm:block">
       <div
         className={cn(
-          "flex h-full flex-col justify-between pt-4 pb-1",
+          "flex h-full flex-col justify-between pt-4 pb-3",
           isZenMode && "pointer-events-none opacity-0",
         )}
       >
@@ -67,12 +67,14 @@ const Sidebar = () => {
             isCollapsedSidebar ? (
               <Tooltip key={key}>
                 <TooltipTrigger asChild>
-                  {renderButton(key, label, icon, tab === key)}
+                  {renderButton(key, label, icon, appTab === key)}
                 </TooltipTrigger>
                 <TooltipContent side="right">{label}</TooltipContent>
               </Tooltip>
             ) : (
-              <div key={key}>{renderButton(key, label, icon, tab === key)}</div>
+              <div key={key}>
+                {renderButton(key, label, icon, appTab === key)}
+              </div>
             ),
           )}
         </div>

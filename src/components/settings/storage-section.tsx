@@ -9,14 +9,14 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { useAppStore } from "@/store/app-store";
+import { useWritesStore } from "@/store/writes-store";
 import { CheckIcon, CircleAlertIcon, XIcon } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import DashedContainer from "../ui/dashed-container";
 
 const StorageSection = () => {
-  const { clearDB } = useAppStore();
+  const { clearDB } = useWritesStore();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   const handleConfirmDelete = async () => {

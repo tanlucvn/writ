@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 import { useAppSettingsStore } from "@/store/app-settings-store";
 import { useAppStore } from "@/store/app-store";
 import { useDialogStore } from "@/store/dialog-store";
-import { useTabStore } from "@/store/tab-store";
+import { useWritesStore } from "@/store/writes-store";
 import { SignOutButton, useUser } from "@clerk/nextjs";
 import { motion } from "framer-motion";
 import {
@@ -35,9 +35,9 @@ import {
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
-import Logo from "../logo";
-import { ThemeSwitcher } from "../theme";
-import DashedContainer from "../ui/dashed-container";
+import Logo from "../../logo";
+import { ThemeSwitcher } from "../../theme";
+import DashedContainer from "../../ui/dashed-container";
 
 type NavMenuLinkProps = {
   children: React.ReactNode;
@@ -129,7 +129,7 @@ const NavMenuSection = ({ title, children, onClose }: NavMenuSectionProps) => (
 );
 
 const WritesTab = ({ onClose, onAction }: TabProps) => {
-  const { createNewWrite } = useAppStore();
+  const { createNewWrite } = useWritesStore();
   const { setWritesHistoryOpen } = useDialogStore();
 
   return (
@@ -211,7 +211,7 @@ const AccountsTab = ({ onClose }: { onClose: () => void }) => {
   );
 };
 
-const MainMenu = (): React.ReactElement => {
+const MainMenuV1 = (): React.ReactElement => {
   const { toggleZenMode, isZenMode } = useAppSettingsStore();
   const {
     setSettingsOpen,
@@ -220,7 +220,7 @@ const MainMenu = (): React.ReactElement => {
     setStatisticsOpen,
     setIsWriteSummaryOpen,
   } = useDialogStore();
-  const { setTab } = useTabStore();
+  const { setAppTab } = useAppStore();
   const { user } = useUser();
   const [activeTab, setActiveTab] = useState<string>("home");
   const [isOpen, setIsOpen] = useState(false);
@@ -341,7 +341,7 @@ const MainMenu = (): React.ReactElement => {
                     <div className="grid w-full grid-cols-2 gap-x-2 gap-y-2">
                       <NavMenuItem
                         icon={<ArrowUpRightIcon size={15} />}
-                        onClick={() => setTab("signin")}
+                        onClick={() => setAppTab("signin")}
                       >
                         Sign in
                       </NavMenuItem>
@@ -381,7 +381,7 @@ const MainMenu = (): React.ReactElement => {
                     {isMobile && (
                       <NavMenuItem
                         icon={<BadgeInfoIcon size={15} />}
-                        onClick={() => setTab("about")}
+                        onClick={() => setAppTab("about")}
                       >
                         About
                       </NavMenuItem>
@@ -389,7 +389,7 @@ const MainMenu = (): React.ReactElement => {
                     {isMobile && (
                       <NavMenuItem
                         icon={<ShieldIcon size={15} />}
-                        onClick={() => setTab("privacy")}
+                        onClick={() => setAppTab("privacy")}
                       >
                         Privacy
                       </NavMenuItem>
@@ -412,4 +412,4 @@ const MainMenu = (): React.ReactElement => {
   );
 };
 
-export default MainMenu;
+export default MainMenuV1;

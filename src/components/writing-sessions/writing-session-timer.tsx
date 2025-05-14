@@ -7,7 +7,7 @@ const WritingSessionTimer = ({ timer }: { timer: number }) => {
     .padStart(2, "0")}`;
 
   return (
-    <div className="w-fit select-none rounded-md bg-secondary px-1 py-0.5 font-medium text-foreground-muted text-xs">
+    <div className="w-12 select-none rounded-md bg-secondary px-1 py-0.5 font-medium text-foreground text-xs outline-double outline-1 outline-border outline-offset-2">
       {formatted}
     </div>
   );

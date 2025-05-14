@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import MainMenu from "./main-menu";
+import MainMenu from "./main-menu-v1";
 
 const FloatingMainMenu = () => {
   const [visible, setVisible] = useState(true);
@@ -37,7 +37,7 @@ const FloatingMainMenu = () => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: visible ? 1 : 0, y: visible ? 0 : 50 }}
+      animate={{ opacity: visible ? 1 : 0, y: visible ? 0 : 10 }}
       transition={{ duration: 0.3 }}
       className="-translate-x-1/2 fixed bottom-14 left-1/2 z-10 mx-auto"
     >

@@ -8,10 +8,10 @@ const RightBar = () => {
   const { isZenMode } = useAppSettingsStore();
 
   return (
-    <aside className="sticky top-4 hidden h-full w-full max-w-[200px] shrink-0 sm:block">
+    <aside className="sticky top-4 hidden h-full w-full max-w-[200px] shrink-0 lg:block">
       <div
         className={cn(
-          "flex h-full flex-col justify-between pt-4 pb-2",
+          "flex h-full flex-col justify-between pt-4 pb-3",
           isZenMode && "pointer-events-none opacity-0",
         )}
       >

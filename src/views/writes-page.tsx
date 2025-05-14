@@ -5,10 +5,10 @@ import { Toolbar } from "@/components/editor/toolbar";
 
 const WritesPage = () => {
   return (
-    <>
+    <div>
       <Toolbar />
       <Editor />
-    </>
+    </div>
   );
 };
 
