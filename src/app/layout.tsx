@@ -1,12 +1,8 @@
-import { AppLayout } from "@/components/layout";
-import { ThemeProvider } from "@/components/theme";
-import { TooltipProvider } from "@/components/ui/tooltip";
+import { ClientProviders } from "@/components/client-providers";
 import { OpenGraph } from "@/lib/og";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import "@/styles/writer.css";
-import { ClerkProvider } from "@clerk/nextjs";
-import { Analytics } from "@vercel/analytics/react";
 import type { Metadata, Viewport } from "next";
 import {
   DM_Sans,
@@ -14,7 +10,6 @@ import {
   JetBrains_Mono,
   Space_Grotesk,
 } from "next/font/google";
-import { Toaster } from "sonner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -58,15 +53,7 @@ export default function RootLayout({
           "h-screen w-screen overflow-x-hidden p-0",
         )}
       >
-        <ClerkProvider>
-          <ThemeProvider>
-            <TooltipProvider>
-              <AppLayout>{children}</AppLayout>
-              <Toaster position="bottom-center" />
-              <Analytics />
-            </TooltipProvider>
-          </ThemeProvider>
-        </ClerkProvider>
+        <ClientProviders>{children}</ClientProviders>
       </body>
     </html>
   );

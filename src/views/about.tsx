@@ -7,7 +7,7 @@ const AboutPage = () => {
   const { setAppTab } = useAppStore();
 
   return (
-    <Container className="mx-auto max-w-md px-4 py-20 text-center">
+    <Container className="flex size-full items-center justify-center px-4 py-20 text-center">
       <Item>
         <h1 className="mb-4 font-semibold text-2xl">About Miniwrit</h1>
         <p className="text-muted-foreground text-sm leading-relaxed">
