@@ -26,6 +26,7 @@ import { useWritingSessionsStore } from "@/store/writing-sessions-store";
 import DashedContainer from "../ui/dashed-container";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { Separator } from "../ui/separator";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import WritingSessionControls from "../writing-sessions/writing-session-controls";
 import Tips from "./tips";
 
@@ -160,14 +161,18 @@ const MainMenu = ({
   onStats: () => void;
   onHelp: () => void;
 }) => (
-  <div className="flex h-full w-full items-center gap-2">
-    <IconButton icon={<PenIcon />} onClick={onOpenWrites} />
-    <IconButton icon={<SearchIcon />} onClick={onSearch} />
-    <IconButton icon={<FlowerIcon />} onClick={onZenMode} />
-    <IconButton icon={<SettingsIcon />} onClick={onSettings} />
-    <IconButton icon={<MusicIcon />} onClick={onMusic} />
-    <IconButton icon={<ChartPieIcon />} onClick={onStats} />
-    <IconButton icon={<HelpCircleIcon />} onClick={onHelp} />
+  <div className="flex h-full w-full items-center gap-[10px]">
+    <IconButton
+      icon={<PenIcon />}
+      onClick={onOpenWrites}
+      label="Writes | Writing Sessions"
+    />
+    <IconButton icon={<SearchIcon />} onClick={onSearch} label="Search" />
+    <IconButton icon={<FlowerIcon />} onClick={onZenMode} label="Zen Mode" />
+    <IconButton icon={<SettingsIcon />} onClick={onSettings} label="Settings" />
+    <IconButton icon={<MusicIcon />} onClick={onMusic} label="Music" />
+    <IconButton icon={<ChartPieIcon />} onClick={onStats} label="Statistics" />
+    <IconButton icon={<HelpCircleIcon />} onClick={onHelp} label="Help" />
   </div>
 );
 
@@ -285,18 +290,27 @@ const SearchResults = ({
 const IconButton = ({
   icon,
   onClick,
+  label,
 }: {
   icon: React.ReactNode;
   onClick: () => void;
+  label: string;
 }) => (
-  <Button
-    variant="secondary"
-    size="icon"
-    onClick={onClick}
-    className="size-8 outline-double outline-1 outline-border outline-offset-2"
-  >
-    {icon}
-  </Button>
+  <Tooltip delayDuration={150}>
+    <TooltipTrigger asChild>
+      <Button
+        variant="secondary"
+        size="icon"
+        onClick={onClick}
+        className="size-8 outline-double outline-1 outline-border outline-offset-2"
+      >
+        {icon}
+      </Button>
+    </TooltipTrigger>
+    <TooltipContent side="top">
+      <p>{label}</p>
+    </TooltipContent>
+  </Tooltip>
 );
 
 export default AppNavBar;
