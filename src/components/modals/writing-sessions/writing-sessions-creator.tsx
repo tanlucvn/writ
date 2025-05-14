@@ -14,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useAppStore } from "@/store/app-store";
 import { useDialogStore } from "@/store/dialog-store";
 import { useWritingSessionsStore } from "@/store/writing-sessions-store";
 import { useState } from "react";
@@ -21,6 +22,7 @@ import { useState } from "react";
 const WritingSessionsCreator = () => {
   const { isNewWritingSessionDialogOpen, setIsNewWritingSessionDialogOpen } =
     useDialogStore();
+  const { setCurrentMenu } = useAppStore();
 
   const [selectedDuration, setSelectedDuration] = useState<number | null>(null);
   const { startSession } = useWritingSessionsStore();
@@ -30,6 +32,8 @@ const WritingSessionsCreator = () => {
 
     startSession(selectedDuration);
     setIsNewWritingSessionDialogOpen(false);
+
+    setCurrentMenu("none");
   };
 
   return (
