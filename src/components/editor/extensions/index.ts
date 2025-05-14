@@ -42,7 +42,6 @@ const extensions = [
   }),
   Placeholder.configure({
     placeholder: "Type / for commands or start writing...",
-    includeChildren: true,
   }),
 ];
 
