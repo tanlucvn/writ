@@ -3,6 +3,7 @@ import DashedContainer from "@/components/ui/dashed-container";
 import { Separator } from "@/components/ui/separator";
 import { useAppStore } from "@/store/app-store";
 import { useDialogStore } from "@/store/dialog-store";
+import { useWritesStore } from "@/store/writes-store";
 import { LibraryBigIcon, PlusIcon, ScrollTextIcon, XIcon } from "lucide-react";
 import MenuItemButton from "../components/menu-item-button";
 
@@ -14,6 +15,7 @@ const WritesMenu = () => {
     setIsWriteSummaryOpen,
   } = useDialogStore();
   const { setCurrentMenu } = useAppStore();
+  const { createNewWrite } = useWritesStore();
 
   return (
     <div className="mb-2 rounded-2xl border bg-background p-1">
@@ -31,7 +33,11 @@ const WritesMenu = () => {
             Writes
           </p>
           <div className="flex flex-col items-center justify-center gap-2">
-            <MenuItemButton icon={<PlusIcon />} label="New Write" />
+            <MenuItemButton
+              icon={<PlusIcon />}
+              label="New Write"
+              onClick={createNewWrite}
+            />
             <MenuItemButton
               icon={<LibraryBigIcon />}
               label="View History"

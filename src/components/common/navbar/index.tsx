@@ -13,7 +13,7 @@ import MainMenu from "./menus/main-menu";
 import PagesMenu from "./menus/pages-menu";
 import SearchResultsMenu from "./menus/search-results-menu";
 import ToolsMenu from "./menus/tools-menu";
-import WritesMenu from "./menus/writes";
+import WritesMenu from "./menus/writes-menu";
 
 const Navbar = () => {
   const { writes, setCurrentWrite, createNewWrite } = useWritesStore();
