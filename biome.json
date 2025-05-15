@@ -7,7 +7,12 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "ignore": ["node_modules", ".next", "public/sw.js"]
+    "ignore": [
+      "node_modules",
+      ".next",
+      "public/sw.js",
+      "src/components/common/__test__"
+    ]
   },
   "formatter": {
     "enabled": true,

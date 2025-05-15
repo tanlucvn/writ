@@ -3,7 +3,7 @@ import { create } from "zustand";
 
 export type SyncStatus = "idle" | "syncing" | "success" | "error";
 export type AppTab = "writes" | "about" | "privacy" | "signin";
-export type AppMenu = "none" | "menu" | "writes" | "search";
+export type AppMenu = "none" | "menu" | "writes" | "search" | "pages" | "tools";
 
 interface AppStore {
   appTab: AppTab;

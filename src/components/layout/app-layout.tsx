@@ -1,7 +1,7 @@
 "use client";
 
 import { RightBar, Sidebar } from "@/components/common";
-import AppNavBar from "@/components/common/app-navbar";
+import Navbar from "@/components/common/navbar";
 import { AppInitializer, AutoSyncInitializer } from "@/components/init";
 import {
   HelpDialog,
@@ -28,7 +28,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
             <div className="scrollable-content size-full overflow-y-auto ">
               {children}
             </div>
-            <AppNavBar />
+            <Navbar />
           </DashedContainer>
         </main>
 
