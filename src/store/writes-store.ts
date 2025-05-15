@@ -2,6 +2,7 @@ import { sortWrites } from "@/lib/utils";
 import { dexie } from "@/services";
 import type { Tag, Write } from "@/types";
 import { toast } from "sonner";
+import { v4 as uuidv4 } from "uuid";
 import { create } from "zustand";
 import { useAppSettingsStore } from "./app-settings-store";
 
@@ -20,6 +21,7 @@ interface WritesStore {
 
   createNewWrite: () => Promise<void>;
   refreshWrites: () => Promise<void>;
+  importWrites: (writes: Write[]) => void;
 
   initDB: () => Promise<void>;
   clearDB: () => Promise<void>;
@@ -67,6 +69,19 @@ export const useWritesStore = create<WritesStore>((set) => ({
     const sortOption = useAppSettingsStore.getState().sortOption;
     const sortedWrites = sortWrites(allWrites, sortOption);
     set({ writes: sortedWrites });
+  },
+
+  importWrites: async (writesToImport) => {
+    const existingIds = new Set((await dexie.getAllWrites()).map((w) => w.id));
+    const newWrites = writesToImport.map((write) => {
+      if (existingIds.has(write.id)) {
+        return { ...write, id: uuidv4() }; // regenerate new ID
+      }
+      return write;
+    });
+
+    await Promise.all(newWrites.map((w) => dexie.saveWrite(w)));
+    useWritesStore.getState().refreshWrites();
   },
 
   initDB: async () => {
