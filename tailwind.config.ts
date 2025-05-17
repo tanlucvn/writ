@@ -39,6 +39,8 @@ export default {
       `outline-${color}-foreground`,
       `ring-${color}`,
       `ring-${color}-foreground`,
+      `stroke-${color}`,
+      `fill-${color}`,
     ]),
   ],
   theme: {

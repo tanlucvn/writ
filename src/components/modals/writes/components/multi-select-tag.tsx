@@ -54,11 +54,12 @@ const MultiSelectTag = ({
             {availableTags.map((tag) => (
               <div
                 key={tag.id}
-                className="flex items-center rounded-md px-2 py-1 hover:bg-accent"
+                className="flex items-center rounded-md py-1 pr-2 pl-0 hover:bg-accent"
                 onClick={() => toggleTag(tag.id)}
               >
                 <TagChip
-                  tag={tag}
+                  label={tag.name}
+                  color={tag.color}
                   className="cursor-default select-none gap-2 border-none"
                 />
                 {selectedTags.has(tag.id) && (

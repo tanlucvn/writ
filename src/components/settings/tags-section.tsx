@@ -1,41 +1,42 @@
 "use client";
 
-import TagColorPicker from "@/components/settings/tags/color-picker";
 import TagChip from "@/components/tag-chip";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { getTagColors } from "@/lib/colors";
+import { WRITE_COLORS } from "@/lib/constants";
 import { dexie } from "@/services";
 import { useWritesStore } from "@/store/writes-store";
-import { DotIcon, PlusIcon } from "lucide-react";
+import { Loader2Icon, PlusIcon } from "lucide-react";
 import { useState } from "react";
+import TagColorPicker from "./components/tag-color-picker";
 
 const TagsSection = () => {
-  const tagColors = getTagColors();
   const [newTag, setNewTag] = useState("");
-  const [color, setColor] = useState(tagColors[0]);
+  const [color, setColor] = useState(WRITE_COLORS[0].name);
   const [loading, setLoading] = useState(false);
   const { tags, setTags } = useWritesStore();
 
   const handleAddTag = async () => {
-    if (!newTag.trim()) return;
+    const trimmed = newTag.trim();
+    if (!trimmed) return;
     setLoading(true);
 
-    const newTagObj = dexie.createTag(newTag.trim(), color);
+    const newTagObj = dexie.createTag(trimmed, color);
     await dexie.saveTag(newTagObj);
-
     setNewTag("");
-    const updatedTags = await dexie.getAllTags();
-    setTags(updatedTags);
+
+    const updated = await dexie.getAllTags();
+    setTags(updated);
     setLoading(false);
   };
 
   const handleDelete = async (id: string) => {
     await dexie.deleteTag(id);
-    const updatedTags = await dexie.getAllTags();
-    setTags(updatedTags);
+    const updated = await dexie.getAllTags();
+    setTags(updated);
   };
 
+  console.log("color", tags);
   return (
     <section className="flex flex-col gap-4 p-1">
       <div className="flex items-center gap-2">
@@ -54,7 +55,7 @@ const TagsSection = () => {
           className="size-8"
         >
           {loading ? (
-            <DotIcon className="h-4 w-4 animate-ping fill-foreground" />
+            <Loader2Icon className="h-4 w-4 animate-spin" />
           ) : (
             <PlusIcon className="h-4 w-4" />
           )}
@@ -68,12 +69,20 @@ const TagsSection = () => {
           tags.map((tag) => (
             <TagChip
               key={tag.id}
-              tag={tag}
-              deletable
+              label={tag.name}
+              color={tag.color}
               onClick={() => handleDelete(tag.id)}
+              deletable
             />
           ))
         )}
+      </div>
+
+      <hr />
+
+      <div className="text-muted-foreground text-xs italic">
+        Click tag to <span className="font-medium text-foreground">delete</span>
+        .
       </div>
     </section>
   );

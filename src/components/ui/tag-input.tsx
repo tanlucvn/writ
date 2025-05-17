@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 import type { Tag } from "@/types";
 import { X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import Pill from "./pill";
+import TagChip from "../tag-chip";
 
 interface TagInputProps {
   tags: Tag[];
@@ -83,11 +83,12 @@ export function TagInput({
     >
       <div className="flex flex-wrap items-center gap-2 rounded-md border px-3 py-2">
         {tags.map((tag) => (
-          <Pill
+          <TagChip
             key={tag.id}
             label={tag.name}
             color={tag.color}
             onClick={() => handleRemove(tag)}
+            deletable
           />
         ))}
 

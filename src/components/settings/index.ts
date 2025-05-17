@@ -5,4 +5,4 @@ export { default as SyncSection } from "./sync-section";
 export { default as TagsSection } from "./tags-section";
 export { default as WritingSection } from "./writing-section";
 
-export { default as ColorPicker } from "./tags/color-picker";
+export { default as TagColorPicker } from "./components/tag-color-picker";
