@@ -33,6 +33,48 @@
     --ring: 0 0% 70%;
 
     --radius: 0.5rem;
+
+    --peach: 30 100% 85%;
+    --peach-foreground: 30 80% 35%;
+
+    --mint: 122 37% 84%;
+    --mint-foreground: 0 0% 10%;
+
+    --silver: 0 0% 64%;
+    --silver-foreground: 0 0% 10%;
+
+    --tiffany: 174 42% 65%;
+    --tiffany-foreground: 0 0% 10%;
+
+    --cambridge: 146 27% 63%;
+    --cambridge-foreground: 0 0% 10%;
+
+    --blue: 185 70% 68%;
+    --blue-foreground: 0 0% 7%;
+
+    --mindaro: 68 74% 74%;
+    --mindaro-foreground: 0 0% 10%;
+
+    --mikado: 46 100% 63%;
+    --mikado-foreground: 0 0% 10%;
+
+    --sunset: 35 100% 70%;
+    --sunset-foreground: 0 0% 10%;
+
+    --melon: 18 90% 73%;
+    --melon-foreground: 0 0% 10%;
+
+    --tickle: 339 70% 72%;
+    --tickle-foreground: 0 0% 10%;
+
+    --wisteria: 271 42% 71%;
+    --wisteria-foreground: 0 0% 10%;
+
+    --slate: 252 54% 64%;
+    --slate-foreground: 0 0% 10%;
+
+    --lavender: 261 46% 84%;
+    --lavender-foreground: 0 0% 10%;
   }
 
   .dark {
@@ -63,6 +105,48 @@
     --border: 0 0% 20%;
     --input: 0 0% 20%;
     --ring: 0 0% 60%;
+
+    --peach: 30 100% 85%;
+    --peach-foreground: 30 80% 35%;
+
+    --mint: 122 37% 84%;
+    --mint-foreground: 0 0% 7%;
+
+    --silver: 0 0% 64%;
+    --silver-foreground: 0 0% 7%;
+
+    --tiffany: 174 42% 65%;
+    --tiffany-foreground: 0 0% 7%;
+
+    --cambridge: 146 27% 63%;
+    --cambridge-foreground: 0 0% 7%;
+
+    --blue: 185 70% 68%;
+    --blue-foreground: 0 0% 7%;
+
+    --mindaro: 68 74% 74%;
+    --mindaro-foreground: 0 0% 7%;
+
+    --mikado: 46 100% 63%;
+    --mikado-foreground: 0 0% 7%;
+
+    --sunset: 35 100% 70%;
+    --sunset-foreground: 0 0% 7%;
+
+    --melon: 18 90% 73%;
+    --melon-foreground: 0 0% 7%;
+
+    --tickle: 339 70% 72%;
+    --tickle-foreground: 0 0% 7%;
+
+    --wisteria: 271 42% 71%;
+    --wisteria-foreground: 0 0% 7%;
+
+    --slate: 252 54% 64%;
+    --slate-foreground: 0 0% 7%;
+
+    --lavender: 261 46% 84%;
+    --lavender-foreground: 0 0% 7%;
   }
 
   .beige.light {

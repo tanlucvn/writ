@@ -58,7 +58,7 @@ export const useAppSettingsStore = create<AppSettingsStore>()(
       toggleCollapsedSidebar: () =>
         set({ isCollapsedSidebar: !get().isCollapsedSidebar }),
 
-      sortOption: "updated-desc",
+      sortOption: "created-desc",
       setSortOption: (option) => set({ sortOption: option }),
 
       lastOpenedWriteId: null,

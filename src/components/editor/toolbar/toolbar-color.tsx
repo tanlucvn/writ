@@ -50,7 +50,8 @@ export const ToolbarColor = () => {
 
   const renderOptions = (type: "text" | "background") => {
     return EDITOR_COLOR_CLASSES.map((c) => {
-      const className = type === "text" ? c.color : c.background;
+      const className =
+        type === "text" ? c.editorText : `${c.background} ${c.text}`;
       const isSelected = currentClass === className;
 
       return (

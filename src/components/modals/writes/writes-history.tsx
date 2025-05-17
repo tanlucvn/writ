@@ -1,23 +1,40 @@
 "use client";
 
-import {
-  MultiSelectTag,
-  WriteItem,
-  WritesSortDropdown,
-} from "@/components/modals/writes";
+import { AnimatedNumberBadge } from "@/components/animated-number-badge";
+import { MultiSelectTag, WritesSortSelector } from "@/components/modals/writes";
 import { Button } from "@/components/ui/button";
+import DashedContainer from "@/components/ui/dashed-container";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
+import { groupWrites } from "@/hooks/group-writes";
 import { useDialogStore } from "@/store/dialog-store";
 import { useWritesStore } from "@/store/writes-store";
 import type { Write } from "@/types";
-import { FileDownIcon, FileUpIcon, Loader2, XIcon } from "lucide-react";
+import { HistoryIcon, InboxIcon, Loader2, PinIcon, XIcon } from "lucide-react";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
 import { Drawer } from "vaul";
-import { AnimatedNumberBadge } from "../../animated-number-badge";
-import DashedContainer from "../../ui/dashed-container";
-import { Separator } from "../../ui/separator";
+import WritesActions from "./components/writes-actions";
+import WritesSection from "./components/writes-section";
+
+// Filter writes by search and selected tags
+const filterWrites = (
+  writes: Write[],
+  query: string,
+  selectedTags: Set<string>,
+): Write[] => {
+  const q = query.trim().toLowerCase();
+  if (!q && selectedTags.size === 0) return writes;
+
+  return writes.filter((write) => {
+    const title = write.title || "Untitled";
+    const matchesSearch = title.toLowerCase().includes(q);
+    const matchesTags =
+      selectedTags.size === 0 ||
+      write.tagIds?.some((id) => selectedTags.has(id));
+    return matchesSearch && matchesTags;
+  });
+};
 
 const WritesHistory = () => {
   const { writes, tags, refreshWrites } = useWritesStore();
@@ -26,69 +43,19 @@ const WritesHistory = () => {
   const [selectedTags, setSelectedTags] = useState<Set<string>>(new Set());
   const [isRefreshing, setIsRefreshing] = useState(true);
 
+  // Group writes into pinned, recent, and archived categories
+  const { pinned, recent, archived } = groupWrites(writes);
+
+  // Apply filters to each group
+  const filteredPinned = filterWrites(pinned, searchQuery, selectedTags);
+  const filteredRecent = filterWrites(recent, searchQuery, selectedTags);
+  const filteredArchived = filterWrites(archived, searchQuery, selectedTags);
+
+  // Count total number of filtered writes
+  const totalFilteredWrites =
+    filteredPinned.length + filteredRecent.length + filteredArchived.length;
+
   const hasFilter = searchQuery.trim() !== "" || selectedTags.size > 0;
-
-  const filteredWrites = writes.filter((write) => {
-    const matchesSearch = (write.title || "Untitled")
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase());
-
-    const matchesTags =
-      selectedTags.size === 0 ||
-      write.tagIds?.some((id) => selectedTags.has(id));
-
-    return matchesSearch && matchesTags;
-  });
-
-  const handleExportWrites = () => {
-    const hasFilter = searchQuery.trim() !== "" || selectedTags.size > 0;
-    const toExport = hasFilter ? filteredWrites : writes;
-
-    const dataStr = JSON.stringify(toExport, null, 2);
-    const blob = new Blob([dataStr], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = hasFilter
-      ? "filtered-writes-export.json"
-      : "all-writes-export.json";
-    a.click();
-
-    URL.revokeObjectURL(url);
-  };
-
-  const handleImportWrites = async () => {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = ".json";
-
-    input.onchange = async (e: any) => {
-      const file = e.target.files?.[0];
-      if (!file) return;
-
-      try {
-        const text = await file.text();
-        const importedWrites: Write[] = JSON?.parse(text);
-
-        // Optional: validate structure
-        if (
-          !Array.isArray(importedWrites) ||
-          !importedWrites.every((w) => w.id && w.createdAt)
-        ) {
-          throw new Error("Invalid data format: Missing required fields.");
-        }
-
-        useWritesStore.getState().importWrites(importedWrites);
-        toast.success("Writes imported successfully!");
-      } catch (err) {
-        toast.error("Failed to import writes.");
-        console.error("Import error:", err);
-      }
-    };
-
-    input.click();
-  };
 
   useEffect(() => {
     setIsRefreshing(true);
@@ -126,14 +93,16 @@ const WritesHistory = () => {
                 </Button>
               </div>
 
+              {/* Search input for filtering by title */}
               <Input
                 placeholder="Search writes..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="text-sm"
+                className="h-8 text-sm placeholder:text-sm"
                 data-vaul-no-drag
               />
 
+              {/* Tag multi-select dropdown and clear button */}
               {tags.length > 0 && (
                 <div className="flex items-center justify-between gap-2">
                   <MultiSelectTag
@@ -158,14 +127,14 @@ const WritesHistory = () => {
               <Separator />
             </div>
 
-            {/* Scrollable Content */}
+            {/* Scrollable list of writes */}
             <ScrollArea id="block-scrollarea" className="flex-1">
               <div className="px-4 py-2">
                 {isRefreshing ? (
                   <div className="flex h-48 items-center justify-center text-muted-foreground">
                     <Loader2 className="size-5 animate-spin" />
                   </div>
-                ) : filteredWrites.length === 0 ? (
+                ) : totalFilteredWrites === 0 ? (
                   <div className="py-12 text-center text-sm">
                     <p>No writes found.</p>
                     <p className="mt-1 text-muted-foreground text-xs">
@@ -173,36 +142,37 @@ const WritesHistory = () => {
                     </p>
                   </div>
                 ) : (
-                  <div className="space-y-3">
-                    {filteredWrites.map((write) => (
-                      <WriteItem key={write.id} write={write} />
-                    ))}
+                  <div className="space-y-4">
+                    <WritesSection
+                      icon={<PinIcon className="size-4" />}
+                      title="Pinned"
+                      items={filteredPinned}
+                    />
+                    <WritesSection
+                      icon={<HistoryIcon className="size-4" />}
+                      title="Recent"
+                      items={filteredRecent}
+                    />
+                    <WritesSection
+                      icon={<InboxIcon className="size-4" />}
+                      title="Archived"
+                      items={filteredArchived}
+                      collapsed
+                    />
                   </div>
                 )}
               </div>
 
-              {filteredWrites.length > 0 && (
-                <div className="flex w-full items-center justify-end gap-3 px-4 py-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="text-xs"
-                    onClick={handleExportWrites}
-                  >
-                    <FileDownIcon />
-                    {hasFilter ? "Export Filtered" : "Export All"}
-                  </Button>
-
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="text-xs"
-                    onClick={handleImportWrites}
-                  >
-                    <FileUpIcon className="mr-1 size-4" />
-                    Import
-                  </Button>
-                </div>
+              {/* Export / Import buttons when writes exist */}
+              {totalFilteredWrites > 0 && (
+                <WritesActions
+                  filteredWrites={[
+                    ...filteredPinned,
+                    ...filteredRecent,
+                    ...filteredArchived,
+                  ]}
+                  hasFilter={hasFilter}
+                />
               )}
             </ScrollArea>
 
@@ -211,9 +181,11 @@ const WritesHistory = () => {
               <div className="flex items-center justify-between text-foreground">
                 <div className="flex select-none items-center gap-2">
                   <p className="text-xs">Writes</p>
-                  <AnimatedNumberBadge value={filteredWrites.length} />
+                  <AnimatedNumberBadge
+                    value={hasFilter ? totalFilteredWrites : writes.length}
+                  />
                 </div>
-                <WritesSortDropdown />
+                <WritesSortSelector />
               </div>
             </div>
           </DashedContainer>

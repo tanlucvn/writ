@@ -13,7 +13,11 @@ export function AnimatedNumberBadge({
   ...props
 }: AnimatedNumberBadgeProps) {
   return (
-    <Badge variant={variant} className={cn(className)} {...props}>
+    <Badge
+      variant={variant}
+      className={cn("px-2 font-medium", className)}
+      {...props}
+    >
       <NumberFlow value={value} />
     </Badge>
   );

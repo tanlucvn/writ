@@ -16,6 +16,9 @@ interface WritesStore {
   currentWrite: Write | null;
   setCurrentWrite: (write: Write) => void;
 
+  currentEditWrite: Write | null;
+  setCurrentEditWrite: (write: Write | null) => void;
+
   handlePrevWrite: () => void;
   handleNextWrite: () => void;
 
@@ -36,6 +39,9 @@ export const useWritesStore = create<WritesStore>((set) => ({
 
   currentWrite: null,
   setCurrentWrite: (write) => set({ currentWrite: write }),
+
+  currentEditWrite: null,
+  setCurrentEditWrite: (write) => set({ currentEditWrite: write }),
 
   handlePrevWrite: () => {
     const { currentWrite, writes, setCurrentWrite } = useWritesStore.getState();

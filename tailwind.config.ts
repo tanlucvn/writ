@@ -3,6 +3,23 @@ import type { Config } from "tailwindcss";
 import tailwindcssAnimate from "tailwindcss-animate";
 import { fontFamily } from "tailwindcss/defaultTheme";
 
+const customColors = [
+  "peach",
+  "mint",
+  "silver",
+  "tiffany",
+  "cambridge",
+  "blue",
+  "mindaro",
+  "mikado",
+  "sunset",
+  "melon",
+  "tickle",
+  "wisteria",
+  "slate",
+  "lavender",
+];
+
 export default {
   darkMode: ["class"],
   content: [
@@ -10,7 +27,20 @@ export default {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-
+  safelist: [
+    ...customColors.flatMap((color) => [
+      `bg-${color}`,
+      `bg-${color}-foreground`,
+      `text-${color}`,
+      `text-${color}-foreground`,
+      `border-${color}`,
+      `border-${color}-foreground`,
+      `outline-${color}`,
+      `outline-${color}-foreground`,
+      `ring-${color}`,
+      `ring-${color}-foreground`,
+    ]),
+  ],
   theme: {
     container: {
       center: true,
@@ -21,21 +51,65 @@ export default {
     },
     extend: {
       colors: {
-        lavender: "#D1C4E9",
-        peach: "#FFDDC1",
-        mint: "#C8E6C9",
-        silver: "#A3A3A3",
-        tiffany: "#80CBC4",
-        cambridge: "#93CBAE",
-        blue: "#80DEEA",
-        mindaro: "#E6EE9B",
-        mikado: "#FFCF32",
-        sunset: "#FFCC80",
-        melon: "#FAB099",
-        tickle: "#F48FB1",
-        wisteria: "#CF93D9",
-        slate: "#9672EA",
+        /* CUSTOM */
+        peach: {
+          DEFAULT: "hsl(var(--peach))",
+          foreground: "hsl(var(--peach-foreground))",
+        },
+        mint: {
+          DEFAULT: "hsl(var(--mint))",
+          foreground: "hsl(var(--mint-foreground))",
+        },
+        silver: {
+          DEFAULT: "hsl(var(--silver))",
+          foreground: "hsl(var(--silver-foreground))",
+        },
+        tiffany: {
+          DEFAULT: "hsl(var(--tiffany))",
+          foreground: "hsl(var(--tiffany-foreground))",
+        },
+        cambridge: {
+          DEFAULT: "hsl(var(--cambridge))",
+          foreground: "hsl(var(--cambridge-foreground))",
+        },
+        blue: {
+          DEFAULT: "hsl(var(--blue))",
+          foreground: "hsl(var(--blue-foreground))",
+        },
+        mindaro: {
+          DEFAULT: "hsl(var(--mindaro))",
+          foreground: "hsl(var(--mindaro-foreground))",
+        },
+        mikado: {
+          DEFAULT: "hsl(var(--mikado))",
+          foreground: "hsl(var(--mikado-foreground))",
+        },
+        sunset: {
+          DEFAULT: "hsl(var(--sunset))",
+          foreground: "hsl(var(--sunset-foreground))",
+        },
+        melon: {
+          DEFAULT: "hsl(var(--melon))",
+          foreground: "hsl(var(--melon-foreground))",
+        },
+        tickle: {
+          DEFAULT: "hsl(var(--tickle))",
+          foreground: "hsl(var(--tickle-foreground))",
+        },
+        wisteria: {
+          DEFAULT: "hsl(var(--wisteria))",
+          foreground: "hsl(var(--wisteria-foreground))",
+        },
+        slate: {
+          DEFAULT: "hsl(var(--slate))",
+          foreground: "hsl(var(--slate-foreground))",
+        },
+        lavender: {
+          DEFAULT: "hsl(var(--lavender))",
+          foreground: "hsl(var(--lavender-foreground))",
+        },
 
+        /* SHADCN */
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -98,35 +172,5 @@ export default {
       },
     },
   },
-  safelist: [
-    "bg-lavender",
-    "text-lavender",
-    "bg-peach",
-    "text-peach",
-    "bg-mint",
-    "text-mint",
-    "bg-silver",
-    "text-silver",
-    "bg-tiffany",
-    "text-tiffany",
-    "bg-cambridge",
-    "text-cambridge",
-    "bg-blue",
-    "text-blue",
-    "bg-mindaro",
-    "text-mindaro",
-    "bg-mikado",
-    "text-mikado",
-    "bg-sunset",
-    "text-sunset",
-    "bg-melon",
-    "text-melon",
-    "bg-tickle",
-    "text-tickle",
-    "bg-wisteria",
-    "text-wisteria",
-    "bg-slate",
-    "text-slate",
-  ],
   plugins: [tailwindcssAnimate, tailwindcssTypography],
 } satisfies Config;
