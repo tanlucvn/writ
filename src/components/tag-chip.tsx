@@ -22,7 +22,7 @@ export default function TagChip({
     <div
       onClick={() => onClick?.()}
       className={cn(
-        "relative flex cursor-pointer select-none items-center gap-1 rounded-full border border-border px-2 py-0.5 text-foreground text-xs",
+        "relative flex cursor-pointer select-none items-center gap-1 rounded-full border border-border px-2 py-0.5 font-medium text-foreground text-xs",
         deletable && "group hover:border-destructive",
         className,
       )}

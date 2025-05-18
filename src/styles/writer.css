@@ -1,81 +1,145 @@
-.tiptap p.is-editor-empty:first-child::before {
-  color: hsl(var(--muted-foreground));
-  opacity: 0.5;
-  content: attr(data-placeholder);
-  float: left;
-  height: 0;
-  pointer-events: none;
-}
+.tiptap {
+  p.is-editor-empty:first-child::before {
+    color: hsl(var(--muted-foreground));
+    opacity: 1;
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+  }
 
-.tiptap p.is-empty::before {
-  color: hsl(var(--muted-foreground));
-  opacity: 0.5;
-  content: attr(data-placeholder);
-  float: left;
-  height: 0;
-  pointer-events: none;
-}
+  p.is-empty::before {
+    color: hsl(var(--muted-foreground));
+    opacity: 1;
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+  }
 
-/* List */
-.ProseMirror ul {
-  @apply list-disc pl-6 space-y-1 marker:text-muted-foreground;
-}
+  :first-child {
+    margin-top: 0;
+  }
 
-.ProseMirror ul li::marker {
-  @apply text-sm;
-}
+  .tiptap-sub {
+    display: unset;
+  }
 
-.ProseMirror ol {
-  @apply list-decimal pl-6;
-}
+  h1 {
+    scroll-margin: 5rem;
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -.025em;
+    margin: 40px 0 0 0;
 
-/* Code block */
-.ProseMirror pre {
-  @apply bg-muted text-foreground px-4 py-3 font-mono;
-}
+    @media (min-width: 1024px) {
+      font-size: 3rem;
+      line-height: 1;
+    }
+  }
 
-.ProseMirror pre code {
-  @apply text-sm;
-}
+  h2 {
+    scroll-margin: 5rem;
+    border-bottom: 1px solid hsl(var(--border));
+    padding-bottom: .5rem;
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    font-weight: 600;
+    letter-spacing: -.025em;
+    margin: 40px 0 0 0;
 
-.ProseMirror p code {
-  @apply bg-muted px-1 py-0.5 rounded text-sm font-mono;
-}
+    &:first-child {
+      margin-top: 0;
+    }
+  }
 
-/* Blockquote */
-.ProseMirror blockquote {
-  @apply border-l-2 border-primary bg-accent/30 px-4;
-}
+  h3 {
+    scroll-margin: 5rem;
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: 600;
+    letter-spacing: -.025em;
+    margin: 32px 0 0 0;
+  }
 
-/* Highlight */
-.ProseMirror mark {
-  @apply bg-muted text-foreground;
-}
+  p {
+    line-height: 1.75rem;
+    margin: 0;
 
-/* ==================
-  Task List 
-================== */
-/* Task List Container */
-.ProseMirror ul[data-type="taskList"] {
-  @apply list-none p-0 m-0;
-}
+    &:not(:first-child) {
+      margin-top: 1.5rem;
+    }
+  }
 
-/* Task Item Container */
-.ProseMirror ul[data-type="taskList"] li {
-  @apply flex flex-grow !my-0 [&_p]:m-0 items-center space-x-2 p-0;
-}
+  a {
+    cursor: pointer;
+    font-weight: 500;
 
-/* Checkbox */
-.ProseMirror ul[data-type="taskList"] li > label {
-  @apply flex items-center gap-2 cursor-pointer select-none;
-}
+    span {
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      text-decoration-color: currentColor !important;
+    }
+  }
 
-/* Hide default checkbox appearance */
-.ProseMirror ul[data-type="taskList"] li input[type="checkbox"] {
-  @apply size-4 rounded border-muted bg-background text-primary;
-}
+  blockquote {
+    font-style: italic;
+    padding-left: 1.5rem;
+    margin: 1.5rem 0px 1.5rem 0px !important;
+    border-left: 2px solid oklch(0.92 0.004 286.32);
+  }
 
-/* Checked item text style */
-.ProseMirror ul[data-type="taskList"] li[data-checked="true"] > div {
-  @apply text-muted-foreground;
+  ul {
+    list-style-type: disc;
+    margin: 1.5rem 0 1.5rem 1.5rem;
+    padding: 0;
+
+    ul {
+      list-style-type: circle;
+
+      ul {
+        list-style-type: square;
+      }
+    }
+
+    li p {
+      margin-top: .5rem !important;
+      line-height: normal !important;
+    }
+  }
+
+  ol {
+    list-style-type: decimal;
+    margin: 1.5rem 0 1.5rem 1.5rem;
+    padding: 0;
+
+    li p {
+      margin-top: .5rem !important;
+      line-height: normal !important;
+    }
+  }
+
+  mark {
+    border-radius: 0.4rem;
+    box-decoration-break: clone;
+    padding: 0.1rem 0.3rem;
+    color: hsl(var(--primary-foreground));
+    background: hsl(var(--primary));
+  }
+
+  .ProseMirror {
+    &:focus-visible {
+      outline: none;
+      border: none;
+    }
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+  }
 }

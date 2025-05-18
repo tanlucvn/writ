@@ -10,14 +10,19 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import { Toggle } from "@/components/ui/toggle";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { useAppStore } from "@/store/app-store";
 import {
   BoldIcon,
-  CodeIcon,
   Heading1Icon,
   Heading2Icon,
   Heading3Icon,
+  HighlighterIcon,
   ItalicIcon,
   ListIcon,
   ListOrderedIcon,
@@ -114,10 +119,10 @@ export const ToolbarFormat = () => {
       active: editor.isActive("underline"),
     },
     {
-      label: "Inline code",
-      icon: <CodeIcon className="size-4" />,
-      action: () => editor.commands.toggleCode(),
-      active: editor.isActive("code"),
+      label: "Highlight",
+      icon: <HighlighterIcon className="size-4" />,
+      action: () => editor.commands.toggleHighlight(),
+      active: editor.isActive("highlight"),
     },
   ];
 
@@ -128,14 +133,18 @@ export const ToolbarFormat = () => {
       {/* Block format dropdown */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="sm" className="h-8 w-28 border text-xs">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="h-8 w-32 justify-start border text-xs"
+          >
             <div className="flex items-center gap-2 truncate">
               {currentBlock?.icon}
               {currentBlock?.label || "Block Type"}
             </div>
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="start">
+        <DropdownMenuContent align="start" className="w-32">
           <DashedContainer className="p-1">
             {blockTypes.map((block) => (
               <DropdownMenuItem
@@ -157,20 +166,28 @@ export const ToolbarFormat = () => {
       <Separator orientation="vertical" className="h-4" />
 
       {/* Inline format toggle buttons */}
+
       {inlineButtons.map((btn) => (
-        <Toggle
-          key={btn.label}
-          size="sm"
-          pressed={btn.active}
-          onPressedChange={btn.action}
-          aria-label={btn.label}
-          className={cn(
-            "border",
-            btn.active && "bg-background text-foreground shadow-inner",
-          )}
-        >
-          {btn.icon}
-        </Toggle>
+        <Tooltip key={btn.label}>
+          <TooltipTrigger asChild>
+            <Toggle
+              key={btn.label}
+              size="sm"
+              pressed={btn.active}
+              onPressedChange={btn.action}
+              aria-label={btn.label}
+              className={cn(
+                "border",
+                btn.active && "bg-background text-foreground shadow-inner",
+              )}
+            >
+              {btn.icon}
+            </Toggle>
+          </TooltipTrigger>
+          <TooltipContent side="top" sideOffset={4}>
+            {btn.label}
+          </TooltipContent>
+        </Tooltip>
       ))}
     </>
   );

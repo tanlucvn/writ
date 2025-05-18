@@ -10,7 +10,7 @@ export const Toolbar = () => {
   return (
     <div className="sticky top-0 z-[1] border-b bg-background">
       <ScrollArea className="size-full">
-        <div className="flex w-full min-w-max items-center gap-1 px-2 py-1.5">
+        <div className="flex w-full min-w-max items-center gap-1 py-1.5">
           <ToolbarUndoRedo />
 
           <Separator orientation="vertical" className="h-4" />

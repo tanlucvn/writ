@@ -25,7 +25,7 @@ const extensions = [
   SlashCommand,
   TaskList,
   TaskItem,
-  Highlight,
+  Highlight.configure({ multicolor: true }),
   Link.extend({
     inclusive: false,
   }).configure({
@@ -41,7 +41,7 @@ const extensions = [
     },
   }),
   Placeholder.configure({
-    placeholder: "Type / for commands or start writing...",
+    placeholder: "Just write. Or type / for commands.",
   }),
 ];
 
