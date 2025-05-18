@@ -6,7 +6,9 @@ import WritingSessionControls from "@/components/writing-sessions/writing-sessio
 import { useAppStore } from "@/store/app-store";
 import { useWritesStore } from "@/store/writes-store";
 import { useWritingSessionsStore } from "@/store/writing-sessions-store";
-import { useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
+
 import Tips from "../tips";
 import LogoButton from "./components/logo-button";
 import MainMenu from "./menus/main-menu";
@@ -20,38 +22,87 @@ const Navbar = () => {
   const { remainingTime } = useWritingSessionsStore();
   const { currentMenu, setCurrentMenu } = useAppStore();
 
+  const menuRef = useRef<HTMLDivElement>(null);
   const [searchQuery, setSearchQuery] = useState("");
 
   const toggleMenu = () =>
     setCurrentMenu(currentMenu === "menu" ? "none" : "menu");
 
-  const filteredWrites = writes.filter((write) =>
-    (write.title || "Untitled")
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase()),
-  );
+  useHotkeys("Escape", () => {
+    if (currentMenu !== "menu" && currentMenu !== "none")
+      setCurrentMenu("menu");
+  });
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        currentMenu !== "menu" &&
+        currentMenu !== "none" &&
+        menuRef.current &&
+        !menuRef.current.contains(event.target as Node)
+      ) {
+        setCurrentMenu("menu");
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [currentMenu, setCurrentMenu]);
+
+  const filteredWrites = useMemo(() => {
+    const q = searchQuery.toLowerCase();
+    return writes.filter((w) =>
+      (w.title || "Untitled").toLowerCase().includes(q),
+    );
+  }, [writes, searchQuery]);
+
+  const renderMenu = () => {
+    switch (currentMenu) {
+      case "search":
+        return (
+          !!searchQuery && (
+            <SearchResultsMenu
+              items={filteredWrites}
+              onSelect={(item) => {
+                setCurrentWrite(item);
+                setSearchQuery("");
+                setCurrentMenu("menu");
+              }}
+              onCreate={() => {
+                createNewWrite();
+                setSearchQuery("");
+                setCurrentMenu("menu");
+              }}
+            />
+          )
+        );
+      case "writes":
+        return <WritesMenu />;
+      case "pages":
+        return <PagesMenu />;
+      case "tools":
+        return <ToolsMenu />;
+      default:
+        return null;
+    }
+  };
+
+  const renderCaption = () => {
+    const captions: Record<string, string> = {
+      writes: "What’s on your mind today?",
+      pages: "Explore more pages",
+      tools: "Customize your writing experience",
+    };
+    return captions[currentMenu] ? (
+      <span className="text-muted-foreground text-xs">
+        {captions[currentMenu]}
+      </span>
+    ) : null;
+  };
 
   return (
-    <>
-      {currentMenu === "search" && !!searchQuery && (
-        <SearchResultsMenu
-          items={filteredWrites}
-          onSelect={(item) => {
-            setCurrentWrite(item);
-            setSearchQuery("");
-            setCurrentMenu("menu");
-          }}
-          onCreate={() => {
-            createNewWrite();
-            setSearchQuery("");
-            setCurrentMenu("menu");
-          }}
-        />
-      )}
-
-      {currentMenu === "writes" && <WritesMenu />}
-      {currentMenu === "pages" && <PagesMenu />}
-      {currentMenu === "tools" && <ToolsMenu />}
+    <div ref={menuRef}>
+      {renderMenu()}
 
       <div className="flex h-fit w-full items-center gap-2 border-t bg-background py-1">
         <LogoButton toggleMenu={toggleMenu} />
@@ -71,23 +122,7 @@ const Navbar = () => {
               />
             )}
 
-            {currentMenu === "writes" && (
-              <span className="text-muted-foreground text-xs">
-                What’s on your mind today?
-              </span>
-            )}
-
-            {currentMenu === "pages" && (
-              <span className="text-muted-foreground text-xs">
-                Explore more pages
-              </span>
-            )}
-
-            {currentMenu === "tools" && (
-              <span className="text-muted-foreground text-xs">
-                Customize your writing experience
-              </span>
-            )}
+            {renderCaption()}
 
             {currentMenu === "search" && (
               <div className="w-full">
@@ -104,7 +139,7 @@ const Navbar = () => {
           <ScrollBar orientation="horizontal" className="hidden" />
         </ScrollArea>
       </div>
-    </>
+    </div>
   );
 };
 
