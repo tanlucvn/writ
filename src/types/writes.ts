@@ -15,11 +15,13 @@ export interface Write {
   id: string;
   title: string;
   content: string;
-  createdAt: string;
-  updatedAt: string;
   pinned?: boolean;
   archived?: boolean;
   color?: WriteColor;
   tagIds?: string[];
+  createdAt: string;
+  updatedAt: string;
+  removedAt?: string | null;
+  syncedAt?: string | null;
   synced: number;
 }

@@ -4,7 +4,13 @@ import { Separator } from "@/components/ui/separator";
 import { useAppStore } from "@/store/app-store";
 import { useDialogStore } from "@/store/dialog-store";
 import { useWritesStore } from "@/store/writes-store";
-import { LibraryBigIcon, PlusIcon, ScrollTextIcon, XIcon } from "lucide-react";
+import {
+  LibraryBigIcon,
+  PlusIcon,
+  ScrollTextIcon,
+  TrashIcon,
+  XIcon,
+} from "lucide-react";
 import MenuItemButton from "../components/menu-item-button";
 
 const WritesMenu = () => {
@@ -13,6 +19,7 @@ const WritesMenu = () => {
     setWritingSessionHistoryOpen,
     setIsNewWritingSessionDialogOpen,
     setIsWriteSummaryOpen,
+    setIsWritesTrashViewOpen,
   } = useDialogStore();
   const { setCurrentMenu } = useAppStore();
   const { createNewWrite } = useWritesStore();
@@ -47,6 +54,11 @@ const WritesMenu = () => {
               icon={<ScrollTextIcon />}
               label="View Summary"
               onClick={() => setIsWriteSummaryOpen(true)}
+            />
+            <MenuItemButton
+              icon={<TrashIcon />}
+              label="Trash"
+              onClick={() => setIsWritesTrashViewOpen(true)}
             />
           </div>
         </div>

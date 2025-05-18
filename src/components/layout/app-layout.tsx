@@ -16,6 +16,7 @@ import {
 } from "@/components/modals";
 import DashedContainer from "@/components/ui/dashed-container";
 import WriteEditDialog from "../modals/writes/writes-edit-dialog";
+import WritesTrashView from "../modals/writes/writes-trash-view";
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -51,6 +52,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
       <WritingSessionsHistory />
       <WritingSessionsSummary />
       <WriteEditDialog />
+      <WritesTrashView />
     </>
   );
 };

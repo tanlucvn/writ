@@ -58,8 +58,8 @@ export default function WriteItem({ write }: WriteItemProps) {
     refreshWrites();
   };
 
-  const handleDelete = async () => {
-    await dexie.deleteWrite(write.id);
+  const handleRemove = async () => {
+    await dexie.removeWrite(write.id);
     setWrites(writes.filter((w) => w.id !== write.id));
     refreshWrites();
   };
@@ -147,10 +147,10 @@ export default function WriteItem({ write }: WriteItemProps) {
             <DropdownMenuSeparator />
             <DropdownMenuItem
               className="text-destructive text-xs"
-              onClick={handleDelete}
+              onClick={handleRemove}
             >
               <TrashIcon className="!size-3.5" />
-              Delete
+              Remove to trash
             </DropdownMenuItem>
           </DashedContainer>
         </DropdownMenuContent>

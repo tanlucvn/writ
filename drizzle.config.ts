@@ -15,8 +15,8 @@ if (!process.env.TURSO_DATABASE_AUTH_TOKEN) {
 }
 
 export default defineConfig({
-  schema: "./src/db/schema.ts",
-  out: "./src/migrations",
+  schema: "./src/services/turso/schema.ts",
+  out: "./src/services/turso/migrations",
   dialect: "turso",
   dbCredentials: {
     url: process.env.TURSO_DATABASE_URL,

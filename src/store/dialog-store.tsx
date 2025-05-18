@@ -30,6 +30,9 @@ interface DialogStore {
 
   isWritesEditingDialogOpen: boolean;
   setIsWritesEditingDialogOpen: (open: boolean) => void;
+
+  isWritesTrashViewOpen: boolean;
+  setIsWritesTrashViewOpen: (open: boolean) => void;
 }
 
 export const useDialogStore = create<DialogStore>((set) => ({
@@ -66,4 +69,7 @@ export const useDialogStore = create<DialogStore>((set) => ({
   isWritesEditingDialogOpen: false,
   setIsWritesEditingDialogOpen: (open) =>
     set({ isWritesEditingDialogOpen: open }),
+
+  isWritesTrashViewOpen: false,
+  setIsWritesTrashViewOpen: (open) => set({ isWritesTrashViewOpen: open }),
 }));

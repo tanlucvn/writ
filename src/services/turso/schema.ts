@@ -1,12 +1,15 @@
-import { sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
-// Mảng tagIds sẽ được lưu dạng JSON string
 export const writes = sqliteTable("writes", {
   id: text("id").primaryKey(),
   title: text("title").notNull(),
   content: text("content").notNull(),
-  createdAt: text("created_at").notNull(), // ISO string
-  updatedAt: text("updated_at").notNull(), // ISO string
-  tagIds: text("tag_ids"), // JSON stringified array
+  pinned: integer("pinned").notNull().default(0),
+  archived: integer("archived").notNull().default(0),
+  color: text("color").default("default"),
+  tagIds: text("tag_ids"),
+  createdAt: text("created_at").notNull(),
+  updatedAt: text("updated_at").notNull(),
+  removedAt: text("removed_at"),
   syncKey: text("sync_key").notNull(),
 });
