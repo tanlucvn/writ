@@ -12,6 +12,7 @@ import {
 import { cn, getRelativeTime, getWriteColorClasses } from "@/lib/utils";
 import { dexie } from "@/services";
 import { useAppSettingsStore } from "@/store/app-settings-store";
+import { useAppStore } from "@/store/app-store";
 import { useDialogStore } from "@/store/dialog-store";
 import { useWritesStore } from "@/store/writes-store";
 import type { Write } from "@/types";
@@ -41,10 +42,12 @@ export default function WriteItem({ write, className }: WriteItemProps) {
   } = useWritesStore();
   const { setLastOpenedWriteId } = useAppSettingsStore();
   const { setIsWritesEditingDialogOpen } = useDialogStore();
+  const { appTab, setAppTab } = useAppStore();
 
   const isSelected = currentWrite?.id === write.id;
 
   const handleSelect = () => {
+    if (appTab !== "writes") setAppTab("writes");
     setCurrentWrite(write);
     setLastOpenedWriteId(write.id);
   };
