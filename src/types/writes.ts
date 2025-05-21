@@ -18,6 +18,7 @@ export interface Write {
   pinned?: boolean;
   archived?: boolean;
   color?: WriteColor;
+  folderId?: string;
   tagIds?: string[];
   createdAt: string;
   updatedAt: string;

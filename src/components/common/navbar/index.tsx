@@ -104,7 +104,7 @@ const Navbar = () => {
     <div ref={menuRef}>
       {renderMenu()}
 
-      <div className="flex h-fit w-full items-center gap-2 border-t bg-background py-1">
+      <div className="flex h-fit w-full items-center gap-2 border-t bg-background px-2 py-1">
         <LogoButton toggleMenu={toggleMenu} />
         <Separator orientation="vertical" className="h-4 w-[1px]" />
 

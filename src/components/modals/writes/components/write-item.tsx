@@ -9,7 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { cn, getWriteColorClasses } from "@/lib/utils";
+import { cn, getRelativeTime, getWriteColorClasses } from "@/lib/utils";
 import { dexie } from "@/services";
 import { useAppSettingsStore } from "@/store/app-settings-store";
 import { useDialogStore } from "@/store/dialog-store";
@@ -27,9 +27,10 @@ import { DateTime } from "luxon";
 
 type WriteItemProps = {
   write: Write;
+  className?: string;
 };
 
-export default function WriteItem({ write }: WriteItemProps) {
+export default function WriteItem({ write, className }: WriteItemProps) {
   const {
     currentWrite,
     setCurrentWrite,
@@ -68,11 +69,12 @@ export default function WriteItem({ write }: WriteItemProps) {
     <div
       onClick={handleSelect}
       className={cn(
-        "group relative flex h-36 w-full flex-col justify-between rounded-lg border px-4 py-3",
+        "group relative flex h-36 w-full cursor-pointer flex-col justify-between rounded-lg border px-4 py-3",
         isSelected && "outline-double outline-2 outline-offset-2",
         write.color
           ? getWriteColorClasses(write.color)
           : getWriteColorClasses("default"),
+        className,
       )}
     >
       {/* Title & Status */}
@@ -82,7 +84,7 @@ export default function WriteItem({ write }: WriteItemProps) {
             {write.title || "Untitled"}
           </h3>
           <p className="text-xs opacity-90">
-            {DateTime.fromISO(write.updatedAt).toRelative()}
+            {getRelativeTime(write.updatedAt)}
           </p>
         </div>
         <div className="absolute bottom-2 left-2 flex flex-col items-end gap-1">

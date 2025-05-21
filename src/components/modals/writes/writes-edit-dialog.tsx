@@ -8,7 +8,6 @@ import {
   CredenzaHeader,
   CredenzaTitle,
 } from "@/components/ui/credenza";
-import DashedContainer from "@/components/ui/dashed-container";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { TagInput } from "@/components/ui/tag-input";
@@ -94,60 +93,57 @@ export default function WriteEditDialog() {
       onOpenChange={setIsWritesEditingDialogOpen}
     >
       <CredenzaContent className="mx-auto max-w-lg border bg-background p-1 shadow-none">
-        <DashedContainer className="p-6">
-          <CredenzaHeader className="p-0">
-            <CredenzaDescription className="font-mono text-muted-foreground text-xs">
-              Update the title, tags and more...
-            </CredenzaDescription>
-            <CredenzaTitle className="font-medium text-foreground text-sm">
-              Edit Write
-            </CredenzaTitle>
-          </CredenzaHeader>
+        <CredenzaHeader>
+          <CredenzaDescription>Make changes to this write.</CredenzaDescription>
+          <CredenzaTitle>Edit Write</CredenzaTitle>
+        </CredenzaHeader>
 
-          <div className="mt-4 flex flex-col gap-4 text-xs">
-            <div className="space-y-2">
-              <Label htmlFor="write-title">Title</Label>
-              <Input
-                id="write-title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Title"
-                className="h-8"
-                autoFocus
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label>Tags</Label>
-              <TagInput
-                tags={selectedTags}
-                setTags={(tags) => setTagIds(tags.map((t) => t.id))}
-                allTags={allTags}
-                placeholder="Add tag"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label>Color</Label>
-              <WriteColorSelector
-                defaultColour={color}
-                onValueChange={(value) => setColor(value)}
-                disabled={false}
-              />
-            </div>
+        <div className="mt-4 flex flex-col gap-4 text-xs">
+          <div className="space-y-2">
+            <Label htmlFor="write-title">Title</Label>
+            <Input
+              id="write-title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Title"
+              className="h-8"
+              autoFocus
+            />
           </div>
 
-          <CredenzaFooter className="mt-4 flex flex-col gap-2 px-0">
-            <Button onClick={handleSave} className="w-full">
-              Save
+          <div className="space-y-2">
+            <Label>Tags</Label>
+            <TagInput
+              tags={selectedTags}
+              setTags={(tags) => setTagIds(tags.map((t) => t.id))}
+              allTags={allTags}
+              placeholder="Add tag"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label>Color</Label>
+            <WriteColorSelector
+              defaultColour={color}
+              onValueChange={(value) => setColor(value)}
+              disabled={false}
+            />
+            <span className="block font-normal text-muted-foreground text-xs">
+              Highlight this write with a color
+            </span>
+          </div>
+        </div>
+
+        <CredenzaFooter className="mt-4 flex flex-col gap-2 px-0">
+          <Button onClick={handleSave} className="w-full">
+            Save
+          </Button>
+          <CredenzaClose asChild>
+            <Button variant="secondary" className="w-full">
+              Close
             </Button>
-            <CredenzaClose asChild>
-              <Button variant="secondary" className="w-full">
-                Close
-              </Button>
-            </CredenzaClose>
-          </CredenzaFooter>
-        </DashedContainer>
+          </CredenzaClose>
+        </CredenzaFooter>
       </CredenzaContent>
     </Credenza>
   );

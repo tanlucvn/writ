@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/drawer";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
+import DashedContainer from "./dashed-container";
 
 interface BaseProps {
   children: React.ReactNode;
@@ -94,7 +95,7 @@ const CredenzaContent = ({ className, children, ...props }: CredenzaProps) => {
 
   return (
     <CredenzaContent className={className} {...props}>
-      {children}
+      <DashedContainer className="p-6">{children}</DashedContainer>
     </CredenzaContent>
   );
 };
@@ -108,7 +109,13 @@ const CredenzaDescription = ({
   const CredenzaDescription = isMobile ? DrawerDescription : DialogDescription;
 
   return (
-    <CredenzaDescription className={className} {...props}>
+    <CredenzaDescription
+      className={cn(
+        "text-center font-mono text-muted-foreground text-xs",
+        className,
+      )}
+      {...props}
+    >
       {children}
     </CredenzaDescription>
   );
@@ -119,7 +126,7 @@ const CredenzaHeader = ({ className, children, ...props }: CredenzaProps) => {
   const CredenzaHeader = isMobile ? DrawerHeader : DialogHeader;
 
   return (
-    <CredenzaHeader className={className} {...props}>
+    <CredenzaHeader className={cn("p-0", className)} {...props}>
       {children}
     </CredenzaHeader>
   );
@@ -130,8 +137,16 @@ const CredenzaTitle = ({ className, children, ...props }: CredenzaProps) => {
   const CredenzaTitle = isMobile ? DrawerTitle : DialogTitle;
 
   return (
-    <CredenzaTitle className={className} {...props}>
-      {children}
+    <CredenzaTitle
+      className={cn(
+        "-translate-x-1/2 -translate-y-1/2 absolute top-0 left-1/2 rounded-full border bg-background p-0.5",
+        className,
+      )}
+      {...props}
+    >
+      <DashedContainer className="rounded-full px-3 py-1.5 font-semibold text-sm leading-none">
+        {children}
+      </DashedContainer>
     </CredenzaTitle>
   );
 };

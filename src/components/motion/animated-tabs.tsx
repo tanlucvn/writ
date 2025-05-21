@@ -20,7 +20,7 @@ const AnimatedTabs = ({ tabs, className, scrollAreaClassName }: TabsProps) => {
   const activeTab = tabs.find((t) => t.label === tab);
 
   return (
-    <div className={cn("my-4 w-full space-y-4 p-4", className)}>
+    <div className={cn("mt-4 w-full space-y-4", className)}>
       {/* Tabs */}
       <div className="relative flex w-full items-center justify-evenly gap-0 rounded-full bg-primary/5">
         {tabs.map((tabItem) => {

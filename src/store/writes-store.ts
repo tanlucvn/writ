@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { v4 as uuidv4 } from "uuid";
 import { create } from "zustand";
 import { useAppSettingsStore } from "./app-settings-store";
+import { useFoldersStore } from "./folders-store";
 
 interface WritesStore {
   writes: Write[];
@@ -63,8 +64,11 @@ export const useWritesStore = create<WritesStore>((set) => ({
 
   createNewWrite: async () => {
     const { setCurrentWrite, refreshWrites } = useWritesStore.getState();
-    const newWrite = dexie.createWrite();
+    const { currentFolder } = useFoldersStore.getState();
+
+    const newWrite = dexie.createWrite({ folderId: currentFolder?.id });
     await dexie.saveWrite(newWrite);
+
     toast.success("New write created successfully!");
     setCurrentWrite(newWrite);
     refreshWrites();
@@ -102,6 +106,7 @@ export const useWritesStore = create<WritesStore>((set) => ({
       const { setCurrentWrite } = useWritesStore.getState();
       const { lastOpenedWriteId, setLastOpenedWriteId } =
         useAppSettingsStore.getState();
+      const { currentFolder } = useFoldersStore.getState();
 
       let write: Write | undefined;
 
@@ -117,7 +122,7 @@ export const useWritesStore = create<WritesStore>((set) => ({
 
       // 3. If no write exists, create a new one
       if (!write) {
-        write = dexie.createWrite();
+        write = dexie.createWrite({ folderId: currentFolder?.id });
         await dexie.saveWrite(write);
       }
 

@@ -12,6 +12,7 @@ import {
   Credenza,
   CredenzaContent,
   CredenzaDescription,
+  CredenzaHeader,
   CredenzaTitle,
 } from "@/components/ui/credenza";
 import { useDialogStore } from "@/store/dialog-store";
@@ -26,7 +27,6 @@ import {
 } from "lucide-react";
 import {} from "react";
 import SyncSection from "../settings/sync-section";
-import DashedContainer from "../ui/dashed-container";
 
 const settingsTabs: TabOption[] = [
   {
@@ -66,14 +66,12 @@ const Settings = () => {
 
   return (
     <Credenza open={isSettingsOpen} onOpenChange={setSettingsOpen}>
-      <CredenzaTitle className="sr-only">Settings</CredenzaTitle>
-      <CredenzaDescription className="sr-only">
-        Change your app settings.
-      </CredenzaDescription>
       <CredenzaContent className="w-full max-w-xl p-1 transition-all duration-0 max-md:max-w-none">
-        <DashedContainer className="p-2">
-          <AnimatedTabs tabs={settingsTabs} />
-        </DashedContainer>
+        <CredenzaHeader>
+          <CredenzaDescription>Change your app settings.</CredenzaDescription>
+          <CredenzaTitle>App Settings</CredenzaTitle>
+        </CredenzaHeader>
+        <AnimatedTabs tabs={settingsTabs} />
       </CredenzaContent>
     </Credenza>
   );

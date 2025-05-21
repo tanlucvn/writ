@@ -15,19 +15,23 @@ import {
   WritingSessionsSummary,
 } from "@/components/modals";
 import DashedContainer from "@/components/ui/dashed-container";
+import FoldersNavigation from "../folders/folders-navigation";
+import FolderDeleteConfirmDialog from "../modals/folders/folder-delete-confirm-dialog";
+import FolderEditDialog from "../modals/folders/folder-edit-dialog";
 import WriteEditDialog from "../modals/writes/writes-edit-dialog";
 import WritesTrashView from "../modals/writes/writes-trash-view";
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      {/* Layout */}
-      <div className="mx-auto flex h-screen w-full max-w-5xl gap-4 overflow-y-hidden">
+      {/*----------------- Layout -----------------*/}
+      <div className="mx-auto flex size-full max-h-screen max-w-5xl gap-4">
         <Sidebar />
 
         <main className="flex size-full max-w-[620px] flex-col border-x p-1">
-          <DashedContainer className="flex flex-col px-2">
-            <div className="scrollable-content size-full overflow-y-auto ">
+          <DashedContainer className="flex flex-col">
+            <FoldersNavigation />
+            <div className="scrollable-content size-full overflow-y-auto px-2">
               {children}
             </div>
             <Navbar />
@@ -37,22 +41,31 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
         <RightBar />
       </div>
 
-      {/* Init */}
+      {/*----------------- Init  -----------------*/}
       <AutoSyncInitializer />
       <AppInitializer />
 
-      {/* Dialog, Drawer, Sheet , ... */}
+      {/*----------------- Dialog, Drawer, Sheet , ...  -----------------*/}
+      {/* App */}
       <Settings />
       <WritesHistory />
       <MusicPlayer />
       <HelpDialog />
       <Statistics />
+
+      {/* Writes */}
       <WritesSummary />
+      <WriteEditDialog />
+      <WritesTrashView />
+
+      {/* Writing Sessions */}
       <WritingSessionsCreator />
       <WritingSessionsHistory />
       <WritingSessionsSummary />
-      <WriteEditDialog />
-      <WritesTrashView />
+
+      {/* Folder */}
+      <FolderEditDialog />
+      <FolderDeleteConfirmDialog />
     </>
   );
 };

@@ -1,5 +1,6 @@
 import type { Write, WriteColor } from "@/types";
 import { type ClassValue, clsx } from "clsx";
+import { DateTime } from "luxon";
 import { twMerge } from "tailwind-merge";
 import { COLOR_CLASSES_MAP } from "./constants";
 
@@ -47,3 +48,12 @@ export const getWriteColorClasses = (color: WriteColor) => {
   const { bg, text, outline } = COLOR_CLASSES_MAP[color];
   return [bg, text, outline];
 };
+
+export function getRelativeTime(isoDate: string): string {
+  const updated = DateTime.fromISO(isoDate);
+  const diffInSeconds = DateTime.now().diff(updated, "seconds").seconds;
+
+  return diffInSeconds < 60
+    ? "just now"
+    : (updated.toRelative({ locale: "en", round: true }) ?? "");
+}

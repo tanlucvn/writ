@@ -33,6 +33,12 @@ interface DialogStore {
 
   isWritesTrashViewOpen: boolean;
   setIsWritesTrashViewOpen: (open: boolean) => void;
+
+  isFolderEditingDialogOpen: boolean;
+  setIsFolderEditingDialogOpen: (open: boolean) => void;
+
+  isFolderDeleteDialogOpen: boolean;
+  setIsFolderDeleteDialogOpen: (open: boolean) => void;
 }
 
 export const useDialogStore = create<DialogStore>((set) => ({
@@ -72,4 +78,12 @@ export const useDialogStore = create<DialogStore>((set) => ({
 
   isWritesTrashViewOpen: false,
   setIsWritesTrashViewOpen: (open) => set({ isWritesTrashViewOpen: open }),
+
+  isFolderEditingDialogOpen: false,
+  setIsFolderEditingDialogOpen: (open) =>
+    set({ isFolderEditingDialogOpen: open }),
+
+  isFolderDeleteDialogOpen: false,
+  setIsFolderDeleteDialogOpen: (open) =>
+    set({ isFolderDeleteDialogOpen: open }),
 }));

@@ -3,6 +3,7 @@ import { OpenGraph } from "@/lib/og";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import "@/styles/writer.css";
+import { Settings } from "luxon";
 import type { Metadata, Viewport } from "next";
 import {
   DM_Sans,
@@ -10,6 +11,8 @@ import {
   JetBrains_Mono,
   Space_Grotesk,
 } from "next/font/google";
+
+Settings.defaultLocale = "en";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -50,7 +53,7 @@ export default function RootLayout({
         className={cn(
           `${inter.variable} ${spaceGrotesk.variable} ${dmSans.variable} ${jetbrainsMono.variable}`,
           "font-sans antialiased",
-          "h-screen w-screen overflow-x-hidden p-0",
+          "flex h-screen max-h-screen w-full items-center justify-center overflow-hidden p-0",
         )}
       >
         <ClientProviders>{children}</ClientProviders>

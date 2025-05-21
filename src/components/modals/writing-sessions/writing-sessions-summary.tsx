@@ -5,7 +5,6 @@ import {
   CredenzaHeader,
   CredenzaTitle,
 } from "@/components/ui/credenza";
-import DashedContainer from "@/components/ui/dashed-container";
 import { cleanText } from "@/lib/utils";
 import {
   countCharacters,
@@ -74,28 +73,25 @@ const WritingSessionsSummary = () => {
       onOpenChange={setIsWritingSessionSummaryOpen}
     >
       <CredenzaContent className="mx-auto max-w-lg border bg-background p-1 shadow-none">
-        <DashedContainer className="p-6">
-          <CredenzaHeader className="p-0">
-            <CredenzaDescription className="font-mono text-muted-foreground text-xs">
-              Here's how your session went.
-            </CredenzaDescription>
-            <CredenzaTitle className="font-medium text-foreground text-sm">
-              Writing Session Summary
-            </CredenzaTitle>
-          </CredenzaHeader>
-          <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
-            <SummaryItem label="Duration" value={`${duration} min`} />
-            <SummaryItem label="Words Written" value={wordsWritten} />
-            <SummaryItem label="Total Words" value={summary.words} />
-            <SummaryItem label="Total Characters" value={summary.letters} />
-            <SummaryItem label="Sentences" value={summary.sentences} />
-            <SummaryItem label="Paragraphs" value={summary.paragraphs} />
-            <SummaryItem
-              label="Reading Time"
-              value={`${summary.readingTime} min`}
-            />
-          </div>
-        </DashedContainer>
+        <CredenzaHeader>
+          <CredenzaDescription>
+            Here's how your session went.
+          </CredenzaDescription>
+          <CredenzaTitle>Writing Session Summary</CredenzaTitle>
+        </CredenzaHeader>
+
+        <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
+          <SummaryItem label="Duration" value={`${duration} min`} />
+          <SummaryItem label="Words Written" value={wordsWritten} />
+          <SummaryItem label="Total Words" value={summary.words} />
+          <SummaryItem label="Total Characters" value={summary.letters} />
+          <SummaryItem label="Sentences" value={summary.sentences} />
+          <SummaryItem label="Paragraphs" value={summary.paragraphs} />
+          <SummaryItem
+            label="Reading Time"
+            value={`${summary.readingTime} min`}
+          />
+        </div>
       </CredenzaContent>
     </Credenza>
   );

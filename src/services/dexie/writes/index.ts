@@ -3,14 +3,19 @@ import { DateTime } from "luxon";
 import { v4 as uuidv4 } from "uuid";
 import { db } from "../client";
 
-// Create a new write object
-export const createWrite = (): Write => ({
+export const createWrite = (options?: Partial<Write>): Write => ({
   id: uuidv4(),
   title: "Untitled",
   content: "",
+  pinned: false,
+  archived: false,
+  color: options?.color ?? "default",
+  folderId: options?.folderId ?? undefined,
+  tagIds: [],
   createdAt: DateTime.utc().toISO(),
   updatedAt: DateTime.utc().toISO(),
-  tagIds: [],
+  removedAt: null,
+  syncedAt: null,
   synced: 0,
 });
 
@@ -67,4 +72,9 @@ export const getLatestWrite = async (): Promise<Write | undefined> => {
 // Get all removed writes
 export const getAllRemovedWrites = async (): Promise<Write[]> => {
   return await db.writes.filter((w) => !!w.removedAt).toArray();
+};
+
+// Get all writes from tab id
+export const getWritesByTabId = async (tabId: string): Promise<Write[]> => {
+  return await db.writes.where("tabId").equals(tabId).toArray();
 };

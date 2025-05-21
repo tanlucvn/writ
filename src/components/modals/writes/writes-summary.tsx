@@ -11,7 +11,6 @@ import {
   CredenzaHeader,
   CredenzaTitle,
 } from "../../ui/credenza";
-import DashedContainer from "../../ui/dashed-container";
 
 const cleanText = (html: string) => {
   return html
@@ -66,26 +65,22 @@ const WritesSummary = () => {
   return (
     <Credenza open={isWriteSummaryOpen} onOpenChange={setIsWriteSummaryOpen}>
       <CredenzaContent className="mx-auto max-w-lg border bg-background p-1 shadow-none">
-        <DashedContainer className="p-6">
-          <CredenzaHeader className="p-0">
-            <CredenzaDescription className="font-mono text-muted-foreground text-xs">
-              Key insights about your current write.
-            </CredenzaDescription>
-            <CredenzaTitle className="font-medium text-foreground text-sm">
-              Write Summary
-            </CredenzaTitle>
-          </CredenzaHeader>
-          <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
-            <SummaryItem label="Letters" value={summary.letters} />
-            <SummaryItem label="Words" value={summary.words} />
-            <SummaryItem label="Paragraphs" value={summary.paragraphs} />
-            <SummaryItem label="Sentences" value={summary.sentences} />
-            <SummaryItem
-              label="Reading Time"
-              value={`${summary.readingTime} min`}
-            />
-          </div>
-        </DashedContainer>
+        <CredenzaHeader>
+          <CredenzaDescription>
+            Key insights about your current write.
+          </CredenzaDescription>
+          <CredenzaTitle>Write Summary</CredenzaTitle>
+        </CredenzaHeader>
+        <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
+          <SummaryItem label="Letters" value={summary.letters} />
+          <SummaryItem label="Words" value={summary.words} />
+          <SummaryItem label="Paragraphs" value={summary.paragraphs} />
+          <SummaryItem label="Sentences" value={summary.sentences} />
+          <SummaryItem
+            label="Reading Time"
+            value={`${summary.readingTime} min`}
+          />
+        </div>
       </CredenzaContent>
     </Credenza>
   );

@@ -6,7 +6,6 @@ import {
   CredenzaHeader,
   CredenzaTitle,
 } from "@/components/ui/credenza";
-import DashedContainer from "@/components/ui/dashed-container";
 import {
   Select,
   SelectContent,
@@ -42,41 +41,37 @@ const WritingSessionsCreator = () => {
       onOpenChange={setIsNewWritingSessionDialogOpen}
     >
       <CredenzaContent className="mx-auto max-w-lg border bg-background p-1 shadow-none">
-        <DashedContainer className="p-6">
-          <CredenzaHeader className="p-0">
-            <CredenzaDescription className="font-mono text-muted-foreground text-xs">
-              Configure the session to your liking.
-            </CredenzaDescription>
-            <CredenzaTitle className="font-medium text-foreground text-sm">
-              Create writing session
-            </CredenzaTitle>
-          </CredenzaHeader>
+        <CredenzaHeader>
+          <CredenzaDescription>
+            Configure the session to your liking.
+          </CredenzaDescription>
+          <CredenzaTitle>Create Writing Session</CredenzaTitle>
+        </CredenzaHeader>
 
-          <div className="mt-4 space-y-4">
-            <Select
-              onValueChange={(val) => setSelectedDuration(Number(val))}
-              value={selectedDuration ? String(selectedDuration) : ""}
-            >
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select duration" />
-              </SelectTrigger>
-              <SelectContent>
-                {[5, 10, 15].map((min) => (
-                  <SelectItem key={min} value={String(min)}>
-                    {min} minutes
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Button
-              className="w-full"
-              onClick={handleStart}
-              disabled={!selectedDuration}
-            >
-              Start
-            </Button>
-          </div>
-        </DashedContainer>
+        <div className="mt-4 space-y-4">
+          <Select
+            onValueChange={(val) => setSelectedDuration(Number(val))}
+            value={selectedDuration ? String(selectedDuration) : ""}
+          >
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Select duration" />
+            </SelectTrigger>
+            <SelectContent>
+              {[5, 10, 15].map((min) => (
+                <SelectItem key={min} value={String(min)}>
+                  {min} minutes
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Button
+            className="w-full"
+            onClick={handleStart}
+            disabled={!selectedDuration}
+          >
+            Start
+          </Button>
+        </div>
       </CredenzaContent>
     </Credenza>
   );
