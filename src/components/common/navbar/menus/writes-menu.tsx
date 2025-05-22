@@ -27,7 +27,7 @@ const WritesMenu = () => {
   const { createNewWrite } = useWritesStore();
 
   return (
-    <div className="mb-2 rounded-2xl border bg-background p-1">
+    <div className="z-10 mx-2 mb-1 rounded-2xl border bg-background p-1">
       <DashedContainer className="relative flex flex-col gap-2 rounded-xl p-2">
         <Button
           variant="ghost"
