@@ -111,7 +111,7 @@ const CredenzaDescription = ({
   return (
     <CredenzaDescription
       className={cn(
-        "text-center font-mono text-muted-foreground text-xs",
+        "select-none text-center font-mono text-muted-foreground text-xs",
         className,
       )}
       {...props}
@@ -139,14 +139,14 @@ const CredenzaTitle = ({ className, children, ...props }: CredenzaProps) => {
   return (
     <CredenzaTitle
       className={cn(
-        "-translate-x-1/2 -translate-y-1/2 absolute top-0 left-1/2 rounded-full border bg-background p-0.5",
+        "-translate-x-1/2 -translate-y-1/2 absolute top-0 left-1/2 select-none rounded-full border bg-background p-0.5",
         className,
       )}
       {...props}
     >
-      <DashedContainer className="rounded-full px-3 py-1.5 font-semibold text-sm leading-none">
+      <div className="rounded-full px-3 py-1.5 font-semibold text-sm leading-none">
         {children}
-      </DashedContainer>
+      </div>
     </CredenzaTitle>
   );
 };
