@@ -9,6 +9,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { WriteContentPreview } from "@/components/writes/write-content-preview";
+import WritePreviewTooltip from "@/components/writes/write-preview-tooltip";
 import { cn, getRelativeTime, getWriteColorClasses } from "@/lib/utils";
 import { dexie } from "@/services";
 import { useAppSettingsStore } from "@/store/app-settings-store";
@@ -80,21 +82,23 @@ export default function WriteItem({ write, className }: WriteItemProps) {
         className,
       )}
     >
-      {/* Title & Status */}
-      <div className="flex items-start justify-between gap-2">
-        <div className="flex w-full flex-col gap-1 overflow-hidden">
-          <h3 className="overflow-hidden truncate text-ellipsis whitespace-nowrap font-semibold text-sm">
-            {write.title || "Untitled"}
-          </h3>
-          <p className="text-xs opacity-90">
-            {getRelativeTime(write.updatedAt)}
-          </p>
+      <WritePreviewTooltip content={<WriteContentPreview write={write} />}>
+        {/* Title & Status */}
+        <div className="flex items-start justify-between gap-2">
+          <div className="flex w-full flex-col gap-1 overflow-hidden">
+            <h3 className="overflow-hidden truncate text-ellipsis whitespace-nowrap font-semibold text-sm">
+              {write.title || "Untitled"}
+            </h3>
+            <p className="text-xs opacity-90">
+              {getRelativeTime(write.updatedAt)}
+            </p>
+          </div>
+          <div className="absolute bottom-2 left-2 flex flex-col items-end gap-1">
+            {write.pinned && <PinIcon className="size-4" />}
+            {write.archived && <ArchiveIcon className="size-4" />}
+          </div>
         </div>
-        <div className="absolute bottom-2 left-2 flex flex-col items-end gap-1">
-          {write.pinned && <PinIcon className="size-4" />}
-          {write.archived && <ArchiveIcon className="size-4" />}
-        </div>
-      </div>
+      </WritePreviewTooltip>
 
       {/* Actions */}
 

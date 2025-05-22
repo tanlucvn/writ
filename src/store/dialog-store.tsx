@@ -39,6 +39,9 @@ interface DialogStore {
 
   isFolderDeleteDialogOpen: boolean;
   setIsFolderDeleteDialogOpen: (open: boolean) => void;
+
+  isNewWriteDialogOpen: boolean;
+  setIsNewWriteDialogOpen: (open: boolean) => void;
 }
 
 export const useDialogStore = create<DialogStore>((set) => ({
@@ -86,4 +89,7 @@ export const useDialogStore = create<DialogStore>((set) => ({
   isFolderDeleteDialogOpen: false,
   setIsFolderDeleteDialogOpen: (open) =>
     set({ isFolderDeleteDialogOpen: open }),
+
+  isNewWriteDialogOpen: false,
+  setIsNewWriteDialogOpen: (open) => set({ isNewWriteDialogOpen: open }),
 }));

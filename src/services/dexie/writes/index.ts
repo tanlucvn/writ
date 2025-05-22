@@ -5,8 +5,8 @@ import { db } from "../client";
 
 export const createWrite = (options?: Partial<Write>): Write => ({
   id: uuidv4(),
-  title: "Untitled",
-  content: "",
+  title: options?.title ?? "Untitled",
+  content: options?.content ?? "",
   pinned: false,
   archived: false,
   color: options?.color ?? "default",

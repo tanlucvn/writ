@@ -11,7 +11,33 @@ import StarterKit from "@tiptap/starter-kit";
 import { ColorClass } from "./color-class";
 
 import SlashCommand from "@/components/editor/extensions/slash-command";
+import { Checkbox } from "@/components/ui/checkbox";
+import type { NodeViewProps } from "@tiptap/react";
+import {
+  NodeViewContent,
+  NodeViewWrapper,
+  ReactNodeViewRenderer,
+} from "@tiptap/react";
 import iframe from "./iframe";
+
+const TaskItemNodeView = (props: NodeViewProps) => {
+  const checked = props.node.attrs.checked;
+  return (
+    <NodeViewWrapper as="li">
+      <div className="flex items-center justify-start gap-2">
+        <Checkbox
+          checked={checked}
+          onCheckedChange={() => {
+            props.updateAttributes({ checked: !checked });
+          }}
+        />
+        <div className={checked ? "text-muted-foreground" : ""}>
+          <NodeViewContent />
+        </div>
+      </div>
+    </NodeViewWrapper>
+  );
+};
 
 const extensions = [
   StarterKit.configure({
@@ -24,7 +50,11 @@ const extensions = [
   CharacterCount,
   SlashCommand,
   TaskList,
-  TaskItem,
+  TaskItem.extend({
+    addNodeView() {
+      return ReactNodeViewRenderer(TaskItemNodeView);
+    },
+  }),
   Highlight.configure({ multicolor: true }),
   Link.extend({
     inclusive: false,

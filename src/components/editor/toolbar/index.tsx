@@ -8,7 +8,7 @@ import { ToolbarUndoRedo } from "./toolbar-undo-redo";
 
 export const Toolbar = () => {
   return (
-    <div className="sticky top-0 z-[1] border-b bg-background">
+    <div className="border-b bg-background px-2">
       <ScrollArea className="size-full">
         <div className="flex w-full min-w-max items-center gap-1 py-1.5">
           <ToolbarUndoRedo />

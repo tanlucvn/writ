@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import type { Write } from "@/types";
 import { ChevronDownIcon, ChevronRightIcon } from "lucide-react";
 import { useState } from "react";
-import WriteItem from "./write-item";
+import WriteItem from "../../../writes/write-item";
 
 type SectionProps = {
   icon: React.ReactNode;

@@ -8,6 +8,7 @@ import {
   LibraryBigIcon,
   PlusIcon,
   ScrollTextIcon,
+  SparkleIcon,
   TrashIcon,
   XIcon,
 } from "lucide-react";
@@ -20,6 +21,7 @@ const WritesMenu = () => {
     setIsNewWritingSessionDialogOpen,
     setIsWriteSummaryOpen,
     setIsWritesTrashViewOpen,
+    setIsNewWriteDialogOpen,
   } = useDialogStore();
   const { setCurrentMenu } = useAppStore();
   const { createNewWrite } = useWritesStore();
@@ -42,8 +44,13 @@ const WritesMenu = () => {
           <div className="flex flex-col items-center justify-center gap-2">
             <MenuItemButton
               icon={<PlusIcon />}
-              label="New Write"
+              label="Quick Create"
               onClick={createNewWrite}
+            />
+            <MenuItemButton
+              icon={<SparkleIcon />}
+              label="Start from Template"
+              onClick={() => setIsNewWriteDialogOpen(true)}
             />
             <MenuItemButton
               icon={<LibraryBigIcon />}
@@ -57,7 +64,7 @@ const WritesMenu = () => {
             />
             <MenuItemButton
               icon={<TrashIcon />}
-              label="Trash"
+              label="Trash Can"
               onClick={() => setIsWritesTrashViewOpen(true)}
             />
           </div>

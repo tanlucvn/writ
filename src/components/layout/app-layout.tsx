@@ -15,9 +15,9 @@ import {
   WritingSessionsSummary,
 } from "@/components/modals";
 import DashedContainer from "@/components/ui/dashed-container";
-import FoldersNavigation from "../folders/folders-navigation";
 import FolderDeleteConfirmDialog from "../modals/folders/folder-delete-confirm-dialog";
 import FolderEditDialog from "../modals/folders/folder-edit-dialog";
+import WriteCreatorDialog from "../modals/writes/write-creator";
 import WriteEditDialog from "../modals/writes/writes-edit-dialog";
 import WritesTrashView from "../modals/writes/writes-trash-view";
 
@@ -30,8 +30,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
 
         <main className="flex size-full max-w-[620px] flex-col border-x p-1">
           <DashedContainer className="flex flex-col">
-            <FoldersNavigation />
-            <div className="scrollable-content size-full overflow-y-auto px-2">
+            <div className="scrollable-content size-full overflow-y-auto">
               {children}
             </div>
             <Navbar />
@@ -54,6 +53,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
       <Statistics />
 
       {/* Writes */}
+      <WriteCreatorDialog />
       <WritesSummary />
       <WriteEditDialog />
       <WritesTrashView />

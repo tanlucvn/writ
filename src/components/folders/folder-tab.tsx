@@ -12,7 +12,7 @@ interface FolderTabProps {
   folder: Folders;
   currentFolderId: string | null;
   writeCount: number;
-  onSelect: () => void;
+  // onSelect: () => void;
   isExpanded: boolean;
   onToggleExpand: () => void;
 }
@@ -23,7 +23,7 @@ const FolderTab = forwardRef<HTMLDivElement, FolderTabProps>(
       folder,
       currentFolderId,
       writeCount,
-      onSelect,
+      // onSelect,
       isExpanded,
       onToggleExpand,
     },
@@ -48,10 +48,7 @@ const FolderTab = forwardRef<HTMLDivElement, FolderTabProps>(
             "size-fit text-muted-foreground hover:bg-transparent hover:text-muted-foreground focus-visible:ring-0",
             isActive && "text-foreground hover:text-foreground",
           )}
-          onClick={(e) => {
-            e.stopPropagation();
-            onToggleExpand();
-          }}
+          onClick={onToggleExpand}
         >
           {isExpanded ? <FolderOpenIcon /> : <FolderIcon />}
         </Button>
@@ -61,7 +58,8 @@ const FolderTab = forwardRef<HTMLDivElement, FolderTabProps>(
             "flex max-w-28 flex-grow cursor-pointer items-center truncate px-4 py-3 text-left font-medium text-xs hover:text-muted-foreground",
             isActive && "text-foreground hover:text-foreground",
           )}
-          onClick={onSelect}
+          // onClick={onSelect}
+          onClick={onToggleExpand}
         >
           {folder.title}
           <span className="ml-1 text-muted-foreground text-xs">

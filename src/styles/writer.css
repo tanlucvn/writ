@@ -32,11 +32,6 @@
     font-weight: 800;
     letter-spacing: -.025em;
     margin: 40px 0 0 0;
-
-    @media (min-width: 1024px) {
-      font-size: 3rem;
-      line-height: 1;
-    }
   }
 
   h2 {
@@ -102,22 +97,12 @@
         list-style-type: square;
       }
     }
-
-    li p {
-      margin-top: .5rem !important;
-      line-height: normal !important;
-    }
   }
 
   ol {
     list-style-type: decimal;
     margin: 1.5rem 0 1.5rem 1.5rem;
     padding: 0;
-
-    li p {
-      margin-top: .5rem !important;
-      line-height: normal !important;
-    }
   }
 
   mark {
@@ -141,5 +126,12 @@
     -moz-appearance: none;
     appearance: none;
     margin: 0;
+  }
+
+  /* Tiptap Task List Styles */
+  ul[data-type="taskList"] {
+    list-style: none;
+    padding-left: 0;
+    margin-left: 0;
   }
 }

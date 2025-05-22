@@ -1,6 +1,7 @@
 import { sortWrites } from "@/lib/utils";
 import { dexie } from "@/services";
 import type { Tag, Write } from "@/types";
+import { DateTime } from "luxon";
 import { toast } from "sonner";
 import { v4 as uuidv4 } from "uuid";
 import { create } from "zustand";
@@ -15,7 +16,7 @@ interface WritesStore {
   setTags: (tags: Tag[]) => void;
 
   currentWrite: Write | null;
-  setCurrentWrite: (write: Write) => void;
+  setCurrentWrite: (write: Write | null) => void;
 
   currentEditWrite: Write | null;
   setCurrentEditWrite: (write: Write | null) => void;
@@ -24,6 +25,7 @@ interface WritesStore {
   handleNextWrite: () => void;
 
   createNewWrite: () => Promise<void>;
+  createNewWriteFromTemplate: (template: Write) => Promise<Write>;
   refreshWrites: () => Promise<void>;
   importWrites: (writes: Write[]) => void;
 
@@ -72,6 +74,29 @@ export const useWritesStore = create<WritesStore>((set) => ({
     toast.success("New write created successfully!");
     setCurrentWrite(newWrite);
     refreshWrites();
+  },
+
+  createNewWriteFromTemplate: async (template: Write): Promise<Write> => {
+    const { setCurrentWrite, refreshWrites } = useWritesStore.getState();
+    const { currentFolder } = useFoldersStore.getState();
+
+    const newWriteData: Write = {
+      id: uuidv4(),
+      title: template.title,
+      content: template.content,
+      folderId: currentFolder?.id,
+      createdAt: DateTime.utc().toISO(),
+      updatedAt: DateTime.utc().toISO(),
+      synced: 0,
+    };
+
+    const newWrite = dexie.createWrite(newWriteData);
+    await dexie.saveWrite(newWrite);
+    toast.success("New write created from template!");
+    setCurrentWrite(newWrite);
+    await refreshWrites();
+
+    return newWrite;
   },
 
   refreshWrites: async () => {
