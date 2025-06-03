@@ -1,6 +1,6 @@
 "use client";
 
-import { RightBar, Sidebar } from "@/components/common";
+import { Sidebar } from "@/components/common";
 import Navbar from "@/components/common/navbar";
 import { AppInitializer, AutoSyncInitializer } from "@/components/init";
 import {
@@ -36,8 +36,6 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
             <Navbar />
           </DashedContainer>
         </main>
-
-        <RightBar />
       </div>
 
       {/*----------------- Init  -----------------*/}

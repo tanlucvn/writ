@@ -5,12 +5,12 @@ import { useDialogStore } from "@/store/dialog-store";
 import { useWritesStore } from "@/store/writes-store";
 import { useEffect, useState } from "react";
 import {
-  Credenza,
-  CredenzaContent,
-  CredenzaDescription,
-  CredenzaHeader,
-  CredenzaTitle,
-} from "../../ui/credenza";
+  Modal,
+  ModalContent,
+  ModalDescription,
+  ModalHeader,
+  ModalTitle,
+} from "../../ui/modal";
 
 const cleanText = (html: string) => {
   return html
@@ -63,14 +63,14 @@ const WritesSummary = () => {
   }, [currentWrite]);
 
   return (
-    <Credenza open={isWriteSummaryOpen} onOpenChange={setIsWriteSummaryOpen}>
-      <CredenzaContent className="mx-auto max-w-lg border bg-background p-1 shadow-none">
-        <CredenzaHeader>
-          <CredenzaDescription>
+    <Modal open={isWriteSummaryOpen} onOpenChange={setIsWriteSummaryOpen}>
+      <ModalContent>
+        <ModalHeader>
+          <ModalDescription>
             Key insights about your current write.
-          </CredenzaDescription>
-          <CredenzaTitle>Write Summary</CredenzaTitle>
-        </CredenzaHeader>
+          </ModalDescription>
+          <ModalTitle>Write Summary</ModalTitle>
+        </ModalHeader>
         <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
           <SummaryItem label="Letters" value={summary.letters} />
           <SummaryItem label="Words" value={summary.words} />
@@ -81,8 +81,8 @@ const WritesSummary = () => {
             value={`${summary.readingTime} min`}
           />
         </div>
-      </CredenzaContent>
-    </Credenza>
+      </ModalContent>
+    </Modal>
   );
 };
 

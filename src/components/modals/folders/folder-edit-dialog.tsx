@@ -1,16 +1,16 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  Credenza,
-  CredenzaContent,
-  CredenzaDescription,
-  CredenzaFooter,
-  CredenzaHeader,
-  CredenzaTitle,
-} from "@/components/ui/credenza";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Modal,
+  ModalContent,
+  ModalDescription,
+  ModalFooter,
+  ModalHeader,
+  ModalTitle,
+} from "@/components/ui/modal";
 import { dexie } from "@/services";
 import { useDialogStore } from "@/store/dialog-store";
 import { useFoldersStore } from "@/store/folders-store";
@@ -60,17 +60,17 @@ const FolderEditDialog = () => {
   };
 
   return (
-    <Credenza
+    <Modal
       open={isFolderEditingDialogOpen}
       onOpenChange={setIsFolderEditingDialogOpen}
     >
-      <CredenzaContent className="mx-auto max-w-lg border bg-background p-1 shadow-none">
-        <CredenzaHeader>
-          <CredenzaDescription>
+      <ModalContent>
+        <ModalHeader>
+          <ModalDescription>
             Change the folder name or remove it permanently.
-          </CredenzaDescription>
-          <CredenzaTitle>Edit Folder</CredenzaTitle>
-        </CredenzaHeader>
+          </ModalDescription>
+          <ModalTitle>Edit Folder</ModalTitle>
+        </ModalHeader>
 
         <div className="mt-4 flex flex-col gap-4 text-xs">
           <div className="space-y-2">
@@ -88,7 +88,7 @@ const FolderEditDialog = () => {
           </div>
         </div>
 
-        <CredenzaFooter className="mt-4 flex flex-col gap-2 px-0">
+        <ModalFooter className="mt-4 flex flex-col gap-2 px-0">
           <Button
             variant="outline"
             onClick={handleDeleteClick}
@@ -100,9 +100,9 @@ const FolderEditDialog = () => {
           <Button onClick={handleSave} className="w-full">
             Save
           </Button>
-        </CredenzaFooter>
-      </CredenzaContent>
-    </Credenza>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   );
 };
 

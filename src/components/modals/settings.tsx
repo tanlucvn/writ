@@ -9,12 +9,12 @@ import {
 } from "@/components/settings";
 import {} from "@/components/ui/command";
 import {
-  Credenza,
-  CredenzaContent,
-  CredenzaDescription,
-  CredenzaHeader,
-  CredenzaTitle,
-} from "@/components/ui/credenza";
+  Modal,
+  ModalContent,
+  ModalDescription,
+  ModalHeader,
+  ModalTitle,
+} from "@/components/ui/modal";
 import { useDialogStore } from "@/store/dialog-store";
 import type { TabOption } from "@/types";
 import {
@@ -65,15 +65,15 @@ const Settings = () => {
   const { isSettingsOpen, setSettingsOpen } = useDialogStore();
 
   return (
-    <Credenza open={isSettingsOpen} onOpenChange={setSettingsOpen}>
-      <CredenzaContent className="w-full max-w-xl p-1 transition-all duration-0 max-md:max-w-none">
-        <CredenzaHeader>
-          <CredenzaDescription>Change your app settings.</CredenzaDescription>
-          <CredenzaTitle>App Settings</CredenzaTitle>
-        </CredenzaHeader>
+    <Modal open={isSettingsOpen} onOpenChange={setSettingsOpen}>
+      <ModalContent>
+        <ModalHeader>
+          <ModalDescription>Change your app settings.</ModalDescription>
+          <ModalTitle>App Settings</ModalTitle>
+        </ModalHeader>
         <AnimatedTabs tabs={settingsTabs} />
-      </CredenzaContent>
-    </Credenza>
+      </ModalContent>
+    </Modal>
   );
 };
 

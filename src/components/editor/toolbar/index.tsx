@@ -1,6 +1,5 @@
 "use client";
 
-import { ToolbarColor } from "@/components/editor/toolbar/toolbar-color";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { ToolbarFormat } from "./toolbar-format";
@@ -15,9 +14,6 @@ export const Toolbar = () => {
 
           <Separator orientation="vertical" className="h-4" />
           <ToolbarFormat />
-
-          <Separator orientation="vertical" className="h-4" />
-          <ToolbarColor />
         </div>
         <ScrollBar orientation="horizontal" className="h-1" />
       </ScrollArea>

@@ -20,9 +20,9 @@ const AnimatedTabs = ({ tabs, className, scrollAreaClassName }: TabsProps) => {
   const activeTab = tabs.find((t) => t.label === tab);
 
   return (
-    <div className={cn("mt-4 w-full space-y-4", className)}>
+    <div className={cn("w-full space-y-4", className)}>
       {/* Tabs */}
-      <div className="relative flex w-full items-center justify-evenly gap-0 rounded-full bg-primary/5">
+      <div className="relative flex w-full items-center justify-evenly gap-0 rounded-full border border-input bg-muted">
         {tabs.map((tabItem) => {
           const isActive = tab === tabItem.label;
           return (
@@ -31,8 +31,8 @@ const AnimatedTabs = ({ tabs, className, scrollAreaClassName }: TabsProps) => {
               variant="ghost"
               onClick={() => setTab(tabItem.label)}
               className={cn(
-                "relative z-10 w-full max-w-[200px] rounded-full bg-transparent text-muted-foreground text-xs hover:bg-transparent",
-                isActive && "text-foreground",
+                "relative z-10 w-full max-w-[200px] shrink rounded-full bg-transparent text-muted-foreground text-sm hover:bg-transparent",
+                isActive && "!text-primary-foreground",
               )}
             >
               {tabItem.icon}
@@ -42,10 +42,10 @@ const AnimatedTabs = ({ tabs, className, scrollAreaClassName }: TabsProps) => {
                   layoutId="highlight"
                   transition={{
                     type: "spring",
-                    bounce: 0.2,
+                    bounce: 0.07,
                     duration: 0.4,
                   }}
-                  className="-z-10 absolute inset-0 rounded-full bg-primary/10"
+                  className="-z-10 absolute inset-0 rounded-full bg-primary"
                 />
               )}
             </Button>

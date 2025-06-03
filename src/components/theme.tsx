@@ -5,9 +5,8 @@ import { useEffect, useState } from "react";
 
 import { ThemeProvider as NextThemeProvider, useTheme } from "next-themes";
 
-import { cn } from "@/lib/utils";
-
 import { Monitor, Moon, Sun } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 
 export const ThemeSwitcher = () => {
   const [mounted, setMounted] = useState(false);
@@ -19,32 +18,20 @@ export const ThemeSwitcher = () => {
 
   if (!mounted) return null;
 
-  const buttons = [
-    { label: "light", icon: <Sun width={13} />, active: theme === "light" },
-    { label: "dark", icon: <Moon width={13} />, active: theme === "dark" },
-    {
-      label: "system",
-      icon: <Monitor width={13} />,
-      active: theme === "system",
-    },
-  ];
-
   return (
-    <span className="flex w-fit items-center gap-0.5 overflow-hidden rounded-[6px] bg-primary/5 p-[2px]">
-      {buttons.map(({ label, icon, active }) => (
-        <button
-          type="button"
-          key={label}
-          onClick={() => setTheme(label)}
-          className={cn(
-            "flex h-6 w-6 items-center justify-center rounded-[4px] text-muted-foreground transition-all hover:opacity-50",
-            active ? "bg-primary/10 text-foreground" : "",
-          )}
-        >
-          {icon}
-        </button>
-      ))}
-    </span>
+    <Tabs value={theme} onValueChange={setTheme} className="w-fit">
+      <TabsList className="h-fit rounded-md bg-muted">
+        <TabsTrigger value="light" className="h-6 w-6 p-0">
+          <Sun className="size-3.5" />
+        </TabsTrigger>
+        <TabsTrigger value="dark" className="h-6 w-6 p-0">
+          <Moon className="size-3.5" />
+        </TabsTrigger>
+        <TabsTrigger value="system" className="h-6 w-6 p-0">
+          <Monitor className="size-3.5" />
+        </TabsTrigger>
+      </TabsList>
+    </Tabs>
   );
 };
 

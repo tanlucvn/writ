@@ -2,13 +2,13 @@
 
 import { Button } from "@/components/ui/button";
 import {
-  Credenza,
-  CredenzaContent,
-  CredenzaDescription,
-  CredenzaFooter,
-  CredenzaHeader,
-  CredenzaTitle,
-} from "@/components/ui/credenza";
+  Modal,
+  ModalContent,
+  ModalDescription,
+  ModalFooter,
+  ModalHeader,
+  ModalTitle,
+} from "@/components/ui/modal";
 import { dexie } from "@/services";
 import { useDialogStore } from "@/store/dialog-store";
 import { useFoldersStore } from "@/store/folders-store";
@@ -39,19 +39,19 @@ const FolderDeleteConfirmDialog = () => {
   };
 
   return (
-    <Credenza
+    <Modal
       open={isFolderDeleteDialogOpen}
       onOpenChange={setIsFolderDeleteDialogOpen}
     >
-      <CredenzaContent className="mx-auto max-w-lg border bg-background p-1 shadow-none">
-        <CredenzaHeader>
-          <CredenzaDescription>
+      <ModalContent>
+        <ModalHeader>
+          <ModalDescription>
             Are you sure you want to delete this folder? This cannot be undone.
-          </CredenzaDescription>
-          <CredenzaTitle>Confirm Delete</CredenzaTitle>
-        </CredenzaHeader>
+          </ModalDescription>
+          <ModalTitle>Confirm Delete</ModalTitle>
+        </ModalHeader>
 
-        <CredenzaFooter className="mt-2 flex gap-2">
+        <ModalFooter className="mt-2 flex gap-2">
           <Button
             variant="destructive"
             onClick={handleConfirm}
@@ -66,9 +66,9 @@ const FolderDeleteConfirmDialog = () => {
           >
             Cancel
           </Button>
-        </CredenzaFooter>
-      </CredenzaContent>
-    </Credenza>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   );
 };
 

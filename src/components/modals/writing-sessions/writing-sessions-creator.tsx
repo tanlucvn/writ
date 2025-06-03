@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
 import {
-  Credenza,
-  CredenzaContent,
-  CredenzaDescription,
-  CredenzaHeader,
-  CredenzaTitle,
-} from "@/components/ui/credenza";
+  Modal,
+  ModalContent,
+  ModalDescription,
+  ModalHeader,
+  ModalTitle,
+} from "@/components/ui/modal";
 import {
   Select,
   SelectContent,
@@ -36,17 +36,17 @@ const WritingSessionsCreator = () => {
   };
 
   return (
-    <Credenza
+    <Modal
       open={isNewWritingSessionDialogOpen}
       onOpenChange={setIsNewWritingSessionDialogOpen}
     >
-      <CredenzaContent className="mx-auto max-w-lg border bg-background p-1 shadow-none">
-        <CredenzaHeader>
-          <CredenzaDescription>
+      <ModalContent>
+        <ModalHeader>
+          <ModalDescription>
             Configure the session to your liking.
-          </CredenzaDescription>
-          <CredenzaTitle>Create Writing Session</CredenzaTitle>
-        </CredenzaHeader>
+          </ModalDescription>
+          <ModalTitle>Create Writing Session</ModalTitle>
+        </ModalHeader>
 
         <div className="mt-4 space-y-4">
           <Select
@@ -72,8 +72,8 @@ const WritingSessionsCreator = () => {
             Start
           </Button>
         </div>
-      </CredenzaContent>
-    </Credenza>
+      </ModalContent>
+    </Modal>
   );
 };
 

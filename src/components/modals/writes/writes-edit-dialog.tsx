@@ -1,15 +1,15 @@
 import { Button } from "@/components/ui/button";
-import {
-  Credenza,
-  CredenzaClose,
-  CredenzaContent,
-  CredenzaDescription,
-  CredenzaFooter,
-  CredenzaHeader,
-  CredenzaTitle,
-} from "@/components/ui/credenza";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Modal,
+  ModalClose,
+  ModalContent,
+  ModalDescription,
+  ModalFooter,
+  ModalHeader,
+  ModalTitle,
+} from "@/components/ui/modal";
 import { TagInput } from "@/components/ui/tag-input";
 import WriteColorSelector from "@/components/write-color-selector";
 import { dexie } from "@/services";
@@ -88,15 +88,15 @@ export default function WriteEditDialog() {
   };
 
   return (
-    <Credenza
+    <Modal
       open={isWritesEditingDialogOpen}
       onOpenChange={setIsWritesEditingDialogOpen}
     >
-      <CredenzaContent className="mx-auto max-w-lg border bg-background p-1 shadow-none">
-        <CredenzaHeader>
-          <CredenzaDescription>Make changes to this write.</CredenzaDescription>
-          <CredenzaTitle>Edit Write</CredenzaTitle>
-        </CredenzaHeader>
+      <ModalContent>
+        <ModalHeader>
+          <ModalDescription>Make changes to this write.</ModalDescription>
+          <ModalTitle>Edit Write</ModalTitle>
+        </ModalHeader>
 
         <div className="mt-4 flex flex-col gap-4 text-xs">
           <div className="space-y-2">
@@ -134,17 +134,17 @@ export default function WriteEditDialog() {
           </div>
         </div>
 
-        <CredenzaFooter className="mt-4 flex flex-col gap-2 px-0">
+        <ModalFooter className="!flex-col flex gap-2 px-0">
           <Button onClick={handleSave} className="w-full">
             Save
           </Button>
-          <CredenzaClose asChild>
+          <ModalClose asChild>
             <Button variant="secondary" className="w-full">
               Close
             </Button>
-          </CredenzaClose>
-        </CredenzaFooter>
-      </CredenzaContent>
-    </Credenza>
+          </ModalClose>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   );
 }

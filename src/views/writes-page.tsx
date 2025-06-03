@@ -6,13 +6,13 @@ import FoldersNavigation from "@/components/folders/folders-navigation";
 
 const WritesPage = () => {
   return (
-    <div>
+    <>
       <div className="sticky top-0 z-[1] flex flex-col">
         <FoldersNavigation />
         <Toolbar />
       </div>
       <Editor />
-    </div>
+    </>
   );
 };
 

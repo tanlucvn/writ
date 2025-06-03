@@ -14,8 +14,8 @@ export const ToolbarUndoRedo = () => {
 
   if (!editor) return null;
 
-  const handleUndo = () => editor.commands.undo();
-  const handleRedo = () => editor.commands.redo();
+  const handleUndo = () => editor.chain().focus().undo().run();
+  const handleRedo = () => editor.chain().focus().redo().run();
 
   return (
     <>
@@ -29,7 +29,7 @@ export const ToolbarUndoRedo = () => {
             aria-label="Undo"
             className="size-8"
           >
-            <UndoIcon className="size-4" />
+            <UndoIcon className="!size-3.5" />
           </Button>
         </TooltipTrigger>
         <TooltipContent side="top" sideOffset={4}>
@@ -47,7 +47,7 @@ export const ToolbarUndoRedo = () => {
             aria-label="Redo"
             className="size-8"
           >
-            <RedoIcon className="size-4" />
+            <RedoIcon className="!size-3.5" />
           </Button>
         </TooltipTrigger>
         <TooltipContent side="top" sideOffset={4}>

@@ -8,7 +8,6 @@ import TaskList from "@tiptap/extension-task-list";
 import TextStyle from "@tiptap/extension-text-style";
 import TiptapUnderline from "@tiptap/extension-underline";
 import StarterKit from "@tiptap/starter-kit";
-import { ColorClass } from "./color-class";
 
 import SlashCommand from "@/components/editor/extensions/slash-command";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -43,9 +42,8 @@ const extensions = [
   StarterKit.configure({
     heading: false,
   }),
-  Heading.configure({ levels: [1, 2, 3] }),
+  Heading.configure({ levels: [1, 2, 3, 4] }),
   TextStyle,
-  ColorClass,
   TiptapUnderline,
   CharacterCount,
   SlashCommand,
@@ -60,10 +58,6 @@ const extensions = [
     inclusive: false,
   }).configure({
     linkOnPaste: true,
-    HTMLAttributes: {
-      class:
-        "text-primary underline underline-offset-[3px] hover:text-opacity-70 transition-colors cursor-pointer",
-    },
   }),
   iframe.configure({
     HTMLAttributes: {

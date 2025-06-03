@@ -1,10 +1,10 @@
 import {
-  Credenza,
-  CredenzaContent,
-  CredenzaDescription,
-  CredenzaHeader,
-  CredenzaTitle,
-} from "@/components/ui/credenza";
+  Modal,
+  ModalContent,
+  ModalDescription,
+  ModalHeader,
+  ModalTitle,
+} from "@/components/ui/modal";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { WritePreview } from "@/components/writes/write-content-preview";
 import { explorerTemplates } from "@/lib/templates";
@@ -23,17 +23,14 @@ const WriteCreatorDialog = () => {
   };
 
   return (
-    <Credenza
-      open={isNewWriteDialogOpen}
-      onOpenChange={setIsNewWriteDialogOpen}
-    >
-      <CredenzaContent className="mx-auto max-w-lg border bg-background p-1 shadow-none">
-        <CredenzaHeader>
-          <CredenzaDescription>
+    <Modal open={isNewWriteDialogOpen} onOpenChange={setIsNewWriteDialogOpen}>
+      <ModalContent>
+        <ModalHeader>
+          <ModalDescription>
             Start with a structure and make it yours.
-          </CredenzaDescription>
-          <CredenzaTitle>Choose a Template</CredenzaTitle>
-        </CredenzaHeader>
+          </ModalDescription>
+          <ModalTitle>Choose a Template</ModalTitle>
+        </ModalHeader>
 
         <div className="mt-4">
           <ScrollArea className="size-full max-w-md">
@@ -50,8 +47,8 @@ const WriteCreatorDialog = () => {
             <ScrollBar orientation="horizontal" className="h-2.5" />
           </ScrollArea>
         </div>
-      </CredenzaContent>
-    </Credenza>
+      </ModalContent>
+    </Modal>
   );
 };
 

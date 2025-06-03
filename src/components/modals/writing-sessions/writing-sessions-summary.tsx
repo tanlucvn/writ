@@ -1,10 +1,10 @@
 import {
-  Credenza,
-  CredenzaContent,
-  CredenzaDescription,
-  CredenzaHeader,
-  CredenzaTitle,
-} from "@/components/ui/credenza";
+  Modal,
+  ModalContent,
+  ModalDescription,
+  ModalHeader,
+  ModalTitle,
+} from "@/components/ui/modal";
 import { cleanText } from "@/lib/utils";
 import {
   countCharacters,
@@ -68,17 +68,15 @@ const WritingSessionsSummary = () => {
     currentSession.endingWordCount - currentSession.startingWordCount;
 
   return (
-    <Credenza
+    <Modal
       open={isWritingSessionSummaryOpen}
       onOpenChange={setIsWritingSessionSummaryOpen}
     >
-      <CredenzaContent className="mx-auto max-w-lg border bg-background p-1 shadow-none">
-        <CredenzaHeader>
-          <CredenzaDescription>
-            Here's how your session went.
-          </CredenzaDescription>
-          <CredenzaTitle>Writing Session Summary</CredenzaTitle>
-        </CredenzaHeader>
+      <ModalContent>
+        <ModalHeader>
+          <ModalDescription>Here's how your session went.</ModalDescription>
+          <ModalTitle>Writing Session Summary</ModalTitle>
+        </ModalHeader>
 
         <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
           <SummaryItem label="Duration" value={`${duration} min`} />
@@ -92,8 +90,8 @@ const WritingSessionsSummary = () => {
             value={`${summary.readingTime} min`}
           />
         </div>
-      </CredenzaContent>
-    </Credenza>
+      </ModalContent>
+    </Modal>
   );
 };
 

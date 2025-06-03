@@ -5,33 +5,20 @@ import "@/styles/globals.css";
 import "@/styles/writer.css";
 import { Settings } from "luxon";
 import type { Metadata, Viewport } from "next";
-import {
-  DM_Sans,
-  Inter,
-  JetBrains_Mono,
-  Space_Grotesk,
-} from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 
 Settings.defaultLocale = "en";
 
-const inter = Inter({
+const geist = Geist({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-geist",
+  preload: false,
 });
 
-const spaceGrotesk = Space_Grotesk({
+const geistMono = Geist_Mono({
   subsets: ["latin"],
-  variable: "--font-spacegrotesk",
-});
-
-const dmSans = DM_Sans({
-  subsets: ["latin"],
-  variable: "--font-dmsans",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-jetbrains-mono",
+  variable: "--font-geist-mono",
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -51,7 +38,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          `${inter.variable} ${spaceGrotesk.variable} ${dmSans.variable} ${jetbrainsMono.variable}`,
+          `${geist.variable} ${geistMono.variable}`,
           "font-sans antialiased",
           "flex h-screen max-h-screen w-full items-center justify-center overflow-hidden p-0",
         )}
