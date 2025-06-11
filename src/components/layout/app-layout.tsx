@@ -10,7 +10,6 @@ import {
   KeyboardShortcutsModal,
   NoteSummaryModal,
   SettingsModal,
-  Statistics,
   TrashModal,
 } from "@/components/modals";
 import { SaveNoteModal } from "../modals/writes/save-note";
@@ -28,7 +27,6 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
       <SettingsModal />
       <AllNotesModal />
       <KeyboardShortcutsModal />
-      <Statistics />
 
       {/* Writes */}
       {/* <WriteCreatorDialog /> */}
