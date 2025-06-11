@@ -6,13 +6,9 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
-import { useDialogStore } from "@/store/use-dialog-store";
 import { useState } from "react";
 
 const SidebarSessionsMenu = () => {
-  const { setWritingSessionHistoryOpen, setIsNewWritingSessionDialogOpen } =
-    useDialogStore();
-
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -52,18 +48,14 @@ const SidebarSessionsMenu = () => {
       <CollapsibleContent className="mt-1 px-2">
         <div className="flex flex-col gap-1">
           <SidebarMenuItem>
-            <SidebarMenuButton
-              onClick={() => setIsNewWritingSessionDialogOpen(true)}
-            >
+            <SidebarMenuButton>
               <IconRenderer name="Plus" />
               New Session
             </SidebarMenuButton>
           </SidebarMenuItem>
 
           <SidebarMenuItem>
-            <SidebarMenuButton
-              onClick={() => setWritingSessionHistoryOpen(true)}
-            >
+            <SidebarMenuButton>
               <IconRenderer name="LibraryBig" />
               View History
             </SidebarMenuButton>
