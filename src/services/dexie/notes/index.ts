@@ -16,8 +16,6 @@ export const createNote = (overrides: Partial<Note> = {}): Note => {
     inTrash: overrides.inTrash ?? false,
     createdAt: now,
     updatedAt: now,
-    syncedAt: null,
-    synced: 0,
   };
 };
 
@@ -52,7 +50,6 @@ export const moveNoteToTrash = async (id: string): Promise<void> => {
   await dexie.db.notes.update(id, {
     inTrash: true,
     updatedAt: DateTime.utc().toISO(),
-    synced: 0,
   });
 };
 
@@ -60,7 +57,6 @@ export const restoreNoteFromTrash = async (id: string): Promise<void> => {
   await dexie.db.notes.update(id, {
     inTrash: false,
     updatedAt: DateTime.utc().toISO(),
-    synced: 0,
   });
 };
 

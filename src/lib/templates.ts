@@ -34,10 +34,8 @@ export const explorerTemplates: WriteTemplate[] = [
     `,
     createdAt: new Date(0).toLocaleString(),
     updatedAt: new Date(0).toLocaleString(),
-    synced: 0,
     inTrash: false,
     parentId: "",
-    syncedAt: null,
   },
   {
     id: "template-2",
@@ -55,10 +53,8 @@ export const explorerTemplates: WriteTemplate[] = [
     `,
     createdAt: new Date(0).toLocaleString(),
     updatedAt: new Date(0).toLocaleString(),
-    synced: 0,
     inTrash: false,
     parentId: "",
-    syncedAt: null,
   },
   {
     id: "template-3",
@@ -88,9 +84,7 @@ export const explorerTemplates: WriteTemplate[] = [
     `,
     createdAt: new Date(0).toLocaleString(),
     updatedAt: new Date(0).toLocaleString(),
-    synced: 0,
     inTrash: false,
     parentId: "",
-    syncedAt: null,
   },
 ];

@@ -4,7 +4,7 @@ import Dexie, { type Table } from "dexie";
 const db = new Dexie("miniwritDB");
 
 db.version(1).stores({
-  notes: "id, updatedAt, synced, inTrash, parentId, *tagIds",
+  notes: "id, updatedAt, inTrash, parentId, *tagIds",
   sessions: "id, noteId, startingWordCount, endingWordCount, duration",
   tags: "id, updatedAt",
   settings: "key",
