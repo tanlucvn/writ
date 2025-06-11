@@ -1,4 +1,4 @@
-import { getAllWrites } from "./writes";
+import { getAllNotes } from "./notes";
 
 type Write = {
   createdAt: string;
@@ -31,7 +31,7 @@ const getWriteCountPerDay = async (
   filterFn: FilterFn,
   days = 30,
 ): Promise<Map<string, number>> => {
-  const writes = await getAllWrites();
+  const writes = await getAllNotes();
   const dates = getLastNDates(days);
   const counts = new Map<string, number>();
 
@@ -47,15 +47,15 @@ const getWriteCountPerDay = async (
 
 // Total number of writes
 export const getTotalWriteCount = async (): Promise<number> =>
-  (await getAllWrites()).length;
+  (await getAllNotes()).length;
 
 // Total number of synced writes
 export const getSyncedWriteCount = async (): Promise<number> =>
-  (await getAllWrites()).filter((w) => w.synced === 1).length;
+  (await getAllNotes()).filter((w) => w.synced === 1).length;
 
 // Total number of unsynced writes
 export const getUnsyncedWriteCount = async (): Promise<number> =>
-  (await getAllWrites()).filter((w) => w.synced === 0).length;
+  (await getAllNotes()).filter((w) => w.synced === 0).length;
 
 // Daily write count (last 30 days)
 export const getWriteCountByDay = (): Promise<Map<string, number>> =>
@@ -71,7 +71,7 @@ export const getUnsyncedWriteCountByDay = (): Promise<Map<string, number>> =>
 
 // Most frequently used tags
 export const getMostFrequentTags = async (): Promise<Map<string, number>> => {
-  const writes = await getAllWrites();
+  const writes = await getAllNotes();
   const tagCounts = new Map<string, number>();
 
   for (const write of writes) {

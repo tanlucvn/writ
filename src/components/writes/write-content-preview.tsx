@@ -1,7 +1,7 @@
 import EditorPreview from "@/components/editor/editor-preview";
 import type { WriteTemplate } from "@/lib/templates";
 import { cn } from "@/lib/utils";
-import type { Write } from "@/types";
+import type { Note } from "@/types";
 import type React from "react";
 
 interface WritePreviewProps {
@@ -10,7 +10,7 @@ interface WritePreviewProps {
 }
 
 interface WriteContentPreviewProps {
-  write: Write;
+  write: Note;
   className?: string;
 }
 

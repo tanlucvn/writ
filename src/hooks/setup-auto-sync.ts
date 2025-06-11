@@ -1,5 +1,5 @@
 import { sync } from "@/services";
-import { useAppSettingsStore } from "@/store/app-settings-store";
+import { useAppSettingsStore } from "@/store/use-app-settings-store";
 
 export const setupAutoSync = ({
   userId,

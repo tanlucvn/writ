@@ -5,8 +5,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { useAppStore } from "@/store/app-store";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { useAppStore } from "@/store/use-app-store";
 import { LinkIcon, UnlinkIcon } from "lucide-react";
 import { useCallback, useState } from "react";
 
@@ -24,7 +28,7 @@ export default function LinkPopover() {
         setUrl(previousUrl);
       }
     },
-    [editor]
+    [editor],
   );
 
   const setLink = () => {

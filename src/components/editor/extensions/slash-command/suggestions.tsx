@@ -1,4 +1,3 @@
-import { getEmbedUrl } from "@/lib/editor";
 import {
   CodeIcon,
   Heading1Icon,
@@ -7,7 +6,6 @@ import {
   ListIcon,
   PilcrowIcon,
   QuoteIcon,
-  ShapesIcon,
   SquareCheckIcon,
 } from "lucide-react";
 import type { ReactNode } from "react";
@@ -136,34 +134,6 @@ export const getSuggestionItems = ({ query }: { query: string }) => {
       icon: <SquareCheckIcon />,
       command: ({ editor, range }: any) =>
         editor.chain().focus().deleteRange(range).toggleTaskList().run(),
-    },
-    {
-      id: "embed",
-      title: "Embed",
-      category: "Media",
-      description: "Embed from Loom, Figma and more",
-      searchTerms: [
-        "media",
-        "embed",
-        "video",
-        "media",
-        "figma",
-        "loom",
-        "youtube",
-      ],
-      icon: <ShapesIcon />,
-      command: ({ editor, range }: any) => {
-        editor.chain().focus().deleteRange(range).run();
-
-        const url = window.prompt("Enter the URL:");
-        const embedUrl = getEmbedUrl(url);
-
-        if (embedUrl) {
-          editor.chain().focus().setIframe({ src: embedUrl }).run();
-        }
-
-        return;
-      },
     },
   ].filter((item) => {
     if (typeof query === "string" && query.length > 0) {

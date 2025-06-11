@@ -1,8 +1,8 @@
-import { ClientProviders } from "@/components/client-providers";
+import { ClientProviders } from "@/components/layout/client-providers";
 import { OpenGraph } from "@/lib/og";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
-import "@/styles/writer.css";
+import "@/styles/themes.css";
 import { Settings } from "luxon";
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";

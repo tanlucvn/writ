@@ -1,35 +1,39 @@
+import { dexie } from "@/services";
 import type { Tag } from "@/types";
 import { DateTime } from "luxon";
 import { v4 as uuidv4 } from "uuid";
-import { db } from "../client";
 
-// Create a new tag object
-export const createTag = (name: string, color?: string): Tag => ({
-  id: uuidv4(),
-  name,
-  color,
-  createdAt: DateTime.utc().toISO(),
-  updatedAt: DateTime.utc().toISO(),
-});
+export const createTag = (overrides: Partial<Tag> = {}): Tag => {
+  const now = DateTime.utc().toISO();
 
-// Save or update a tag in the database
+  return {
+    id: uuidv4(),
+    name: overrides.name ?? "New Tag",
+    createdAt: now,
+    updatedAt: now,
+  };
+};
+
 export const saveTag = async (tag: Tag): Promise<Tag> => {
-  const updated = { ...tag, updatedAt: DateTime.utc().toISO() };
-  await db.tags.put(updated);
+  const updated = {
+    ...tag,
+    updatedAt: DateTime.utc().toISO(),
+    synced: 0,
+  };
+  await dexie.db.tags.put(updated);
   return updated;
 };
 
-// Delete a tag by ID
-export const deleteTag = async (id: string) => {
-  await db.tags.delete(id);
+export const getTagById = (id: string): Promise<Tag | undefined> =>
+  dexie.db.tags.get(id);
+
+export const getAllTags = (): Promise<Tag[]> =>
+  dexie.db.tags.orderBy("updatedAt").reverse().toArray();
+
+export const deleteTag = async (id: string): Promise<void> => {
+  await dexie.db.tags.delete(id);
 };
 
-// Get a single tag by ID
-export const getTag = async (id: string): Promise<Tag | undefined> => {
-  return await db.tags.get(id);
-};
-
-// Get all tags sorted by updatedAt (most recent first)
-export const getAllTags = async (): Promise<Tag[]> => {
-  return await db.tags.orderBy("updatedAt").reverse().toArray();
+export const clearAllTags = async (): Promise<void> => {
+  await dexie.db.tags.clear();
 };

@@ -5,7 +5,6 @@ import { TagIcon, XIcon } from "lucide-react";
 
 type TagChipProps = {
   label: string;
-  color?: string;
   className?: string;
   deletable?: boolean;
   onClick?: () => void;
@@ -13,7 +12,6 @@ type TagChipProps = {
 
 export default function TagChip({
   label,
-  color,
   className,
   deletable = false,
   onClick,
@@ -29,10 +27,7 @@ export default function TagChip({
     >
       <TagIcon
         strokeWidth={3}
-        className={cn(
-          "size-3 fill-transparent group-hover:hidden",
-          color ? `stroke-${color}` : "stroke-current",
-        )}
+        className="size-3 fill-transparent group-hover:hidden"
       />
 
       {deletable && (

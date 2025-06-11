@@ -14,7 +14,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import { useAppStore } from "@/store/app-store";
+import { useAppStore } from "@/store/use-app-store";
 import {
   BoldIcon,
   Heading1Icon,

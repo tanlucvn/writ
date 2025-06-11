@@ -1,4 +1,4 @@
-import { useAppStore } from "@/store/app-store";
+import { useAppStore } from "@/store/use-app-store";
 import { CheckIcon, XIcon } from "lucide-react";
 import { useEffect } from "react";
 

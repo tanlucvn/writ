@@ -42,7 +42,7 @@ const AnimatedTabs = ({ tabs, className, scrollAreaClassName }: TabsProps) => {
                   layoutId="highlight"
                   transition={{
                     type: "spring",
-                    bounce: 0.07,
+                    bounce: 0.01,
                     duration: 0.4,
                   }}
                   className="-z-10 absolute inset-0 rounded-full bg-primary"
@@ -54,7 +54,10 @@ const AnimatedTabs = ({ tabs, className, scrollAreaClassName }: TabsProps) => {
       </div>
 
       {/* Content */}
-      <ScrollArea className={cn("h-[350px] w-full", scrollAreaClassName)}>
+      <ScrollArea
+        id="block-scrollarea"
+        className={cn("h-[350px] w-full", scrollAreaClassName)}
+      >
         <AnimatePresence mode="wait">
           <motion.div
             key={tab}
@@ -62,7 +65,7 @@ const AnimatedTabs = ({ tabs, className, scrollAreaClassName }: TabsProps) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.25 }}
-            className="px-2 text-foreground"
+            className="h-full px-2 text-foreground"
           >
             {activeTab?.content}
           </motion.div>

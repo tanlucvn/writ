@@ -1,7 +1,4 @@
 import { updateScrollView } from "@/components/editor/extensions/slash-command";
-import { CommandListItem } from "@/components/editor/extensions/slash-command/command-list-item";
-import type { CommandItemProps } from "@/components/editor/extensions/slash-command/suggestions";
-import DashedContainer from "@/components/ui/dashed-container";
 import {
   useCallback,
   useEffect,
@@ -9,81 +6,80 @@ import {
   useRef,
   useState,
 } from "react";
+import { CommandListItem } from "./command-list-item";
+import type { CommandItemProps } from "./suggestions";
 
-export const CommandList = ({
-  items,
-  command,
-}: {
-  items: Array<CommandItemProps>;
+type CommandListProps = {
+  items: CommandItemProps[];
   command: (item: CommandItemProps) => void;
-  range?: any;
-}) => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const commandListContainer = useRef<HTMLDivElement>(null);
+};
 
-  // Handle keyboard navigation for the command list
+export const CommandList = ({ items, command }: CommandListProps) => {
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const selectItem = useCallback(
     (index: number) => {
       const item = items[index];
-      if (item) {
-        command(item);
-      }
+      if (item) command(item);
     },
     [items, command],
   );
 
+  // Keyboard navigation
   useEffect(() => {
-    const navigationKeys = ["ArrowUp", "ArrowDown", "Enter"];
     const onKeyDown = (e: KeyboardEvent) => {
-      if (navigationKeys.includes(e.key)) {
-        e.preventDefault();
-        if (e.key === "ArrowUp") {
-          setSelectedIndex((prev) => (prev + items.length - 1) % items.length);
-        } else if (e.key === "ArrowDown") {
+      switch (e.key) {
+        case "ArrowUp":
+          e.preventDefault();
+          setSelectedIndex((prev) => (prev - 1 + items.length) % items.length);
+          break;
+        case "ArrowDown":
+          e.preventDefault();
           setSelectedIndex((prev) => (prev + 1) % items.length);
-        } else if (e.key === "Enter") {
+          break;
+        case "Enter":
+          e.preventDefault();
           selectItem(selectedIndex);
-        }
+          break;
       }
     };
 
     document.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.removeEventListener("keydown", onKeyDown);
-    };
+    return () => document.removeEventListener("keydown", onKeyDown);
   }, [items.length, selectItem, selectedIndex]);
 
+  // Reset on mount
   useEffect(() => {
     setSelectedIndex(0);
   }, []);
 
+  // Auto scroll selected item into view
   useLayoutEffect(() => {
-    const container = commandListContainer.current;
-    const item = container?.children[selectedIndex] as HTMLElement;
-    if (item && container) {
-      updateScrollView(container, item);
+    const container = containerRef.current;
+    const selectedItem = container?.children[selectedIndex] as HTMLElement;
+    if (selectedItem && container) {
+      updateScrollView(container, selectedItem);
     }
   }, [selectedIndex]);
 
-  if (items.length === 0) return null;
+  if (!items.length) return null;
 
   return (
     <div
       id="slash-command"
-      ref={commandListContainer}
-      className="z-50 h-[330px] w-80 animate-in rounded-lg border bg-background p-1 shadow-lg"
+      ref={containerRef}
+      className="z-50 flex h-60 w-32 animate-in flex-col gap-0.5 space-y-1 overflow-y-auto rounded-lg border bg-popover p-1 shadow-xl"
     >
-      <DashedContainer className="space-y-1 overflow-y-auto p-2">
-        {items.map((item, index) => (
-          <CommandListItem
-            key={item.id}
-            item={item}
-            index={index}
-            selectedIndex={selectedIndex}
-            onSelect={selectItem}
-          />
-        ))}
-      </DashedContainer>
+      {items.map((item, index) => (
+        <CommandListItem
+          key={item.id}
+          item={item}
+          index={index}
+          selectedIndex={selectedIndex}
+          onSelect={selectItem}
+        />
+      ))}
     </div>
   );
 };

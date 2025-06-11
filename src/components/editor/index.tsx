@@ -1,40 +1,42 @@
 "use client";
 
 import ExtensionList from "@/components/editor/extensions";
+import { useNoteActions } from "@/hooks/use-note-actions";
 import { cn } from "@/lib/utils";
-import { dexie } from "@/services";
-import { useAppSettingsStore } from "@/store/app-settings-store";
-import { useAppStore } from "@/store/app-store";
-import { useWritesStore } from "@/store/writes-store";
+import { useAppSettingsStore } from "@/store/use-app-settings-store";
+import { useAppStore } from "@/store/use-app-store";
+import type { Note } from "@/types";
 import { EditorContent, useEditor } from "@tiptap/react";
 import { DateTime } from "luxon";
 import { useEffect } from "react";
 import Loading from "../loading";
-import EditorTitle from "./editor-title";
+import { Toolbar } from "./toolbar";
 
-const Editor = () => {
+interface EditorProps {
+  note?: Note;
+}
+
+const Editor = ({ note }: EditorProps) => {
   const { setEditor } = useAppStore();
-  const { currentWrite, setCurrentWrite, refreshWrites } = useWritesStore();
   const { fontFamily, fontSize } = useAppSettingsStore();
+  const { onUpdateNote } = useNoteActions();
 
   const editor = useEditor(
     {
       extensions: [...ExtensionList],
-      content: currentWrite?.content ?? "",
+      content: note?.content ?? "",
       onUpdate: ({ editor }) => {
-        if (!currentWrite) return;
+        if (!note) return;
 
         const content = editor.getHTML();
 
         const updated = {
-          ...currentWrite,
+          ...note,
           content,
           updatedAt: DateTime.utc().toISO(),
         };
 
-        setCurrentWrite(updated);
-        dexie.saveWrite(updated);
-        refreshWrites();
+        onUpdateNote(updated);
       },
       onCreate: ({ editor }) => {
         editor.commands.focus();
@@ -42,7 +44,8 @@ const Editor = () => {
       editorProps: {
         attributes: {
           class: cn(
-            "!outline-none !focus-visible:!outline-none focus-visible:border-none",
+            "!outline-none !focus-visible:!outline-none",
+            "!h-[calc(100svh-2rem-36px-58px)] w-full overflow-y-auto rounded-md border-2 border-dashed p-4",
             fontFamily && `font-${fontFamily}`,
           ),
           style: `font-size: ${fontSize}px;`,
@@ -59,7 +62,7 @@ const Editor = () => {
       },
       immediatelyRender: false,
     },
-    [currentWrite?.id],
+    [note?.id],
   );
 
   useEffect(() => {
@@ -73,9 +76,9 @@ const Editor = () => {
   }
 
   return (
-    <div className="flex h-full w-full flex-col items-center justify-start space-y-4 p-4 px-6">
-      <EditorTitle />
-      <EditorContent editor={editor} className="w-full" />
+    <div className="relative mx-auto flex w-full max-w-prose flex-col justify-start space-y-2.5">
+      <Toolbar />
+      <EditorContent editor={editor} />
     </div>
   );
 };

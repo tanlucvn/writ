@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { dexie } from "@/services";
-import { useDialogStore } from "@/store/dialog-store";
+import { useDialogStore } from "@/store/use-dialog-store";
 import { ChevronLeft, ChevronRight, RotateCwIcon, XIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Drawer } from "vaul";

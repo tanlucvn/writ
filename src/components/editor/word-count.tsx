@@ -1,6 +1,6 @@
 "use client";
 
-import { useAppStore } from "@/store/app-store";
+import { useAppStore } from "@/store/use-app-store";
 
 const WordCount = () => {
   const { editor } = useAppStore();

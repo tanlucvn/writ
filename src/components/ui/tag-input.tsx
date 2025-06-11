@@ -86,7 +86,6 @@ export function TagInput({
           <TagChip
             key={tag.id}
             label={tag.name}
-            color={tag.color}
             onClick={() => handleRemove(tag)}
             deletable
           />

@@ -2,7 +2,7 @@
 
 import ExtensionList from "@/components/editor/extensions";
 import { cn } from "@/lib/utils";
-import { useAppSettingsStore } from "@/store/app-settings-store";
+import { useAppSettingsStore } from "@/store/use-app-settings-store";
 import { EditorContent, useEditor } from "@tiptap/react";
 
 interface EditorProps {

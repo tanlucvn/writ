@@ -1,15 +1,25 @@
-import type { Write, WriteColor } from "@/types";
+import type { Note } from "@/types";
 import { type ClassValue, clsx } from "clsx";
 import { DateTime } from "luxon";
 import { twMerge } from "tailwind-merge";
-import { COLOR_CLASSES_MAP } from "./constants";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const sortWrites = (writes: Write[], option: string): Write[] => {
-  return [...writes].sort((a, b) => {
+export async function safeCall<T>(
+  fn: () => Promise<T>,
+): Promise<T | undefined> {
+  try {
+    return await fn();
+  } catch (error) {
+    console.error(error);
+    return undefined;
+  }
+}
+
+export const sortWrites = (notes: Note[], option: string): Note[] => {
+  return [...notes].sort((a, b) => {
     switch (option) {
       case "created-desc":
         return (
@@ -37,16 +47,11 @@ export const sortWrites = (writes: Write[], option: string): Write[] => {
   });
 };
 
-export const cleanText = (html: string) => {
+export const cleanContent = (html: string) => {
   return html
     .replace(/<\/?[^>]+(>|$)/g, "") // Remove HTML tags
     .replace(/\s+/g, " ") // Normalize whitespace
     .trim();
-};
-
-export const getWriteColorClasses = (color: WriteColor) => {
-  const { bg, text, outline } = COLOR_CLASSES_MAP[color];
-  return [bg, text, outline];
 };
 
 export function getRelativeTime(isoDate: string): string {

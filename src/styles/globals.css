@@ -157,13 +157,6 @@
   }
 }
 
-::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-  visibility: hidden;
-  background: rgba(0, 0, 0, 0);
-}
-
 /* ======================
  Editor 
 ====================== */
@@ -235,10 +228,23 @@
   }
 
   p.is-editor-empty:first-child::before {
-    color: var(--color-muted-foreground);
+    color: var(--color-muted-foreground) !important;
     content: attr(data-placeholder);
     float: left;
     height: 0;
     pointer-events: none;
   }
+}
+
+#block-scrollarea [data-radix-scroll-area-viewport] > div {
+  min-width: 0 !important;
+  display: block !important; /* optional: override table */
+  height: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  visibility: hidden;
+  background: rgba(0, 0, 0, 0);
 }
