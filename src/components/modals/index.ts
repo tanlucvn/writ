@@ -1,6 +1,5 @@
 export { default as KeyboardShortcutsModal } from "./keyboard-shortcuts";
 export { default as SettingsModal } from "./settings";
-export { default as Statistics } from "./statistics";
 
 export { default as NotesSortSelector } from "./writes/_components/notes-sort-selector";
 export { default as AllNotesModal } from "./writes/all-notes";
