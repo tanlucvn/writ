@@ -1,100 +1,79 @@
 import { dexie, turso } from "@/services";
-import { writes as writesTable } from "@/services/turso/schema";
-import type { Write, WriteColor } from "@/types";
+import { notesTable } from "@/services/turso/schema";
+import type { Note } from "@/types";
 import { and, eq, gt, lt } from "drizzle-orm";
 
 // Push local changes to Turso
 export const pushDexieToTurso = async (syncKey: string) => {
   const lastSyncedAt = await dexie.getLastSyncedAt();
 
-  const unsyncedWrites = await dexie.db.writes
-    .filter((w) => w.updatedAt > lastSyncedAt)
+  const localNotes = await dexie.db.notes
+    .filter((n) => n.updatedAt > lastSyncedAt)
     .toArray();
 
-  for (const write of unsyncedWrites) {
+  for (const note of localNotes) {
     await turso.clientDb
-      .insert(writesTable)
+      .insert(notesTable)
       .values({
-        id: write.id,
-        title: write.title,
-        content: write.content,
-        pinned: write.pinned ? 1 : 0,
-        archived: write.archived ? 1 : 0,
-        color: write.color ?? "default",
-        tagIds: JSON.stringify(write.tagIds ?? []),
-        createdAt: write.createdAt,
-        updatedAt: write.updatedAt,
-        removedAt: write.removedAt ?? null,
+        ...note,
+        isPinned: note.isPinned ? 1 : 0,
+        inTrash: note.inTrash ? 1 : 0,
+        parentId: note.parentId ?? null,
+        tagIds: JSON.stringify(note.tagIds ?? []),
         syncKey,
       })
       .onConflictDoUpdate({
-        target: writesTable.id,
+        target: notesTable.id,
         set: {
-          title: write.title,
-          content: write.content,
-          pinned: write.pinned ? 1 : 0,
-          archived: write.archived ? 1 : 0,
-          color: write.color ?? "default",
-          tagIds: JSON.stringify(write.tagIds ?? []),
-          updatedAt: write.updatedAt,
-          removedAt: write.removedAt ?? null,
+          title: note.title,
+          content: note.content,
+          isPinned: note.isPinned ? 1 : 0,
+          inTrash: note.inTrash ? 1 : 0,
+          parentId: note.parentId ?? null,
+          tagIds: JSON.stringify(note.tagIds ?? []),
+          updatedAt: note.updatedAt,
           syncKey,
         },
-        where: lt(writesTable.updatedAt, write.updatedAt), // last write wins
+        where: lt(notesTable.updatedAt, note.updatedAt), // last write wins
       });
-
-    await dexie.db.writes.update(write.id, {
-      syncedAt: new Date().toISOString(),
-      synced: 1,
-    });
   }
 
   await dexie.setLastSyncedAt(new Date().toISOString());
 };
 
-// Pull remote changes to Dexie
+// Pull remote changes from Turso to Dexie
 export const pullTursoToDexie = async (syncKey: string) => {
   const lastPulledAt = await dexie.getLastPulledAt();
 
   const rows = await turso.clientDb
     .select()
-    .from(writesTable)
+    .from(notesTable)
     .where(
       and(
-        eq(writesTable.syncKey, syncKey),
-        gt(writesTable.updatedAt, lastPulledAt ?? "1970-01-01T00:00:00.000Z"),
+        eq(notesTable.syncKey, syncKey),
+        gt(notesTable.updatedAt, lastPulledAt ?? "1970-01-01T00:00:00.000Z"),
       ),
     );
 
   for (const row of rows) {
-    const local = await dexie.db.writes.get(row.id);
+    const local = await dexie.db.notes.get(row.id);
 
-    // OPTION: Delete write in local when remove
-
-    /* if (row.removedAt) {
-      await dexie.db.writes.delete(row.id);
-      continue;
-    } */
-
-    const remoteWrite: Write = {
+    const remoteNote: Note = {
       id: row.id,
       title: row.title,
       content: row.content,
-      pinned: row.pinned === 1,
-      archived: row.archived === 1,
-      color: isWriteColor(row.color) ? row.color : "default",
+      isPinned: !!row.isPinned,
+      inTrash: !!row.inTrash,
+      parentId: row.parentId ?? "root",
       tagIds: JSON.parse(row.tagIds ?? "[]"),
       createdAt: row.createdAt,
       updatedAt: row.updatedAt,
-      removedAt: row.removedAt ?? null,
-      syncedAt: new Date().toISOString(),
-      synced: 1,
     };
 
     if (!local) {
-      await dexie.db.writes.add(remoteWrite);
+      await dexie.db.notes.add(remoteNote);
     } else if (new Date(row.updatedAt) > new Date(local.updatedAt)) {
-      await dexie.db.writes.put({ ...local, ...remoteWrite });
+      await dexie.db.notes.put({ ...local, ...remoteNote });
     }
   }
 
@@ -105,22 +84,4 @@ export const pullTursoToDexie = async (syncKey: string) => {
 export const syncWithTurso = async (syncKey: string) => {
   await pushDexieToTurso(syncKey);
   await pullTursoToDexie(syncKey);
-};
-
-const isWriteColor = (
-  color: string | null | undefined,
-): color is WriteColor => {
-  return [
-    "default",
-    "blue",
-    "cambridge",
-    "melon",
-    "mikado",
-    "mindaro",
-    "slate",
-    "sunset",
-    "tickle",
-    "tiffany",
-    "wisteria",
-  ].includes(color ?? "");
 };

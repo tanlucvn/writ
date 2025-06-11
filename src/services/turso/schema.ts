@@ -1,15 +1,14 @@
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
-export const writes = sqliteTable("writes", {
+export const notesTable = sqliteTable("notes", {
   id: text("id").primaryKey(),
   title: text("title").notNull(),
   content: text("content").notNull(),
-  pinned: integer("pinned").notNull().default(0),
-  archived: integer("archived").notNull().default(0),
-  color: text("color").default("default"),
+  isPinned: integer("isPinned").notNull().default(0),
+  inTrash: integer("inTrash").notNull().default(0),
+  parentId: text("parent_id"),
   tagIds: text("tag_ids"),
   createdAt: text("created_at").notNull(),
   updatedAt: text("updated_at").notNull(),
-  removedAt: text("removed_at"),
   syncKey: text("sync_key").notNull(),
 });
