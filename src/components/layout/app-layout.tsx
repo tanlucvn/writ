@@ -16,7 +16,7 @@ import { SaveNoteModal } from "../modals/writes/save-note";
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <>
+    <main className="flex h-screen max-h-screen w-full items-center justify-center overflow-hidden p-0">
       {children}
       {/*----------------- Init  -----------------*/}
       <AutoSyncInitializer />
@@ -34,7 +34,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
       <EditNoteTitleModal />
       <TrashModal />
       <SaveNoteModal />
-    </>
+    </main>
   );
 };
 

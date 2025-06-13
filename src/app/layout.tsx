@@ -40,7 +40,6 @@ export default function RootLayout({
         className={cn(
           `${geist.variable} ${geistMono.variable}`,
           "font-sans antialiased",
-          "flex h-screen max-h-screen w-full items-center justify-center overflow-hidden p-0",
         )}
       >
         <ClientProviders>{children}</ClientProviders>

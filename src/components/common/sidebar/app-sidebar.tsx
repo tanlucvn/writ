@@ -67,7 +67,7 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenu className="relative">
             <SidebarToolsMenu />
 
-            <Separator className="my-0.5" />
+            <Separator className="my-1" />
 
             <SidebarNotesMenu />
             <SidebarSessionsMenu />
