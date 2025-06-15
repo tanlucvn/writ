@@ -9,10 +9,14 @@ import {
 import { useDialogStore } from "@/store/use-dialog-store";
 
 const KeyboardShortcutsModal = () => {
-  const { isShortcutsModalOpen, setIsShortcutsModalOpen } = useDialogStore();
+  const { isKeyboardShortcutsOpen, setIsKeyboardShortcutsOpen } =
+    useDialogStore();
 
   return (
-    <Modal open={isShortcutsModalOpen} onOpenChange={setIsShortcutsModalOpen}>
+    <Modal
+      open={isKeyboardShortcutsOpen}
+      onOpenChange={setIsKeyboardShortcutsOpen}
+    >
       <ModalContent>
         <ModalHeader>
           <ModalDescription>

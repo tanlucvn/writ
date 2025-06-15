@@ -32,7 +32,7 @@ export default function NoteItem({
 }: NoteItemProps) {
   const pathname = usePathname();
   const { onSelect } = useNoteActions();
-  const isSelected = pathname === `/${note.id}`;
+  const isSelected = pathname === `/app/${note.id}`;
 
   const handleSelectNote = () => {
     if (selectable) {

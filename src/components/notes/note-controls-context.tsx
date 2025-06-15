@@ -23,17 +23,17 @@ export function NoteControlsContext({
   children,
 }: NoteControlsContextProps) {
   const { onRemoveNote, onTogglePinNote } = useNoteActions(note.id);
-  const { setIsEditTitleModalOpen, setIsWriteSummaryOpen } = useDialogStore();
+  const { setIsEditNoteTitleOpen, setIsNoteSummaryOpen } = useDialogStore();
   const { setCurrentEditNote } = useAppStore();
 
   const handleEditNote = () => {
     setCurrentEditNote(note);
-    setIsEditTitleModalOpen(true);
+    setIsEditNoteTitleOpen(true);
   };
 
   const handleViewSummary = () => {
     setCurrentEditNote(note);
-    setIsWriteSummaryOpen(true);
+    setIsNoteSummaryOpen(true);
   };
 
   return (

@@ -6,12 +6,13 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useAppStore } from "@/store/use-app-store";
 import { RedoIcon, UndoIcon } from "lucide-react";
 
-export const ToolbarUndoRedo = () => {
-  const { editor } = useAppStore();
+interface ToolbarUndoRedoProps {
+  editor: any;
+}
 
+export const ToolbarUndoRedo = ({ editor }: ToolbarUndoRedoProps) => {
   if (!editor) return null;
 
   const handleUndo = () => editor.chain().focus().undo().run();

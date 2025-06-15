@@ -26,15 +26,15 @@ export const useNoteActions = (
   } = useNoteStore();
 
   const onSelect = (note: Note) => {
-    if (pathname !== `/${note.id}`) {
-      router.push(`/${note.id}`);
+    if (pathname !== `/app/${note.id}`) {
+      router.push(`/app/${note.id}`);
     }
   };
 
   const onCreate = async (note?: Partial<Note>) => {
     const promise = addNote({ ...note, parentId: parentId }).then((noteId) => {
       if (!expanded) onExpand?.();
-      router.push(`/${noteId}`);
+      router.push(`/app/${noteId}`);
     });
 
     toast.promise(promise, {
@@ -88,7 +88,7 @@ export const useNoteActions = (
     await promise;
 
     // Only redirect if currently viewing the deleted note
-    if (pathname === `/${id}`) {
+    if (pathname === `/app/${id}`) {
       router.push("/");
     }
   };

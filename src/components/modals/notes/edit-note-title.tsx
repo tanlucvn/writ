@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import {
   Modal,
@@ -17,21 +16,21 @@ import { useDialogStore } from "@/store/use-dialog-store";
 import { useEffect, useRef, useState } from "react";
 
 const EditNoteTitleModal = () => {
-  const { isEditTitleModalOpen, setIsEditTitleModalOpen } = useDialogStore();
+  const { isEditNoteTitleOpen, setIsEditNoteTitleOpen } = useDialogStore();
   const { currentEditNote } = useAppStore();
   const [title, setTitle] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const { onRenameNote } = useNoteActions();
 
   useEffect(() => {
-    if (isEditTitleModalOpen && currentEditNote) {
+    if (isEditNoteTitleOpen && currentEditNote) {
       setTitle(currentEditNote.title);
       setTimeout(() => {
         inputRef.current?.focus();
         inputRef.current?.select();
       }, 100);
     }
-  }, [isEditTitleModalOpen, currentEditNote]);
+  }, [isEditNoteTitleOpen, currentEditNote]);
 
   if (!currentEditNote) return null;
 
@@ -41,11 +40,11 @@ const EditNoteTitleModal = () => {
     }
 
     onRenameNote(currentEditNote.id, title.trim());
-    setIsEditTitleModalOpen(false);
+    setIsEditNoteTitleOpen(false);
   };
 
   return (
-    <Modal open={isEditTitleModalOpen} onOpenChange={setIsEditTitleModalOpen}>
+    <Modal open={isEditNoteTitleOpen} onOpenChange={setIsEditNoteTitleOpen}>
       <ModalContent className="md:max-w-md">
         <ModalHeader>
           <ModalTitle>Rename note</ModalTitle>
@@ -60,10 +59,7 @@ const EditNoteTitleModal = () => {
           placeholder="Enter note title"
         />
         <ModalFooter className="mt-4 flex justify-end gap-2">
-          <Button
-            variant="ghost"
-            onClick={() => setIsEditTitleModalOpen(false)}
-          >
+          <Button variant="ghost" onClick={() => setIsEditNoteTitleOpen(false)}>
             Cancel
           </Button>
           <Button onClick={onSave}>Save</Button>

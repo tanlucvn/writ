@@ -10,13 +10,14 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useAppStore } from "@/store/use-app-store";
 import { LinkIcon, UnlinkIcon } from "lucide-react";
 import { useCallback, useState } from "react";
 
-export default function LinkPopover() {
-  const { editor } = useAppStore();
+interface ToolbarLinkPopoverProps {
+  editor: any;
+}
 
+export default function LinkPopover({ editor }: ToolbarLinkPopoverProps) {
   const [url, setUrl] = useState("");
   const [open, setOpen] = useState(false);
 

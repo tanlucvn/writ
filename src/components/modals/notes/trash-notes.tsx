@@ -7,15 +7,13 @@ import { useEffect, useState } from "react";
 import { Drawer } from "vaul";
 
 import { IconRenderer } from "@/components/icon-renderer";
-import { NotesSortSelector } from "@/components/modals";
 import { NumberFlowBadge } from "@/components/number-flow-badge";
 import { MultiSelect } from "@/components/ui/multi-select";
-import { useGroupNotes } from "@/hooks/use-group-notes";
+import TrashItem from "@/components/writes/trash-item";
 import { useDialogStore } from "@/store/use-dialog-store";
 import { useNoteStore } from "@/store/use-note-store";
 import { useTagStore } from "@/store/use-tags-store";
 import type { Note } from "@/types";
-import NoteSection from "./_components/note-section";
 
 const filterNotes = (
   notes: Note[],
@@ -34,18 +32,16 @@ const filterNotes = (
   });
 };
 
-export default function AllNotesModal() {
-  const { isAllNotesModalOpen, setIsAllNotesModalOpen } = useDialogStore();
-  const { notes } = useNoteStore();
+export default function TrashModal() {
+  const { isTrashOpen, setIsTrashOpen } = useDialogStore();
+  const { trash } = useNoteStore();
   const { tags } = useTagStore();
 
   const [query, setQuery] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
-  const { pinned, recent } = useGroupNotes(notes);
-  const filteredPinned = filterNotes(pinned, query, selectedTags);
-  const filteredRecent = filterNotes(recent, query, selectedTags);
-  const total = filteredPinned.length + filteredRecent.length;
+  const filteredNotes = filterNotes(trash, query, selectedTags);
+  const total = filteredNotes.length;
 
   const tagOptions = tags.map((tag) => ({
     label: tag.name,
@@ -53,16 +49,16 @@ export default function AllNotesModal() {
   }));
 
   useEffect(() => {
-    if (isAllNotesModalOpen) {
+    if (isTrashOpen) {
       setQuery("");
       setSelectedTags([]);
     }
-  }, [isAllNotesModalOpen]);
+  }, [isTrashOpen]);
 
   return (
     <Drawer.Root
-      open={isAllNotesModalOpen}
-      onOpenChange={setIsAllNotesModalOpen}
+      open={isTrashOpen}
+      onOpenChange={setIsTrashOpen}
       direction="right"
     >
       <Drawer.Portal>
@@ -71,16 +67,16 @@ export default function AllNotesModal() {
           {/* Header */}
           <div className="shrink-0 border-b p-4 pb-2">
             <Drawer.Title className="font-medium text-base text-foreground">
-              All Notes
+              Trash
             </Drawer.Title>
             <Drawer.Description className="text-muted-foreground text-xs">
-              Quickly access and manage all your notes and pins.
+              Review and restore or permanently delete notes.
             </Drawer.Description>
             <Button
               variant="ghost"
               size="icon"
               className="absolute top-4 right-4"
-              onClick={() => setIsAllNotesModalOpen(false)}
+              onClick={() => setIsTrashOpen(false)}
             >
               <IconRenderer name="X" />
             </Button>
@@ -93,7 +89,7 @@ export default function AllNotesModal() {
                   />
                 </InputPrefix>
                 <Input
-                  placeholder="Search notes..."
+                  placeholder="Search notes in trash..."
                   className="pl-8"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
@@ -116,24 +112,16 @@ export default function AllNotesModal() {
             <ScrollArea id="block-scrollarea" className="h-full px-4 py-2">
               {total === 0 ? (
                 <div className="flex h-full flex-col justify-center text-center text-sm">
-                  <p>No notes found.</p>
+                  <p>No trashed notes.</p>
                   <p className="mt-1 text-muted-foreground text-xs">
-                    Start writing something awesome!
+                    Deleted notes will appear here.
                   </p>
                 </div>
               ) : (
-                <div className="space-y-4">
-                  <NoteSection
-                    icon={<IconRenderer name="Pin" />}
-                    title="Pinned"
-                    notes={filteredPinned}
-                  />
-                  <NoteSection
-                    icon={<IconRenderer name="History" />}
-                    title="Recent"
-                    notes={filteredRecent}
-                    defaultOpen
-                  />
+                <div className="grid grid-cols-2 gap-2 p-2 px-1 lg:grid-cols-3">
+                  {filteredNotes.map((note) => (
+                    <TrashItem key={note.id} note={note} selectable={false} />
+                  ))}
                 </div>
               )}
             </ScrollArea>
@@ -142,10 +130,9 @@ export default function AllNotesModal() {
           {/* Footer */}
           <div className="flex shrink-0 items-center justify-between border-t px-4 py-2 text-xs">
             <div className="flex items-center gap-2">
-              <span className="font-medium">Notes</span>
+              <span className="font-medium">Trash Notes</span>
               <NumberFlowBadge value={total} />
             </div>
-            <NotesSortSelector />
           </div>
         </Drawer.Content>
       </Drawer.Portal>

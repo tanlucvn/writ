@@ -14,7 +14,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import { useAppStore } from "@/store/use-app-store";
 import {
   BoldIcon,
   Heading1Icon,
@@ -32,8 +31,11 @@ import {
 import { useEffect, useState } from "react";
 import LinkPopover from "./link-popover";
 
-export const ToolbarFormat = () => {
-  const { editor } = useAppStore();
+interface ToolbarFormatProps {
+  editor: any;
+}
+
+export const ToolbarFormat = ({ editor }: ToolbarFormatProps) => {
   const [, forceUpdate] = useState(0);
 
   useEffect(() => {
@@ -193,7 +195,7 @@ export const ToolbarFormat = () => {
 
       <Separator orientation="vertical" className="h-4" />
 
-      <LinkPopover />
+      <LinkPopover editor={editor} />
 
       {/* Layout formatting */}
       {layoutBlockTypes.map((btn) => (

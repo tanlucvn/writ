@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import {} from "lucide-react";
 import type { CommandItemProps } from "./suggestions";
 
 type CommandListItemProps = {

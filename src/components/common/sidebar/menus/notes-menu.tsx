@@ -16,7 +16,7 @@ import { Trash } from "lucide-react";
 import { useState } from "react";
 
 const SidebarNotesMenu = () => {
-  const { setIsAllNotesModalOpen, setIsTrashModalOpen } = useDialogStore();
+  const { setIsAllNotesOpen, setIsTrashOpen } = useDialogStore();
 
   const [isOpen, setIsOpen] = useState(true);
 
@@ -43,7 +43,7 @@ const SidebarNotesMenu = () => {
           </SidebarMenuButton>
         </SidebarMenuItem>
         <SidebarMenuItem>
-          <SidebarMenuButton onClick={() => setIsAllNotesModalOpen(true)}>
+          <SidebarMenuButton onClick={() => setIsAllNotesOpen(true)}>
             <IconRenderer name="LibraryBig" />
             All Notes
           </SidebarMenuButton>
@@ -52,7 +52,7 @@ const SidebarNotesMenu = () => {
         <SidebarMenuItem>
           <SidebarMenuButton
             className="cursor-pointer text-destructive"
-            onClick={() => setIsTrashModalOpen(true)}
+            onClick={() => setIsTrashOpen(true)}
           >
             <Trash className="h-4 w-4" />
             Trash

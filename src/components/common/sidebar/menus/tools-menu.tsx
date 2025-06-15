@@ -1,11 +1,9 @@
 import { IconRenderer } from "@/components/icon-renderer";
-import {} from "@/components/ui/collapsible";
 import { SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
 import { useDialogStore } from "@/store/use-dialog-store";
 
 const SidebarToolsMenu = () => {
-  const { setSettingsOpen, setStatisticsOpen, setIsShortcutsModalOpen } =
-    useDialogStore();
+  const { setSettingsOpen, setIsKeyboardShortcutsOpen } = useDialogStore();
 
   return (
     <div className="flex flex-col gap-1">
@@ -17,14 +15,14 @@ const SidebarToolsMenu = () => {
       </SidebarMenuItem>
 
       <SidebarMenuItem>
-        <SidebarMenuButton onClick={() => setStatisticsOpen(true)}>
+        <SidebarMenuButton onClick={() => console.log("clicked")}>
           <IconRenderer name="ChartPie" />
           Statistics
         </SidebarMenuButton>
       </SidebarMenuItem>
 
       <SidebarMenuItem>
-        <SidebarMenuButton onClick={() => setIsShortcutsModalOpen(true)}>
+        <SidebarMenuButton onClick={() => setIsKeyboardShortcutsOpen(true)}>
           <IconRenderer name="Keyboard" />
           Keyboard Shortcuts
         </SidebarMenuButton>

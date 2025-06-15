@@ -26,7 +26,7 @@ const SummaryItem = ({
 );
 
 const NoteSummaryModal = () => {
-  const { isWriteSummaryOpen, setIsWriteSummaryOpen } = useDialogStore();
+  const { isNoteSummaryOpen, setIsNoteSummaryOpen } = useDialogStore();
   const { currentEditNote } = useAppStore();
 
   const [summary, setSummary] = useState({
@@ -59,7 +59,7 @@ const NoteSummaryModal = () => {
   }, [currentEditNote]);
 
   return (
-    <Modal open={isWriteSummaryOpen} onOpenChange={setIsWriteSummaryOpen}>
+    <Modal open={isNoteSummaryOpen} onOpenChange={setIsNoteSummaryOpen}>
       <ModalContent>
         <ModalHeader>
           <ModalTitle className="text-base">Write Summary</ModalTitle>

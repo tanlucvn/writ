@@ -12,7 +12,7 @@ const AppInitializer = () => {
   const { loadNotes, loadTrash } = useNoteStore();
   const { loadTags } = useTagStore();
   const { appColor, toggleZenMode } = useAppSettingsStore();
-  const { setIsShortcutsModalOpen, setSettingsOpen } = useDialogStore();
+  const { setIsKeyboardShortcutsOpen, setSettingsOpen } = useDialogStore();
 
   const { onCreate } = useNoteActions();
   const { theme } = useTheme();
@@ -38,7 +38,7 @@ const AppInitializer = () => {
 
   useHotkeys("alt+z", toggleZenMode);
   useHotkeys("alt+n", () => onCreate());
-  useHotkeys("alt+h", () => setIsShortcutsModalOpen(true));
+  useHotkeys("alt+h", () => setIsKeyboardShortcutsOpen(true));
   useHotkeys("alt+s", () => setSettingsOpen(true));
 
   return null;

@@ -1,25 +1,26 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import {
   Modal,
+  ModalClose,
   ModalContent,
   ModalDescription,
   ModalFooter,
   ModalHeader,
   ModalTitle,
+  ModalTrigger,
 } from "@/components/ui/modal";
 import { useNoteActions } from "@/hooks/use-note-actions";
-import { useAppStore } from "@/store/use-app-store";
-import { useDialogStore } from "@/store/use-dialog-store";
-import { useRef, useState } from "react";
+import { type ReactNode, useRef, useState } from "react";
 
-export function SaveNoteModal() {
-  const { editor } = useAppStore();
-  const { isSaveNoteModalOpen, setIsSaveNoteModalOpen } = useDialogStore();
+interface SaveNoteModalProps {
+  children: ReactNode;
+  value: string;
+}
 
+export function SaveNoteModal({ children, value }: SaveNoteModalProps) {
   const [title, setTitle] = useState("Untitled");
   const inputRef = useRef<HTMLInputElement>(null);
   const { onCreate } = useNoteActions();
@@ -29,14 +30,14 @@ export function SaveNoteModal() {
       return;
     }
 
-    const content = editor?.getHTML();
-
-    onCreate({ title: title.trim(), content: content });
-    setIsSaveNoteModalOpen(false);
+    onCreate({ title: title.trim(), content: value });
   };
 
+  console.log("value", value);
+
   return (
-    <Modal open={isSaveNoteModalOpen} onOpenChange={setIsSaveNoteModalOpen}>
+    <Modal>
+      <ModalTrigger asChild>{children}</ModalTrigger>
       <ModalContent className="md:max-w-md">
         <ModalHeader>
           <ModalTitle>Save Note</ModalTitle>
@@ -52,9 +53,9 @@ export function SaveNoteModal() {
           autoFocus
         />
         <ModalFooter className="mt-4 flex justify-end gap-2">
-          <Button variant="ghost" onClick={() => setIsSaveNoteModalOpen(false)}>
-            Cancel
-          </Button>
+          <ModalClose asChild>
+            <Button variant="ghost">Cancel</Button>
+          </ModalClose>
           <Button onClick={onSave}>Save</Button>
         </ModalFooter>
       </ModalContent>

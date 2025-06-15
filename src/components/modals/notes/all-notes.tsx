@@ -36,7 +36,7 @@ const filterNotes = (
 };
 
 export default function AllNotesModal() {
-  const { isAllNotesModalOpen, setIsAllNotesModalOpen } = useDialogStore();
+  const { isAllNotesOpen, setIsAllNotesOpen } = useDialogStore();
   const { notes } = useNoteStore();
   const { tags } = useTagStore();
 
@@ -54,16 +54,16 @@ export default function AllNotesModal() {
   }));
 
   useEffect(() => {
-    if (isAllNotesModalOpen) {
+    if (isAllNotesOpen) {
       setQuery("");
       setSelectedTags([]);
     }
-  }, [isAllNotesModalOpen]);
+  }, [isAllNotesOpen]);
 
   return (
     <Drawer.Root
-      open={isAllNotesModalOpen}
-      onOpenChange={setIsAllNotesModalOpen}
+      open={isAllNotesOpen}
+      onOpenChange={setIsAllNotesOpen}
       direction="right"
     >
       <Drawer.Portal>
@@ -81,7 +81,7 @@ export default function AllNotesModal() {
               variant="ghost"
               size="icon"
               className="absolute top-4 right-4"
-              onClick={() => setIsAllNotesModalOpen(false)}
+              onClick={() => setIsAllNotesOpen(false)}
             >
               <IconRenderer name="X" />
             </Button>

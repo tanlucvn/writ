@@ -1,13 +1,15 @@
 "use client";
+
+import { IconRenderer } from "@/components/icon-renderer";
 import {
   AppearanceSection,
   FeedbackSection,
   StorageSection,
+  SyncSection,
   TagsSection,
   WritingSection,
 } from "@/components/modals/settings/_components/index";
 import { AnimatedTabs } from "@/components/motion";
-import {} from "@/components/ui/command";
 import {
   Modal,
   ModalContent,
@@ -17,46 +19,36 @@ import {
 } from "@/components/ui/modal";
 import { useDialogStore } from "@/store/use-dialog-store";
 import type { TabOption } from "@/types";
-import {
-  ArchiveIcon,
-  BlendIcon,
-  CloudIcon,
-  MessageSquareIcon,
-  PenIcon,
-  TagIcon,
-} from "lucide-react";
-import {} from "react";
-import SyncSection from "./_components/sync-section";
 
 const settingsTabs: TabOption[] = [
   {
     label: "Appearance",
-    icon: <BlendIcon className="size-4" />,
+    icon: <IconRenderer name="Blend" />,
     content: <AppearanceSection />,
   },
   {
     label: "Tags",
-    icon: <TagIcon className="size-4" />,
+    icon: <IconRenderer name="Tag" />,
     content: <TagsSection />,
   },
   {
     label: "Writing",
-    icon: <PenIcon className="size-4" />,
+    icon: <IconRenderer name="Pen" />,
     content: <WritingSection />,
   },
   {
     label: "Feedback",
-    icon: <MessageSquareIcon className="size-4" />,
+    icon: <IconRenderer name="MessageSquare" />,
     content: <FeedbackSection />,
   },
   {
     label: "Backup & Sync",
-    icon: <CloudIcon className="size-4" />,
+    icon: <IconRenderer name="Cloud" />,
     content: <SyncSection />,
   },
   {
     label: "Storage",
-    icon: <ArchiveIcon className="size-4" />,
+    icon: <IconRenderer name="Archive" />,
     content: <StorageSection />,
   },
 ] as const;
