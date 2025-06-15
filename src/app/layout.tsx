@@ -12,7 +12,7 @@ Settings.defaultLocale = "en";
 const geist = Geist({
   subsets: ["latin"],
   variable: "--font-geist",
-  preload: false,
+  preload: true,
 });
 
 const geistMono = Geist_Mono({

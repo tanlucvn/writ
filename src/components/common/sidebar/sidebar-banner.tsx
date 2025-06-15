@@ -45,9 +45,9 @@ export function SidebarBanner() {
     <Card className="py-0 shadow-none">
       <form>
         <CardHeader className="p-4 pb-0">
-          <CardTitle>Login</CardTitle>
+          <CardTitle className="text-base">Get more from Miniwrit</CardTitle>
           <CardDescription>
-            Sign in with your email to securely save your documents.
+            Sign in to securely save your writing and sync across devices.
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-2.5 p-4">
@@ -57,7 +57,7 @@ export function SidebarBanner() {
             disabled={loading}
             onClick={() => signInWithOAuth("google")}
           >
-            Sign in with Email
+            Continue with Google
           </Button>
         </CardContent>
       </form>
