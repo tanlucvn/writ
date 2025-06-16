@@ -109,7 +109,7 @@
     "@commitlint/config-conventional": "^19.7.1",
     "@tailwindcss/postcss": "^4.1.8",
     "@types/luxon": "^3.6.2",
-    "@types/node": "^20",
+    "@types/node": "^24",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "commitizen": "^4.3.1",
