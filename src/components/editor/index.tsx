@@ -47,6 +47,7 @@ const TiptapEditor = ({ defaultValue, onChange }: EditorProps) => {
         },
       },
     },
+    immediatelyRender: false,
   });
 
   return (

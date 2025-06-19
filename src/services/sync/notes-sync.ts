@@ -3,8 +3,8 @@ import { notesTable } from "@/services/turso/schema";
 import type { Note } from "@/types";
 import { and, eq, gt, lt } from "drizzle-orm";
 
-// Push local changes to Turso
-export const pushDexieToTurso = async (syncKey: string) => {
+// Push Local Notes to Turso
+export const pushDexieNotesToTurso = async (syncKey: string) => {
   const lastSyncedAt = await dexie.getLastSyncedAt();
 
   const localNotes = await dexie.db.notes
@@ -37,12 +37,10 @@ export const pushDexieToTurso = async (syncKey: string) => {
         where: lt(notesTable.updatedAt, note.updatedAt), // last write wins
       });
   }
-
-  await dexie.setLastSyncedAt(new Date().toISOString());
 };
 
-// Pull remote changes from Turso to Dexie
-export const pullTursoToDexie = async (syncKey: string) => {
+// Pull remote notes from Turso to Dexie
+export const pullTursoNotesToDexie = async (syncKey: string) => {
   const lastPulledAt = await dexie.getLastPulledAt();
 
   const rows = await turso.clientDb
@@ -76,12 +74,4 @@ export const pullTursoToDexie = async (syncKey: string) => {
       await dexie.db.notes.put({ ...local, ...remoteNote });
     }
   }
-
-  await dexie.setLastPulledAt(new Date().toISOString());
-};
-
-// Full sync
-export const syncWithTurso = async (syncKey: string) => {
-  await pushDexieToTurso(syncKey);
-  await pullTursoToDexie(syncKey);
 };

@@ -23,7 +23,6 @@ export const saveNote = async (note: Note): Promise<Note> => {
   const updatedNote = {
     ...note,
     updatedAt: DateTime.utc().toISO(),
-    synced: 0,
   };
   await dexie.db.notes.put(updatedNote);
   return updatedNote;

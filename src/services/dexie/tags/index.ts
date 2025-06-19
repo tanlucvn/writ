@@ -15,13 +15,12 @@ export const createTag = (overrides: Partial<Tag> = {}): Tag => {
 };
 
 export const saveTag = async (tag: Tag): Promise<Tag> => {
-  const updated = {
+  const updatedTag = {
     ...tag,
     updatedAt: DateTime.utc().toISO(),
-    synced: 0,
   };
-  await dexie.db.tags.put(updated);
-  return updated;
+  await dexie.db.tags.put(updatedTag);
+  return updatedTag;
 };
 
 export const getTagById = (id: string): Promise<Tag | undefined> =>

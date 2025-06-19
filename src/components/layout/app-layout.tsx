@@ -4,6 +4,7 @@ import {
   AppInitializer,
   AutoSyncInitializer,
 } from "@/components/layout/initialize";
+import SyncIndicator from "../sync-indicator";
 import { ModalInitializer } from "./initialize/modal-initializer";
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
@@ -14,6 +15,8 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
       <AutoSyncInitializer />
       <AppInitializer />
       <ModalInitializer />
+
+      <SyncIndicator />
     </main>
   );
 };

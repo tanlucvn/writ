@@ -17,7 +17,7 @@ export const setupAutoSync = ({
   const intervalId = setInterval(async () => {
     try {
       onStart?.();
-      await sync.syncWithTurso(userId);
+      await sync.syncWithTursor(userId);
       onSuccess?.();
     } catch (e) {
       onError?.(e);

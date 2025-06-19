@@ -12,3 +12,11 @@ export const notesTable = sqliteTable("notes", {
   updatedAt: text("updated_at").notNull(),
   syncKey: text("sync_key").notNull(),
 });
+
+export const tagsTable = sqliteTable("tags", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  createdAt: text("created_at").notNull(),
+  updatedAt: text("updated_at").notNull(),
+  syncKey: text("sync_key").notNull(),
+});
