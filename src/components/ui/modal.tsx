@@ -93,7 +93,13 @@ const ModalContent = ({ className, children, ...props }: ModalProps) => {
   const ModalContent = isMobile ? DrawerContent : DialogContent;
 
   return (
-    <ModalContent className={className} {...props}>
+    <ModalContent
+      className={cn(
+        "max-md:!right-2 max-md:!bottom-2 max-md:!left-2 after:hidden after:content-none max-md:rounded-md max-md:border",
+        className,
+      )}
+      {...props}
+    >
       {children}
     </ModalContent>
   );

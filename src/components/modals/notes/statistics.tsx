@@ -75,7 +75,7 @@ const Statistics = () => {
     >
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 z-40 bg-black/40" />
-        <Drawer.Content className="fixed top-0 right-0 bottom-0 z-50 flex h-full w-full flex-col gap-4 overflow-hidden rounded-xl border bg-background p-4 shadow-xl sm:top-2 sm:right-2 sm:bottom-2 sm:h-[98%] sm:max-w-md">
+        <Drawer.Content className="fixed top-2 right-2 bottom-2 left-2 z-50 flex h-[98%] flex-col gap-4 overflow-hidden rounded-xl border bg-background p-4 shadow-xl sm:left-auto sm:w-full sm:max-w-md">
           {/* Header */}
           <div className="shrink-0 pb-2">
             <Drawer.Title className="font-medium text-base text-foreground">
@@ -96,15 +96,15 @@ const Statistics = () => {
           </div>
 
           {/* Summary */}
-          <div className="grid grid-cols-3 gap-3 text-center text-sm">
+          <div className="grid grid-cols-3 gap-2 text-center text-sm">
             {[
               { label: "Total", value: total },
               { label: "Active", value: active },
               { label: "Trash", value: trashed },
             ].map(({ label, value }) => (
               <div key={label} className="rounded-md border bg-secondary py-2">
-                <div className="text-muted-foreground text-xs">{label}</div>
-                <div className="font-semibold">{value}</div>
+                <div className="text-muted-foreground text-sm">{label}</div>
+                <div className="font-medium">{value}</div>
               </div>
             ))}
           </div>
@@ -172,39 +172,43 @@ const Statistics = () => {
                   getNoteBgColor(count),
                 );
 
-                return (
+                return count > 0 ? (
                   <Popover key={iso}>
                     <PopoverTrigger asChild>
                       <div className={bg}>{day}</div>
                     </PopoverTrigger>
-                    <PopoverContent className="w-44 select-none text-xs">
-                      <p className="mb-1 text-[10px] text-muted-foreground">
+                    <PopoverContent className="w-44 select-none text-sm">
+                      <p className="mb-1 text-muted-foreground text-xs">
                         {iso}
                       </p>
                       <div className="flex justify-between">
-                        <span>Total</span>
+                        <span className="text-muted-foreground">Total</span>
                         <span>{count}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span>Active</span>
+                        <span className="text-muted-foreground">Active</span>
                         <span>{activeByDay.get(iso) || 0}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span>Trash</span>
+                        <span className="text-muted-foreground">Trash</span>
                         <span>{trashedByDay.get(iso) || 0}</span>
                       </div>
                     </PopoverContent>
                   </Popover>
+                ) : (
+                  <div key={iso} className={bg}>
+                    {day}
+                  </div>
                 );
               })}
             </div>
 
-            <div className="flex items-center justify-center gap-2 text-muted-foreground text-xs">
+            <div className="flex items-center justify-center gap-1 text-muted-foreground text-xs">
               <span>None</span>
-              <div className="h-3 w-3 rounded-xs bg-muted" />
-              <div className="h-3 w-3 rounded-xs bg-primary/40" />
-              <div className="h-3 w-3 rounded-xs bg-primary/80" />
-              <div className="h-3 w-3 rounded-xs bg-primary" />
+              <div className="size-4 rounded-[5px] border bg-muted" />
+              <div className="size-4 rounded-[5px] border bg-primary/40" />
+              <div className="size-4 rounded-[5px] border bg-primary/80" />
+              <div className="size-4 rounded-[5px] border bg-primary" />
               <span>More</span>
             </div>
           </div>

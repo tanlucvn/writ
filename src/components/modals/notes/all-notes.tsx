@@ -68,7 +68,7 @@ export default function AllNotesModal() {
     >
       <Drawer.Portal>
         <Drawer.Overlay className="fixed inset-0 z-40 bg-black/40" />
-        <Drawer.Content className="fixed top-0 right-0 bottom-0 z-50 flex h-full w-full flex-col overflow-hidden rounded-xl border bg-background shadow-xl sm:top-2 sm:right-2 sm:bottom-2 sm:h-[98%] sm:max-w-md">
+        <Drawer.Content className="fixed top-2 right-2 bottom-2 left-2 z-50 flex h-[98%] flex-col overflow-hidden rounded-xl border bg-background shadow-xl sm:left-auto sm:w-full sm:max-w-md">
           {/* Header */}
           <div className="shrink-0 border-b p-4 pb-2">
             <Drawer.Title className="font-medium text-base text-foreground">

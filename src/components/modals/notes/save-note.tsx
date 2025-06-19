@@ -33,8 +33,6 @@ export function SaveNoteModal({ children, value }: SaveNoteModalProps) {
     onCreate({ title: title.trim(), content: value });
   };
 
-  console.log("value", value);
-
   return (
     <Modal>
       <ModalTrigger asChild>{children}</ModalTrigger>
