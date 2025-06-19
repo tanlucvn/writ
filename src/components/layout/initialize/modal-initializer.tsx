@@ -1,5 +1,6 @@
 "use client";
 
+import Statistics from "@/components/modals/notes/statistics";
 import { useDialogStore } from "@/store/use-dialog-store";
 import dynamic from "next/dynamic";
 
@@ -28,6 +29,7 @@ export const ModalInitializer = () => {
     isEditNoteTitleOpen,
     isNoteSummaryOpen,
     isKeyboardShortcutsOpen,
+    isStatisticsOpen,
   } = useDialogStore();
 
   const modals = [
@@ -37,6 +39,7 @@ export const ModalInitializer = () => {
     { open: isEditNoteTitleOpen, Component: EditNoteTitleModal },
     { open: isNoteSummaryOpen, Component: NoteSummaryModal },
     { open: isKeyboardShortcutsOpen, Component: KeyboardShortcutsModal },
+    { open: isStatisticsOpen, Component: Statistics },
   ];
 
   return (

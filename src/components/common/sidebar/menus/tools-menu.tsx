@@ -3,7 +3,8 @@ import { SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
 import { useDialogStore } from "@/store/use-dialog-store";
 
 const SidebarToolsMenu = () => {
-  const { setSettingsOpen, setIsKeyboardShortcutsOpen } = useDialogStore();
+  const { setSettingsOpen, setIsKeyboardShortcutsOpen, setIsStatisticsOpen } =
+    useDialogStore();
 
   return (
     <div className="flex flex-col gap-1">
@@ -15,7 +16,7 @@ const SidebarToolsMenu = () => {
       </SidebarMenuItem>
 
       <SidebarMenuItem>
-        <SidebarMenuButton onClick={() => console.log("clicked")}>
+        <SidebarMenuButton onClick={() => setIsStatisticsOpen(true)}>
           <IconRenderer name="ChartPie" />
           Statistics
         </SidebarMenuButton>

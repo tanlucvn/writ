@@ -1,5 +1,5 @@
 import type { Note } from "@/types";
-import { getAllNotes } from "./notes";
+import { getAllNotes, getTotalNotes, getTrashedNotes } from "./notes";
 
 const getLastNDates = (days: number): string[] => {
   const today = new Date();
@@ -28,13 +28,11 @@ const getNoteCountPerDay = async (
   return counts;
 };
 
-export const getTotalNoteCount = async () => (await getAllNotes()).length;
+export const getTotalNoteCount = async () => (await getTotalNotes()).length;
 
-export const getTrashedNoteCount = async () =>
-  (await getAllNotes()).filter((n) => n.inTrash).length;
+export const getTrashedNoteCount = async () => (await getTrashedNotes()).length;
 
-export const getActiveNoteCount = async () =>
-  (await getAllNotes()).filter((n) => !n.inTrash).length;
+export const getActiveNoteCount = async () => (await getAllNotes()).length;
 
 export const getNoteCountByDay = () => getNoteCountPerDay(() => true);
 

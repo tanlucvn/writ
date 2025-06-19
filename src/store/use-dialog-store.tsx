@@ -18,6 +18,9 @@ interface DialogStore {
 
   isTrashOpen: boolean;
   setIsTrashOpen: (open: boolean) => void;
+
+  isStatisticsOpen: boolean;
+  setIsStatisticsOpen: (open: boolean) => void;
 }
 
 export const useDialogStore = create<DialogStore>((set) => ({
@@ -38,4 +41,7 @@ export const useDialogStore = create<DialogStore>((set) => ({
 
   isEditNoteTitleOpen: false,
   setIsEditNoteTitleOpen: (open) => set({ isEditNoteTitleOpen: open }),
+
+  isStatisticsOpen: false,
+  setIsStatisticsOpen: (open) => set({ isStatisticsOpen: open }),
 }));

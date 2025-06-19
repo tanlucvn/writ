@@ -31,6 +31,9 @@ export const saveNote = async (note: Note): Promise<Note> => {
 export const getNoteById = (id: string): Promise<Note | undefined> =>
   dexie.db.notes.get(id);
 
+export const getTotalNotes = (): Promise<Note[]> => dexie.db.notes.toArray();
+
+// Not in trash
 export const getAllNotes = (): Promise<Note[]> =>
   dexie.db.notes.filter((note) => !note.inTrash).toArray();
 
@@ -43,7 +46,7 @@ export const getNotesByParentId = (parentId: string): Promise<Note[]> => {
 };
 
 export const getTrashedNotes = (): Promise<Note[]> =>
-  dexie.db.notes.filter((note) => note.inTrash).sortBy("updatedAt");
+  dexie.db.notes.filter((note) => note.inTrash).toArray();
 
 export const moveNoteToTrash = async (id: string): Promise<void> => {
   await dexie.db.notes.update(id, {
