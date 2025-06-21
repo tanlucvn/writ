@@ -10,9 +10,12 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
+import { useDialogStore } from "@/store/use-dialog-store";
 import { useState } from "react";
 
 const SidebarSessionsMenu = () => {
+  const { setIsNewSessionOpen } = useDialogStore();
+
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -30,7 +33,7 @@ const SidebarSessionsMenu = () => {
 
       <CollapsibleContent className="my-2 space-y-1">
         <SidebarMenuItem>
-          <SidebarMenuButton>
+          <SidebarMenuButton onClick={() => setIsNewSessionOpen(true)}>
             <IconRenderer name="Plus" />
             New Session
           </SidebarMenuButton>

@@ -1,47 +1,50 @@
 import { dexie } from "@/services";
-import type { Note, Session } from "@/types";
+import type { Session } from "@/types";
+import { DateTime } from "luxon";
 import { v4 as uuidv4 } from "uuid";
 
-// Create a new session
 export const createSession = (
-  note: Note,
-  duration: number,
-  startingWordCount: number,
-  endingWordCount: number,
-): Session => ({
-  id: uuidv4(),
-  noteId: note.id,
-  duration,
-  startingWordCount,
-  endingWordCount,
-});
+  overrides: Partial<Session> & { noteId: string },
+): Session => {
+  const now = DateTime.utc().toISO();
 
-// Save a session to the database
+  return {
+    id: uuidv4(),
+    noteId: overrides.noteId,
+    duration: overrides.duration ?? 0,
+    startingWordCount: overrides.startingWordCount ?? 0,
+    endingWordCount: overrides.endingWordCount ?? 0,
+    createdAt: overrides.createdAt ?? now,
+    updatedAt: overrides.updatedAt ?? now,
+
+    goalType: overrides.goalType,
+    goalValue: overrides.goalValue,
+    label: overrides.label,
+  };
+};
+
 export const saveSession = async (session: Session): Promise<Session> => {
-  await dexie.db.sessions.put(session);
-  return session;
+  const updatedSession = {
+    ...session,
+    updatedAt: DateTime.utc().toISO(),
+  };
+  await dexie.db.sessions.put(updatedSession);
+  return updatedSession;
 };
 
-// Get a session by ID
-export const getSessionById = async (
-  id: string,
-): Promise<Session | undefined> => {
-  return dexie.db.sessions.get(id);
-};
+export const getSessionById = (id: string): Promise<Session | undefined> =>
+  dexie.db.sessions.get(id);
 
-// Get all sessions
-export const getAllSessions = async (): Promise<Session[]> => {
-  return dexie.db.sessions.toArray();
-};
+export const getAllSessions = (): Promise<Session[]> =>
+  dexie.db.sessions.toArray();
 
-// Get all sessions linked to a specific note
-export const getSessionsByNoteId = async (
-  noteId: string,
-): Promise<Session[]> => {
-  return dexie.db.sessions.where("noteId").equals(noteId).toArray();
-};
+export const getSessionsByNoteId = (noteId: string): Promise<Session[]> =>
+  dexie.db.sessions.where("noteId").equals(noteId).toArray();
 
-// Delete a session by ID
-export const deleteSession = async (id: string): Promise<void> => {
-  await dexie.db.sessions.delete(id);
+export const deleteSession = (id: string): Promise<void> =>
+  dexie.db.sessions.delete(id);
+
+export const clearAllSessions = async (): Promise<void> => {
+  const all = await getAllSessions();
+  await Promise.all(all.map((s) => dexie.db.sessions.delete(s.id)));
 };

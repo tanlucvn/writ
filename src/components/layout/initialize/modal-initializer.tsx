@@ -1,6 +1,5 @@
 "use client";
 
-import Statistics from "@/components/modals/notes/statistics";
 import { useDialogStore } from "@/store/use-dialog-store";
 import dynamic from "next/dynamic";
 
@@ -20,6 +19,12 @@ const NoteSummaryModal = dynamic(
 const KeyboardShortcutsModal = dynamic(
   () => import("@/components/modals/keyboard-shortcuts"),
 );
+const Statistics = dynamic(
+  () => import("@/components/modals/notes/statistics"),
+);
+const NewSessionModal = dynamic(
+  () => import("@/components/modals/sessions/new-session"),
+);
 
 export const ModalInitializer = () => {
   const {
@@ -30,6 +35,7 @@ export const ModalInitializer = () => {
     isNoteSummaryOpen,
     isKeyboardShortcutsOpen,
     isStatisticsOpen,
+    isNewSessionOpen,
   } = useDialogStore();
 
   const modals = [
@@ -40,6 +46,7 @@ export const ModalInitializer = () => {
     { open: isNoteSummaryOpen, Component: NoteSummaryModal },
     { open: isKeyboardShortcutsOpen, Component: KeyboardShortcutsModal },
     { open: isStatisticsOpen, Component: Statistics },
+    { open: isNewSessionOpen, Component: NewSessionModal },
   ];
 
   return (

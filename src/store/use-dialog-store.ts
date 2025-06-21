@@ -21,6 +21,9 @@ interface DialogStore {
 
   isStatisticsOpen: boolean;
   setIsStatisticsOpen: (open: boolean) => void;
+
+  isNewSessionOpen: boolean;
+  setIsNewSessionOpen: (open: boolean) => void;
 }
 
 export const useDialogStore = create<DialogStore>((set) => ({
@@ -44,4 +47,7 @@ export const useDialogStore = create<DialogStore>((set) => ({
 
   isStatisticsOpen: false,
   setIsStatisticsOpen: (open) => set({ isStatisticsOpen: open }),
+
+  isNewSessionOpen: false,
+  setIsNewSessionOpen: (open) => set({ isNewSessionOpen: open }),
 }));

@@ -4,6 +4,7 @@ import Editor from "@/components/editor";
 import { IconRenderer } from "@/components/icon-renderer";
 import { NoteControlsDropdown } from "@/components/notes/note-controls-dropdown";
 import { NoteSkeleton } from "@/components/notes/note-skeleton";
+import { SessionToolbar } from "@/components/sessions/session-toolbar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
@@ -49,6 +50,8 @@ export default function Page() {
           }}
         />
       </div>
+
+      <SessionToolbar />
     </>
   );
 }
