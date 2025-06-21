@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
 import { countWords } from "@/lib/utils";
+import { dexie } from "@/services";
 import { useActiveSessionStore } from "@/store/use-active-session-store";
 import { useNoteStore } from "@/store/use-note-store";
 import { useSessionStore } from "@/store/use-session-store";
@@ -63,6 +64,7 @@ export function SessionToolbar() {
 
   const handleEnd = async () => {
     await updateSession({ ...session, endingWordCount: currentWordCount });
+    await dexie.clearActiveSessionId();
     endSession();
   };
 
