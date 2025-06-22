@@ -1,27 +1,39 @@
 "use client";
 
-import { cleanContent } from "@/lib/utils";
-import { useAppStore } from "@/store/use-app-store";
-import { useDialogStore } from "@/store/use-dialog-store";
-import { useEffect, useState } from "react";
 import {
   Modal,
   ModalContent,
   ModalDescription,
   ModalHeader,
   ModalTitle,
-} from "../../ui/modal";
+} from "@/components/ui/modal";
+import {
+  cleanContent,
+  countCharacters,
+  countParagraphs,
+  countSentences,
+  countWords,
+} from "@/lib/utils";
+import { useAppStore } from "@/store/use-app-store";
+import { useDialogStore } from "@/store/use-dialog-store";
+import NumberFlow from "@number-flow/react";
+import { useEffect, useState } from "react";
 
 const SummaryItem = ({
   label,
   value,
+  suffix,
 }: {
   label: string;
-  value: string | number;
+  value: number;
+  suffix?: string;
 }) => (
   <div className="flex flex-col gap-1 rounded-md border bg-card p-2 shadow-xs">
     <span className="text-muted-foreground text-sm">{label}</span>
-    <span className="font-medium text-foreground text-lg">{value}</span>
+    <span className="flex items-baseline gap-1 font-medium text-foreground text-lg">
+      <NumberFlow format={{ notation: "compact" }} value={value} />
+      {suffix && <span className="text-xs">{suffix}</span>}
+    </span>
   </div>
 );
 
@@ -43,19 +55,17 @@ const NoteSummaryModal = () => {
     const raw = currentEditNote.content || "";
     const text = cleanContent(raw);
 
-    const letters = text.length;
-    const wordsArr = text.split(/\s+/).filter(Boolean);
-    const paragraphs = text.split(/\n{2,}/).filter((p) => p.trim());
-    const sentences = text.split(/[.!?]+/).filter(Boolean);
-    const readingTime = Math.ceil(wordsArr.length / 200);
+    const timeout = setTimeout(() => {
+      setSummary({
+        letters: countCharacters(text),
+        words: countWords(text),
+        paragraphs: countParagraphs(text),
+        sentences: countSentences(text),
+        readingTime: Math.ceil(countWords(text) / 200),
+      });
+    }, 100);
 
-    setSummary({
-      letters,
-      words: wordsArr.length,
-      paragraphs: paragraphs.length,
-      sentences: sentences.length,
-      readingTime,
-    });
+    return () => clearTimeout(timeout);
   }, [currentEditNote]);
 
   return (
@@ -75,7 +85,8 @@ const NoteSummaryModal = () => {
           <SummaryItem label="Sentences" value={summary.sentences} />
           <SummaryItem
             label="Reading Time"
-            value={`${summary.readingTime} min`}
+            value={summary.readingTime}
+            suffix={summary.readingTime === 1 ? "minute" : "minutes"}
           />
         </div>
       </ModalContent>

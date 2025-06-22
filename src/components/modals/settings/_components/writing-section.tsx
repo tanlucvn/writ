@@ -40,16 +40,10 @@ const WritingSection = () => {
                 Inter (default)
               </SelectItem>
               <SelectItem
-                value="spacegrotesk"
+                value="geist"
                 className="font-spacegrotesk text-xs hover:bg-accent"
               >
-                Space Grotesk
-              </SelectItem>
-              <SelectItem
-                value="dmsans"
-                className="font-dmsans text-xs hover:bg-accent"
-              >
-                DM Sans
+                Geist
               </SelectItem>
             </SelectContent>
           </Select>

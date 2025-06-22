@@ -9,14 +9,22 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { useCurrentNote } from "@/hooks/use-current-note";
 import { cn } from "@/lib/utils";
 import { useDialogStore } from "@/store/use-dialog-store";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const SidebarSessionsMenu = () => {
-  const { setIsNewSessionOpen } = useDialogStore();
+  const { setIsNewSessionOpen, setIsSessionHistoryOpen } = useDialogStore();
+  const currentNote = useCurrentNote();
 
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpenSession = () => {
+    if (!currentNote) return toast.error("Open a note to start a session.");
+    setIsNewSessionOpen(true);
+  };
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
@@ -33,14 +41,14 @@ const SidebarSessionsMenu = () => {
 
       <CollapsibleContent className="my-2 space-y-1">
         <SidebarMenuItem>
-          <SidebarMenuButton onClick={() => setIsNewSessionOpen(true)}>
+          <SidebarMenuButton onClick={handleOpenSession}>
             <IconRenderer name="Plus" />
             New Session
           </SidebarMenuButton>
         </SidebarMenuItem>
 
         <SidebarMenuItem>
-          <SidebarMenuButton>
+          <SidebarMenuButton onClick={() => setIsSessionHistoryOpen(true)}>
             <IconRenderer name="LibraryBig" />
             View History
           </SidebarMenuButton>

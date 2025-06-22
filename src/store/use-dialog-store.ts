@@ -24,6 +24,9 @@ interface DialogStore {
 
   isNewSessionOpen: boolean;
   setIsNewSessionOpen: (open: boolean) => void;
+
+  isSessionHistoryOpen: boolean;
+  setIsSessionHistoryOpen: (open: boolean) => void;
 }
 
 export const useDialogStore = create<DialogStore>((set) => ({
@@ -50,4 +53,7 @@ export const useDialogStore = create<DialogStore>((set) => ({
 
   isNewSessionOpen: false,
   setIsNewSessionOpen: (open) => set({ isNewSessionOpen: open }),
+
+  isSessionHistoryOpen: false,
+  setIsSessionHistoryOpen: (open) => set({ isSessionHistoryOpen: open }),
 }));

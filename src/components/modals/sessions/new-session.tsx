@@ -1,15 +1,5 @@
 "use client";
 
-import { useCurrentNote } from "@/hooks/use-current-note";
-import { useSessionActions } from "@/hooks/use-session-actions";
-import { countWords } from "@/lib/utils";
-import { dexie } from "@/services";
-import { useActiveSessionStore } from "@/store/use-active-session-store";
-import { useDialogStore } from "@/store/use-dialog-store";
-import type { GoalType } from "@/types";
-import { useState } from "react";
-
-import { IconRenderer } from "@/components/icon-renderer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -29,6 +19,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useCurrentNote } from "@/hooks/use-current-note";
+import { useSessionActions } from "@/hooks/use-session-actions";
+import { countWords } from "@/lib/utils";
+import { dexie } from "@/services";
+import { useActiveSessionStore } from "@/store/use-active-session-store";
+import { useDialogStore } from "@/store/use-dialog-store";
+import type { GoalType } from "@/types";
+import { useState } from "react";
 
 const durations = [5, 10, 15, 25, 45];
 
@@ -43,16 +41,11 @@ const NewSessionModal = () => {
   const [goalType, setGoalType] = useState<GoalType | undefined>();
   const [goalValue, setGoalValue] = useState<number>(0);
   const [label, setLabel] = useState("");
-  const [error, setError] = useState<string | null>(null);
 
   const isStartDisabled = !duration || (goalType === "wordCount" && !goalValue);
 
   const handleStartSession = async () => {
-    setError(null);
-    if (!currentNote || !duration) {
-      setError("You need to be in a note to start a session.");
-      return;
-    }
+    if (!currentNote || !duration) return;
 
     const newSessionId = await onCreateSession({
       noteId: currentNote.id,
@@ -64,14 +57,11 @@ const NewSessionModal = () => {
       label,
     });
 
-    if (!newSessionId) {
-      setError("Could not create session. Please try again.");
-      return;
+    if (newSessionId) {
+      await dexie.setActiveSessionId(newSessionId);
+      start(newSessionId);
+      setIsNewSessionOpen(false);
     }
-
-    await dexie.setActiveSessionId(newSessionId);
-    start(newSessionId);
-    setIsNewSessionOpen(false);
   };
 
   return (
@@ -94,9 +84,8 @@ const NewSessionModal = () => {
           <GoalValueInput goalValue={goalValue} setGoalValue={setGoalValue} />
         )}
         <LabelInput label={label} setLabel={setLabel} />
-        {error && <ErrorMessage message={error} />}
 
-        <ModalFooter className="flex justify-end gap-2 pt-0">
+        <ModalFooter className="flex justify-end gap-2">
           <ModalClose asChild>
             <Button variant="outline">Cancel</Button>
           </ModalClose>
@@ -198,13 +187,6 @@ const LabelInput = ({
       onChange={(e) => setLabel(e.target.value)}
       placeholder="e.g. Morning Journal, Brain dump..."
     />
-  </div>
-);
-
-const ErrorMessage = ({ message }: { message: string }) => (
-  <div className="flex items-center gap-2 text-destructive text-sm">
-    <IconRenderer name="AlertCircle" />
-    <span>{message}</span>
   </div>
 );
 

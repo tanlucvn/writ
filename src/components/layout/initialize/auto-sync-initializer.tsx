@@ -6,7 +6,7 @@ import { useAppStore } from "@/store/use-app-store";
 import { useUser } from "@clerk/nextjs";
 import { useEffect, useRef } from "react";
 
-const AutoSyncInitializer = () => {
+export const AutoSyncInitializer = () => {
   const { user } = useUser();
   const { setSyncStatus } = useAppStore();
   const { isAutoSync } = useAppSettingsStore();
@@ -34,5 +34,3 @@ const AutoSyncInitializer = () => {
 
   return null;
 };
-
-export default AutoSyncInitializer;

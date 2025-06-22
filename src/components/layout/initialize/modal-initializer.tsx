@@ -25,6 +25,9 @@ const Statistics = dynamic(
 const NewSessionModal = dynamic(
   () => import("@/components/modals/sessions/new-session"),
 );
+const SessionHistoryModal = dynamic(
+  () => import("@/components/modals/sessions/session-history"),
+);
 
 export const ModalInitializer = () => {
   const {
@@ -36,6 +39,7 @@ export const ModalInitializer = () => {
     isKeyboardShortcutsOpen,
     isStatisticsOpen,
     isNewSessionOpen,
+    isSessionHistoryOpen,
   } = useDialogStore();
 
   const modals = [
@@ -47,6 +51,7 @@ export const ModalInitializer = () => {
     { open: isKeyboardShortcutsOpen, Component: KeyboardShortcutsModal },
     { open: isStatisticsOpen, Component: Statistics },
     { open: isNewSessionOpen, Component: NewSessionModal },
+    { open: isSessionHistoryOpen, Component: SessionHistoryModal },
   ];
 
   return (
