@@ -1,4 +1,5 @@
 import { IconRenderer } from "@/components/icon-renderer";
+import NoteItem from "@/components/modals/notes/_components/note-item";
 import { NumberFlowBadge } from "@/components/number-flow-badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -6,7 +7,6 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import NoteItem from "@/components/writes/note-item";
 import type { Note } from "@/types";
 import { useState } from "react";
 

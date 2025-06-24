@@ -19,7 +19,7 @@ export const createSession = (
 
     goalType: overrides.goalType,
     goalValue: overrides.goalValue,
-    label: overrides.label,
+    label: overrides.label ?? "Untitled Session",
   };
 };
 

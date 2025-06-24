@@ -24,6 +24,30 @@ export const SORT_OPTIONS_GROUPED = [
   },
 ];
 
+export const SESSION_SORT_OPTIONS = [
+  {
+    group: "Date",
+    options: [
+      { label: "Newest", value: "newest" },
+      { label: "Oldest", value: "oldest" },
+    ],
+  },
+  {
+    group: "Duration",
+    options: [
+      { label: "Longest", value: "longest" },
+      { label: "Shortest", value: "shortest" },
+    ],
+  },
+  {
+    group: "Words Written",
+    options: [
+      { label: "Most Words", value: "mostWords" },
+      { label: "Least Words", value: "leastWords" },
+    ],
+  },
+];
+
 export const COLOR_OPTIONS: { label: string; value: AppColor; desc: string }[] =
   [
     {

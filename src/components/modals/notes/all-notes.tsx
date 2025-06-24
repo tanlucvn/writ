@@ -9,14 +9,14 @@ import { Drawer } from "vaul";
 import { IconRenderer } from "@/components/icon-renderer";
 import { NotesSortSelector } from "@/components/modals";
 import { NotesTransferButton } from "@/components/notes/notes-transfer-button";
-import { NumberFlowBadge } from "@/components/number-flow-badge";
-import { MultiSelect } from "@/components/ui/multi-select";
 import { useGroupNotes } from "@/hooks/use-group-notes";
 import { useDialogStore } from "@/store/use-dialog-store";
 import { useNoteStore } from "@/store/use-note-store";
 import { useTagStore } from "@/store/use-tags-store";
 import type { Note } from "@/types";
+import NumberFlow from "@number-flow/react";
 import NoteSection from "./_components/note-section";
+import { TagFilter } from "./_components/tag-filter";
 
 const filterNotes = (
   notes: Note[],
@@ -47,11 +47,6 @@ export default function AllNotesModal() {
   const filteredPinned = filterNotes(pinned, query, selectedTags);
   const filteredRecent = filterNotes(recent, query, selectedTags);
   const total = filteredPinned.length + filteredRecent.length;
-
-  const tagOptions = tags.map((tag) => ({
-    label: tag.name,
-    value: tag.id,
-  }));
 
   useEffect(() => {
     if (isAllNotesOpen) {
@@ -102,12 +97,7 @@ export default function AllNotesModal() {
               </InputWrapper>
 
               {tags.length > 0 && (
-                <MultiSelect
-                  options={tagOptions}
-                  defaultValue={selectedTags}
-                  onValueChange={setSelectedTags}
-                  placeholder="Filter by tags"
-                />
+                <TagFilter selected={selectedTags} onChange={setSelectedTags} />
               )}
             </div>
           </div>
@@ -143,10 +133,14 @@ export default function AllNotesModal() {
           </div>
 
           {/* Footer */}
-          <div className="flex shrink-0 items-center justify-between border-t px-4 py-2 text-xs">
-            <div className="flex items-center gap-2">
-              <span className="font-medium">Notes</span>
-              <NumberFlowBadge value={total} />
+          <div
+            className="flex shrink-0 items-center justify-between border-t px-4 py-2 text-xs"
+            data-vault-no-drag
+          >
+            <div className="flex items-center gap-1 font-medium text-xs">
+              <IconRenderer name="LibraryBig" />
+              <NumberFlow value={total} />
+              <span className="mt-[1px]">{total === 1 ? "Note" : "Notes"}</span>
             </div>
             <NotesSortSelector />
           </div>

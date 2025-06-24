@@ -49,7 +49,7 @@ const SidebarSessionsMenu = () => {
 
         <SidebarMenuItem>
           <SidebarMenuButton onClick={() => setIsSessionHistoryOpen(true)}>
-            <IconRenderer name="LibraryBig" />
+            <IconRenderer name="History" />
             View History
           </SidebarMenuButton>
         </SidebarMenuItem>

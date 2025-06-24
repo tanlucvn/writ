@@ -1,10 +1,10 @@
 import type { Note } from "@/types";
 
-export interface WriteTemplate extends Note {
+export interface NoteTemplate extends Note {
   desc: string;
 }
 
-export const explorerTemplates: WriteTemplate[] = [
+export const explorerTemplates: NoteTemplate[] = [
   {
     id: "template-1",
     title: "Daily Journal",

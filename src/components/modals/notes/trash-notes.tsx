@@ -7,13 +7,13 @@ import { useEffect, useState } from "react";
 import { Drawer } from "vaul";
 
 import { IconRenderer } from "@/components/icon-renderer";
-import { NumberFlowBadge } from "@/components/number-flow-badge";
-import { MultiSelect } from "@/components/ui/multi-select";
-import TrashItem from "@/components/writes/trash-item";
+import TrashItem from "@/components/modals/notes/_components/trash-item";
 import { useDialogStore } from "@/store/use-dialog-store";
 import { useNoteStore } from "@/store/use-note-store";
 import { useTagStore } from "@/store/use-tags-store";
 import type { Note } from "@/types";
+import NumberFlow from "@number-flow/react";
+import { TagFilter } from "./_components/tag-filter";
 
 const filterNotes = (
   notes: Note[],
@@ -42,11 +42,6 @@ export default function TrashModal() {
 
   const filteredNotes = filterNotes(trash, query, selectedTags);
   const total = filteredNotes.length;
-
-  const tagOptions = tags.map((tag) => ({
-    label: tag.name,
-    value: tag.id,
-  }));
 
   useEffect(() => {
     if (isTrashOpen) {
@@ -97,12 +92,7 @@ export default function TrashModal() {
               </InputWrapper>
 
               {tags.length > 0 && (
-                <MultiSelect
-                  options={tagOptions}
-                  defaultValue={selectedTags}
-                  onValueChange={setSelectedTags}
-                  placeholder="Filter by tags"
-                />
+                <TagFilter selected={selectedTags} onChange={setSelectedTags} />
               )}
             </div>
           </div>
@@ -128,10 +118,11 @@ export default function TrashModal() {
           </div>
 
           {/* Footer */}
-          <div className="flex shrink-0 items-center justify-between border-t px-4 py-2 text-xs">
-            <div className="flex items-center gap-2">
-              <span className="font-medium">Trash Notes</span>
-              <NumberFlowBadge value={total} />
+          <div className="flex h-12 shrink-0 items-center justify-between border-t px-4 py-2 text-xs">
+            <div className="flex items-center gap-1 font-medium text-xs">
+              <IconRenderer name="Trash" />
+              <NumberFlow value={total} />
+              <span className="mt-[1px]">{total === 1 ? "Note" : "Notes"}</span>
             </div>
           </div>
         </Drawer.Content>

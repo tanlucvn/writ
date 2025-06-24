@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Select,
   SelectContent,
@@ -8,19 +9,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { SORT_OPTIONS_GROUPED } from "@/lib/constants";
-import { sortWrites } from "@/lib/utils";
-import { useAppSettingsStore } from "@/store/use-app-settings-store";
-import { useNoteStore } from "@/store/use-note-store";
+import { SESSION_SORT_OPTIONS } from "@/lib/constants";
+import { sortSessions } from "@/lib/utils";
+import { useSessionStore } from "@/store/use-session-store";
+import { useState } from "react";
 
-const NotesSortSelector = () => {
-  const { notes, setNotes } = useNoteStore();
-  const { sortOption, setSortOption } = useAppSettingsStore();
+const SessionSortSelector = () => {
+  const { sessions, setSessions } = useSessionStore();
+  const [sortOption, setSortOption] = useState("newest");
 
   const handleSort = (value: string) => {
     setSortOption(value);
-    const sorted = sortWrites(notes, value);
-    setNotes(sorted);
+    const sorted = sortSessions(sessions, value);
+    setSessions(sorted);
   };
 
   return (
@@ -30,7 +31,7 @@ const NotesSortSelector = () => {
       </SelectTrigger>
 
       <SelectContent>
-        {SORT_OPTIONS_GROUPED.map(({ group, options }) => (
+        {SESSION_SORT_OPTIONS.map(({ group, options }) => (
           <SelectGroup key={group}>
             <SelectLabel className="font-mono text-muted-foreground text-xs">
               {group}
@@ -51,4 +52,4 @@ const NotesSortSelector = () => {
   );
 };
 
-export default NotesSortSelector;
+export default SessionSortSelector;

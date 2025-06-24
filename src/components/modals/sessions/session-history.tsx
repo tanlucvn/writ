@@ -6,9 +6,10 @@ import { Input, InputPrefix, InputWrapper } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useDialogStore } from "@/store/use-dialog-store";
 import { useSessionStore } from "@/store/use-session-store";
+import NumberFlow from "@number-flow/react";
 import { useMemo, useState } from "react";
 import { Drawer } from "vaul";
-import { SessionHistoryItem } from "./_components/session-history-item";
+import { SessionHistoryItem, SessionSortSelector } from "./_components";
 
 export default function SessionHistoryModal() {
   const { isSessionHistoryOpen, setIsSessionHistoryOpen } = useDialogStore();
@@ -51,7 +52,7 @@ export default function SessionHistoryModal() {
               <IconRenderer name="X" />
             </Button>
 
-            <div className="mt-3 space-y-2">
+            <div className="mt-3 space-y-4">
               <InputWrapper>
                 <InputPrefix>
                   <IconRenderer
@@ -90,11 +91,15 @@ export default function SessionHistoryModal() {
           </div>
 
           {/* Footer */}
-          <div className="flex shrink-0 items-center justify-between border-t px-4 py-2 text-muted-foreground text-xs">
-            <p>
-              {filteredSessions.length}{" "}
-              {filteredSessions.length === 1 ? "Session" : "Sessions"}
-            </p>
+          <div className="flex shrink-0 items-center justify-between border-t px-4 py-2">
+            <div className="flex items-center gap-1 font-medium text-xs">
+              <IconRenderer name="History" />
+              <NumberFlow value={filteredSessions.length} />
+              <span className="mt-[1px]">
+                {filteredSessions.length === 1 ? "Session" : "Sessions"}
+              </span>
+            </div>
+            <SessionSortSelector />
           </div>
         </Drawer.Content>
       </Drawer.Portal>

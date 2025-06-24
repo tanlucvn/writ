@@ -1,4 +1,4 @@
-import type { Note } from "@/types";
+import type { Note, Session } from "@/types";
 import { type ClassValue, clsx } from "clsx";
 import { DateTime } from "luxon";
 import { twMerge } from "tailwind-merge";
@@ -41,6 +41,42 @@ export const sortWrites = (notes: Note[], option: string): Note[] => {
         return (a.title || "").localeCompare(b.title || "");
       case "title-desc":
         return (b.title || "").localeCompare(a.title || "");
+      default:
+        return 0;
+    }
+  });
+};
+
+export const sortSessions = (
+  sessions: Session[],
+  sortOption: string,
+): Session[] => {
+  return [...sessions].sort((a, b) => {
+    switch (sortOption) {
+      case "newest":
+        return (
+          new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+        );
+      case "oldest":
+        return (
+          new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime()
+        );
+      case "longest":
+        return b.duration - a.duration;
+      case "shortest":
+        return a.duration - b.duration;
+      case "mostWords":
+        return (
+          b.endingWordCount -
+          b.startingWordCount -
+          (a.endingWordCount - a.startingWordCount)
+        );
+      case "leastWords":
+        return (
+          a.endingWordCount -
+          a.startingWordCount -
+          (b.endingWordCount - b.startingWordCount)
+        );
       default:
         return 0;
     }

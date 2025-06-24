@@ -1,23 +1,22 @@
 import EditorPreview from "@/components/editor/editor-preview";
-import type { WriteTemplate } from "@/lib/templates";
+import type { NoteTemplate } from "@/lib/templates";
 import { cn } from "@/lib/utils";
 import type { Note } from "@/types";
-import type React from "react";
 
-interface WritePreviewProps {
-  write: WriteTemplate;
+interface NotePreviewProps {
+  note: NoteTemplate;
   onClick: () => void;
 }
 
-interface WriteContentPreviewProps {
-  write: Note;
+interface NoteContentPreviewProps {
+  note: Note;
   className?: string;
 }
 
-export const WriteContentPreview: React.FC<WriteContentPreviewProps> = ({
-  write,
+export const NoteContentPreview = ({
+  note,
   className,
-}) => {
+}: NoteContentPreviewProps) => {
   return (
     <div
       className={cn(
@@ -26,32 +25,29 @@ export const WriteContentPreview: React.FC<WriteContentPreviewProps> = ({
       )}
     >
       <div className="pointer-events-none absolute inset-0 w-[220%] origin-top-left scale-50">
-        <EditorPreview content={write.content || ""} />
+        <EditorPreview content={note.content || ""} />
       </div>
     </div>
   );
 };
 
-export const WritePreview: React.FC<WritePreviewProps> = ({
-  write,
-  onClick,
-}) => {
+export const NotePreview = ({ note, onClick }: NotePreviewProps) => {
   return (
     <div
       onClick={onClick}
       className="relative w-full max-w-xs cursor-pointer rounded-md border bg-card shadow-sm outline-double outline-1 outline-border outline-offset-2 hover:bg-secondary hover:outline-2"
     >
       <div className="w-full px-2">
-        <WriteContentPreview write={write} />
+        <NoteContentPreview note={note} />
       </div>
 
       <div className="flex items-center justify-between border-t p-2">
         <div className="flex flex-col overflow-hidden">
           <span className="truncate font-semibold text-foreground text-xs">
-            {write.title || "Untitled"}
+            {note.title || "Untitled"}
           </span>
           <span className="truncate text-muted-foreground text-xs">
-            {write.desc || "No description"}
+            {note.desc || "No description"}
           </span>
         </div>
       </div>
